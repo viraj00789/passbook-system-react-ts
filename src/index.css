@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --primary: #c8ee44;
+  --secondary: #29a073;
+  --primary-50: #f7fde6;
+  --primary-100: #ecf9c2;
+  --primary-200: #e4f7a5;
+  --primary-300: #d8f16f;
+  --primary-400: #cfee55;
+  --primary-500: #bfe84b;
+  --primary-600: #a3cc40;
+  --primary-700: #7d9f32;
+  --primary-800: #567223;
+  --primary-900: #2f4515;
+  --dark-blue: #1b212d;
+  --gray-1: #929EAE;
+  --font-manrope: "Manrope", sans-serif;
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+body {
+  font-family: var(--font-manrope);
+}
+
+/* Define Tailwind theme using your variables */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-primary-50: var(--primary-50);
+  --color-primary-100: var(--primary-100);
+  --color-primary-200: var(--primary-200);
+  --color-primary-300: var(--primary-300);
+  --color-primary-400: var(--primary-400);
+  --color-primary-500: var(--primary-500);
+  --color-primary-600: var(--primary-600);
+  --color-primary-700: var(--primary-700);
+  --color-primary-800: var(--primary-800);
+  --color-primary-900: var(--primary-900);
+  --color-dark-blue: var(--dark-blue);
+  --color-gray-1: var(--gray-1);
+}
+
+
+.text {
+  @apply text-black dark:text-white;
+}
+
+.custom-border-gray {
+  @apply border border-gray-600 rounded-md;
+}
+
+.credit-text {
+  @apply text-gray-50 dark:text-white;
+}
