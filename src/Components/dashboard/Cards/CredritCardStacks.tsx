@@ -77,7 +77,7 @@ const CardStack = () => {
                     </div>
                   </div>
 
-                  <span className="text-2xl tracking-widest font-bold">{card.number}</span>
+                  <span className="text-2xl tracking-widest font-bold text-white">{card.amount}</span>
 
                   <div className="flex justify-between text-sm opacity-80 credit-text">
                     <div className="flex flex-col">

@@ -1,5 +1,3 @@
-"use client";
-
 import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
 import Chart from "react-apexcharts";
 import { useTheme } from "../../../Providers/ThemesProvider";
@@ -74,7 +72,7 @@ export default function CardDataStates({
                 series={[{ data: chartData }]}
                 type="bar"
                 height={48}
-                width={"100%"}
+                width="100%"
             />}
         </div>
     );

@@ -1,6 +1,7 @@
+import { FiEdit2 } from "react-icons/fi";
 import DataTable from "../../../Components/ui/Table";
 import type { Column } from "../../../Components/ui/Table";
-import { BiEdit, BiTrash } from "react-icons/bi";
+import { LuTrash2 } from "react-icons/lu";
 
 interface User {
   id: number;
@@ -86,15 +87,15 @@ export default function TableUsageExample() {
       label: "Actions",
       render: (row) => (
         <div className="flex gap-2">
-          <BiEdit
+          <FiEdit2
             onClick={() => alert(`Edit ${row.name}`)}
             className="text-gray-500 dark:text-gray cursor-pointer"
             size={20}
           />
-          <BiTrash
+          <LuTrash2
             onClick={() => alert(`Delete ${row.name}`)}
             className="text-gray-500 dark:text-gray cursor-pointer"
-            size={20}
+            size={21.5}
           />
         </div>
       ),
