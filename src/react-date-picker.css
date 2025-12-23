@@ -1,0 +1,105 @@
+:root {
+    --dp-bg: var(--background);
+    --dp-text: var(--foreground);
+    --dp-border: var(--primary-200);
+    --dp-primary: var(--primary);
+    --dp-primary-soft: var(--primary-100);
+    --dp-muted: var(--gray-1);
+}
+
+.dark {
+    --dp-bg: var(--dark-blue);
+    --dp-text: #ffffff;
+    --dp-border: var(--primary-700);
+    --dp-primary: var(--primary);
+    --dp-primary-soft: var(--primary-800);
+    --dp-muted: #9ca3af;
+}
+
+/* Wrapper */
+.react-datepicker {
+    background-color: var(--dp-bg);
+    color: var(--dp-text);
+    border: 1px solid var(--dp-border);
+    /* border-radius: 16px; */
+    font-family: var(--font-manrope);
+}
+
+/* Header */
+.react-datepicker__header {
+    background-color: var(--dp-bg);
+    border-bottom: 1px solid var(--dp-border);
+}
+
+/* Month & year text */
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header {
+    color: var(--dp-text);
+    font-weight: 600;
+}
+
+/* Day names */
+.react-datepicker__day-name {
+    color: var(--dp-muted);
+}
+
+/* Day */
+.react-datepicker__day {
+    color: var(--dp-text);
+    /* border-radius: 50%; */
+    transition: background-color 0.2s ease;
+}
+
+/* Hover */
+.react-datepicker__day:hover {
+    background-color: var(--dp-primary);
+    color: var(--dp-muted);
+}
+
+/* Selected day */
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+    background-color: var(--dp-primary);
+    color: var(--dp-muted);
+}
+
+/* Range styles */
+.react-datepicker__day--in-range {
+    background-color: var(--dp-primary);
+    color: var(--dp-muted);
+}
+
+.react-datepicker__day.react-datepicker__day--in-range:hover {
+    background-color: var(--dp-primary);
+    color: var(--dp-muted);
+
+}
+
+.react-datepicker__day--range-start,
+.react-datepicker__day--range-end {
+    background-color: var(--dp-primary);
+    color: var(--dp-muted);
+}
+
+/* Disabled */
+.react-datepicker__day--disabled {
+    color: var(--dp-muted);
+    opacity: 0.5;
+}
+
+/* Detect selecting state on parent */
+.react-datepicker__day--in-selecting-range:not(.react-datepicker__day--in-range) {
+    background-color: var(--dp-primary);
+    color: var(--dp-muted);
+}
+
+.react-datepicker__day--in-selecting-range:not(.react-datepicker__day--in-range):hover {
+    background-color: var(--dp-primary);
+    color: var(--dp-muted);
+}
+
+/* .react-datepicker__month--selecting-range~.react-datepicker__header,
+.react-datepicker__month--selecting-range+.react-datepicker__header {
+    background-color: var(--dp-primary) !important;
+} */

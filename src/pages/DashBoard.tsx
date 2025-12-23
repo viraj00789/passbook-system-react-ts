@@ -10,7 +10,7 @@ import { statsData } from "../../Data/graphStatesData";
 const DashBoard = () => {
     const navigate = useNavigate();
     const [filter, setFilter] = useState<FilterState>({
-        type: "day",
+        type: "all",
         dateRange: {
             start: null,
             end: null,
@@ -22,7 +22,7 @@ const DashBoard = () => {
     }, [navigate]);
     return (
         <>
-            <div className="flex justify-between items-center sticky top-0 bg-gray-100 dark:bg-dark-blue p-2 lg:p-4">
+            <div className="flex justify-between items-center sticky top-0 bg-gray-100 dark:bg-dark-blue p-2 lg:p-4 z-10">
                 <h1 className="text-lg md:text-2xl lg:text-3xl font-bold text">
                     Dashboard
                 </h1>
