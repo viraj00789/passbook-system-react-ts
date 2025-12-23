@@ -12,7 +12,7 @@ export default function Navbar() {
   const { open, setOpen } = useSidebar();
 
   return (
-    <nav className="w-full text h-20 p-4 flex items-center justify-between border-b border-gray-200 dark:border-gray-600 bg-white dark:bg-dark-blue">
+    <nav className="w-full text h-20! px-5 flex items-center justify-between border-b border-gray-200 dark:border-gray-600 bg-white dark:bg-dark-blue">
       <div className="flex items-center gap-4">
         <div
           className="md:hidden cursor-pointer"
@@ -59,7 +59,7 @@ export default function Navbar() {
 
         <div className="w-8 h-8 min-w-8 min-h-8 rounded-lg flex items-center justify-centerw">
           {email ? (
-            <div className="w-full h-full bg-primary text-black flex items-center justify-center text-2xl font-bold">
+            <div className="w-full h-full bg-primary text-black flex items-center justify-center text-2xl font-bold rounded-full">
               {email?.charAt(0)?.toUpperCase() || "?"}
             </div>
           ) : (

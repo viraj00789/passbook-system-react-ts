@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import { Filter, type FilterState } from "../Components/dashboard/Filters/filter"
+import { Filter, type FilterState } from "../Components/dashboard/Filters/GlobalFilter"
 import { useEffect, useState } from "react";
 import AreaGraph from "../Components/dashboard/Graph/AreaGraph";
 import CardStack from "../Components/dashboard/Cards/CredritCardStacks";

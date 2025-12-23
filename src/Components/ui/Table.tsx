@@ -3,6 +3,9 @@
 import { useMemo, useState, type ReactNode } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { useSidebar } from "../../Providers/SideBarContext";
+import { IoFilter } from "react-icons/io5";
+import PopUp from "./PopUp";
+import FiltersPanel from "../dashboard/Filters/TableFilters";
 
 export type SortDirection = "asc" | "desc";
 
@@ -18,6 +21,8 @@ interface DataTableProps<T extends object> {
   columns: Column<T>[];
   data: T[];
   searchable?: boolean;
+  filterable?: boolean;
+  filterNode?: ReactNode;
 }
 
 export default function DataTable<T extends object>({
@@ -25,11 +30,13 @@ export default function DataTable<T extends object>({
   columns,
   data,
   searchable = true,
+  filterable = true,
 }: DataTableProps<T>) {
   const [search, setSearch] = useState("");
   const [sortKey, setSortKey] = useState<keyof T | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
   const { open } = useSidebar();
+  const [openModal, setOpenModal] = useState(false);
 
   /* 🔍 Search */
   const filteredData = useMemo(() => {
@@ -79,26 +86,35 @@ export default function DataTable<T extends object>({
           {title}
         </h1>
 
-        {searchable && (
-          <input
-            type="text"
-            placeholder="Search..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full max-w-62.5 px-4 py-2 rounded-xl
+        <div className="flex items-center gap-2">
+          {searchable && (
+            <input
+              type="text"
+              placeholder="Search..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full max-w-62.5 px-4 py-2 rounded-xl
               bg-background text-foreground border
               border-gray-300 dark:border-gray-700
-              focus:outline-none focus:ring-2 focus:ring-primary"
-          />
-        )}
+              focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-gray-400 dark:placeholder:text-gray-200  dark:bg-dark-blue"
+            />
+          )}
+
+          {filterable && (
+            <IoFilter
+              size={36}
+              className="text border rounded-lg p-1.5 border-gray-200 w-10 dark:border-gray-600 cursor-pointer"
+              onClick={() => setOpenModal(true)}
+            />
+          )}
+        </div>
       </div>
 
       {/* Table Wrapper */}
       <div
-        className={`overflow-x-auto w-full ${open
-          ? "max-w-[calc(100vw-284px)]"
-          : "max-w-[calc(100vw-111px)]"
-          }`}
+        className={`overflow-x-auto w-full ${
+          open ? "max-w-[calc(100vw-300px)]" : "max-w-[calc(100vw-111px)]"
+        }`}
       >
         <table className="min-w-max w-full text-sm">
           {/* Header */}
@@ -113,9 +129,10 @@ export default function DataTable<T extends object>({
                       : undefined
                   }
                   className={`p-4 text-left text-lg font-bold text-gray-700 dark:text-gray-400
-                    ${col.sortable
-                      ? "cursor-pointer select-none hover:text-primary"
-                      : ""
+                    ${
+                      col.sortable
+                        ? "cursor-pointer select-none hover:text-primary"
+                        : ""
                     }`}
                 >
                   <div className="flex items-center gap-2">
@@ -125,19 +142,20 @@ export default function DataTable<T extends object>({
                     {col.sortable && col.key !== "actions" && (
                       <span className="flex flex-col text-xs">
                         <FaChevronUp
-                          className={`transition ${sortKey === col.key && sortDirection === "asc"
-                            ? "text-primary"
-                            : "text-gray-400"
-                            }`}
+                          className={`transition ${
+                            sortKey === col.key && sortDirection === "asc"
+                              ? "text-primary"
+                              : "text-gray-400"
+                          }`}
                           size={8}
                         />
                         <FaChevronDown
-                          className={`transition ${sortKey === col.key && sortDirection === "desc"
-                            ? "text-primary"
-                            : "text-gray-400"
-                            }`}
+                          className={`transition ${
+                            sortKey === col.key && sortDirection === "desc"
+                              ? "text-primary"
+                              : "text-gray-400"
+                          }`}
                           size={8}
-
                         />
                       </span>
                     )}
@@ -163,8 +181,8 @@ export default function DataTable<T extends object>({
                       {col.render
                         ? col.render(row)
                         : col.key !== "actions"
-                          ? String(row[col.key])
-                          : null}
+                        ? String(row[col.key])
+                        : null}
                     </td>
                   ))}
                 </tr>
@@ -182,6 +200,15 @@ export default function DataTable<T extends object>({
           </tbody>
         </table>
       </div>
+
+      {/* FilterPop Up */}
+      {openModal && (
+        <PopUp
+          setOpenModal={setOpenModal}
+          popupTitle="Filter"
+          makeNode={<FiltersPanel />}
+        />
+      )}
     </div>
   );
 }
