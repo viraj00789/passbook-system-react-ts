@@ -1,4 +1,4 @@
-import { SelectOption } from "../src/types/FilterTypes";
+import { type SelectOption } from "../src/types/FilterTypes";
 
 export const ACCOUNT_OPTIONS: SelectOption[] = [
   { label: "Account A", value: "a" },

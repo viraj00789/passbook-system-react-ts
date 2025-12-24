@@ -2,12 +2,12 @@ import { useNavigate } from "react-router";
 import {
   Filter,
   type FilterState,
-} from "../Components/dashboard/Filters/GlobalFilter";
+} from "../components/dashboard/Filters/GlobalFilter";
 import { useEffect, useState } from "react";
-import AreaGraph from "../Components/dashboard/Graph/AreaGraph";
-import CardStack from "../Components/dashboard/Cards/CredritCardStacks";
-import TableUsageExample from "../Components/dashboard/Cards/UserTable";
-import CardDataStates from "../Components/dashboard/Cards/CardDataStates";
+import AreaGraph from "../components/dashboard/Graph/AreaGraph";
+import CardStack from "../components/dashboard/Cards/CredritCardStacks";
+import TableUsageExample from "../components/dashboard/Cards/UserTable";
+import CardDataStates from "../components/dashboard/Cards/CardDataStates";
 import { statsData } from "../../data/graphStatesData";
 
 const DashBoard = () => {

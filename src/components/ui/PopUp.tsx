@@ -43,7 +43,7 @@ export default function PopUp({
             <Button
               buttonType="button"
               className="inline-flex justify-center w-full rounded-lg border border-transparent bg-primary-600 text-base leading-6 font-medium text-black shadow-sm hover:bg-primary-800 focus:outline-none "
-              title="Save"
+              title="Apply Filter(s)"
               buttonPadding="px-1.5 py-1.5"
             />
           </div>

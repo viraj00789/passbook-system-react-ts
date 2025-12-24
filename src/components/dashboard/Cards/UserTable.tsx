@@ -1,6 +1,6 @@
 import { FiEdit2 } from "react-icons/fi";
-import DataTable from "../../../Components/ui/Table";
-import type { Column } from "../../../Components/ui/Table";
+import DataTable from "../../ui/Table";
+import type { Column } from "../../ui/Table";
 import { LuTrash2 } from "react-icons/lu";
 
 interface User {
@@ -102,5 +102,12 @@ export default function TableUsageExample() {
     },
   ];
 
-  return <DataTable title="Recent Transaction(s)" columns={columns} data={data} searchable />;
+  return (
+    <DataTable
+      title="Recent Transaction(s)"
+      columns={columns}
+      data={data}
+      searchable
+    />
+  );
 }

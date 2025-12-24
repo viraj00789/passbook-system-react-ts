@@ -79,7 +79,7 @@ export default function DataTable<T extends object>({
   };
 
   return (
-    <div className="w-full border rounded-2xl border-gray-300 dark:border-gray-800">
+    <div className="w-full border rounded-2xl border-gray-300 dark:border-gray-800 max-h-[calc(100vh-10px)]">
       {/* Header */}
       <div className="flex justify-between items-center rounded-t-2xl p-4 bg-white dark:bg-gray-800">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -202,7 +202,7 @@ export default function DataTable<T extends object>({
         </table>
       </div>
 
-      {/* FilterPop Up */}
+      {/* Filter Pop-Up */}
       {openModal && (
         <PopUp
           setOpenModal={setOpenModal}
