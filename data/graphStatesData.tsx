@@ -1,5 +1,3 @@
-"use client";
-
 import { BiWallet } from "react-icons/bi";
 import { FiClock } from "react-icons/fi";
 import { GiRadialBalance } from "react-icons/gi";

@@ -78,22 +78,15 @@ export default function FilterSelect({
             "text-gray-400 dark:text-gray-400 text-md font-medium",
 
           multiValue: () =>
-            `
-    flex items-center gap-1
+            `flex items-center gap-1
     bg-gray-200 dark:bg-gray-700
     text-gray-800 dark:text-gray-100
     rounded-sm px-1 py-1
-    text-xs
-    `,
-
+    text-xs`,
           multiValueLabel: () => "text-inherit",
-
-          multiValueRemove: () =>
-            `
-    rounded-sm px-1
-    hover:bg-gray-300 dark:hover:bg-gray-600
-    cursor-pointer
-    `,
+          multiValueRemove: () => `
+    rounded-sm px-1 hover:bg-gray-300 dark:hover:bg-gray-600
+    cursor-pointer`,
         }}
       />
     </div>

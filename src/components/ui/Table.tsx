@@ -1,11 +1,9 @@
-"use client";
-
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { useSidebar } from "../../providers/SideBarContext";
 import { IoFilter } from "react-icons/io5";
-import PopUp from "./PopUp";
 import FiltersPanel from "../dashboard/Filters/TableFilters";
+import FilterPopUp from "./FilterPopup";
 
 export type SortDirection = "asc" | "desc";
 
@@ -37,6 +35,7 @@ export default function DataTable<T extends object>({
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
   const { open } = useSidebar();
   const [openModal, setOpenModal] = useState(false);
+  const filterRef = useRef<HTMLDivElement>(null);
 
   /* 🔍 Search */
   const filteredData = useMemo(() => {
@@ -78,8 +77,27 @@ export default function DataTable<T extends object>({
     }
   };
 
+  useEffect(() => {
+    if (!openModal) return;
+
+    const handleClickOutside = (e: MouseEvent) => {
+      if (filterRef.current && !filterRef.current.contains(e.target as Node)) {
+        setOpenModal(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openModal]);
+
   return (
-    <div className="w-full border rounded-2xl border-gray-300 dark:border-gray-800 max-h-[calc(100vh-10px)]">
+    <div
+      className="w-full border rounded-2xl border-gray-300 dark:border-gray-800 max-h-[calc(100vh-10px)]"
+      ref={filterRef}
+    >
       {/* Header */}
       <div className="flex justify-between items-center rounded-t-2xl p-4 bg-white dark:bg-gray-800">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -104,10 +122,19 @@ export default function DataTable<T extends object>({
             <IoFilter
               size={36}
               className="text border
-              border-gray-300 dark:border-gray-700 rounded-lg p-1.5 w-11 h-9.5 cursor-pointer"
-              onClick={() => setOpenModal(true)}
+              border-gray-300 dark:border-gray-700 rounded-lg px-1.5 w-11 h-9.5 cursor-pointer"
+              onClick={() => setOpenModal(!openModal)}
             />
           )}
+          <>
+            {openModal && (
+              <FilterPopUp
+                setOpenModal={setOpenModal}
+                popupTitle="Filter"
+                makeNode={<FiltersPanel />}
+              />
+            )}
+          </>
         </div>
       </div>
 
@@ -203,13 +230,6 @@ export default function DataTable<T extends object>({
       </div>
 
       {/* Filter Pop-Up */}
-      {openModal && (
-        <PopUp
-          setOpenModal={setOpenModal}
-          popupTitle="Filter"
-          makeNode={<FiltersPanel />}
-        />
-      )}
     </div>
   );
 }

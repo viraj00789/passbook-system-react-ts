@@ -1,5 +1,3 @@
-"use client";
-
 import { useMemo, useState } from "react";
 import { useTheme } from "../../../providers/ThemesProvider";
 import { areaChartData } from "../../../../data/areaGraphData";
