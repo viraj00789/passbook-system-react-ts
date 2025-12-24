@@ -2,9 +2,9 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { getItemFromLocalStorage } from "../utils/helper";
 import { GoBell } from "react-icons/go";
 import { MdOutlineAttachMoney } from "react-icons/md";
-import { useSidebar } from "../Providers/SideBarContext";
+import { useSidebar } from "../providers/SideBarContext";
 import { Link } from "react-router-dom";
-import ThemeToggle from "../Providers/ThemeToggle";
+import ThemeToggle from "../providers/ThemeToggle";
 import Maglo from "../assets/maglo.svg";
 
 export default function Navbar() {

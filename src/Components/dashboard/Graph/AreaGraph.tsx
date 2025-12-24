@@ -1,11 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useTheme } from "../../../Providers/ThemesProvider";
-import { areaChartData } from "../../../../Data/areaGraphData";
+import { useTheme } from "../../../providers/ThemesProvider";
+import { areaChartData } from "../../../../data/areaGraphData";
 import { getAreaChartOptions } from "../../../utils/graphconfig";
-import Chart from "react-apexcharts"
-
+import Chart from "react-apexcharts";
 
 type FilterType = "day" | "month" | "year";
 
@@ -47,10 +46,11 @@ export default function AreaGraph() {
               <button
                 key={type}
                 onClick={() => setFilter(type)}
-                className={`px-3 py-1 text-sm rounded-md capitalize transition font-bold ${filter === type
-                  ? "bg-white dark:bg-black text-primary-600 shadow"
-                  : "text-gray-500 hover:text-gray-900 dark:hover:text-gray-300"
-                  }`}
+                className={`px-3 py-1 text-sm rounded-md capitalize transition font-bold ${
+                  filter === type
+                    ? "bg-white dark:bg-black text-primary-600 shadow"
+                    : "text-gray-500 hover:text-gray-900 dark:hover:text-gray-300"
+                }`}
               >
                 {type}
               </button>

@@ -2,7 +2,7 @@
 
 import { useMemo, useState, type ReactNode } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
-import { useSidebar } from "../../Providers/SideBarContext";
+import { useSidebar } from "../../providers/SideBarContext";
 import { IoFilter } from "react-icons/io5";
 import PopUp from "./PopUp";
 import FiltersPanel from "../dashboard/Filters/TableFilters";

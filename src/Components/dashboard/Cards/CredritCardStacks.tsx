@@ -2,9 +2,8 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { CARDS } from "../../../../Data/creditCardData";
-import type { CreditCard } from "../../../../Data/creditCardData";
-
+import { CARDS } from "../../../../data/creditCardData";
+import type { CreditCard } from "../../../../data/creditCardData";
 
 const CARD_OFFSET = 10;
 const SCALE_FACTOR = 0.06;
@@ -77,16 +76,22 @@ const CardStack = () => {
                     </div>
                   </div>
 
-                  <span className="text-2xl tracking-widest font-bold text-white">{card.amount}</span>
+                  <span className="text-2xl tracking-widest font-bold text-white">
+                    {card.amount}
+                  </span>
 
                   <div className="flex justify-between text-sm opacity-80 credit-text">
                     <div className="flex flex-col">
                       <p className="text-xl font-bold">IFSC Code</p>
-                      <p className="font-medium text-md opacity-60">{card.ifscode}</p>
+                      <p className="font-medium text-md opacity-60">
+                        {card.ifscode}
+                      </p>
                     </div>
                     <div className="flex flex-col">
                       <p className="text-xl font-bold">Account No.</p>
-                      <p className="font-medium text-md opacity-60">{card.accountNumber}</p>
+                      <p className="font-medium text-md opacity-60">
+                        {card.accountNumber}
+                      </p>
                     </div>
                   </div>
                 </div>

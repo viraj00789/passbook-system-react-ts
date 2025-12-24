@@ -1,5 +1,5 @@
 import Select from "react-select";
-import type { SelectOption } from "../../Types/FilterTypes";
+import type { SelectOption } from "../../types/FilterTypes";
 
 interface SelectProps {
   label: string;

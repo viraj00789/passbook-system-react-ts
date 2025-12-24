@@ -1,14 +1,14 @@
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import type { FiltersState, SelectOption } from "../../../Types/FilterTypes";
+import type { FiltersState, SelectOption } from "../../../types/FilterTypes";
 import FilterSelect from "../../ui/Select";
 import {
   ACCOUNT_OPTIONS,
   CLIENT_OPTIONS,
   EMPLOYEE_OPTIONS,
   TRANSACTION_OPTIONS,
-} from "../../../../Data/filterOptionsData";
+} from "../../../../data/filterOptionsData";
 
 // interface FiltersPanelProps {
 //     onApply?: (filters: FiltersState) => void;

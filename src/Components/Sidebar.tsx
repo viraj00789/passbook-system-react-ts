@@ -9,7 +9,7 @@ import {
 } from "react-icons/hi2";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { useEffect } from "react";
-import { useSidebar } from "../Providers/SideBarContext";
+import { useSidebar } from "../providers/SideBarContext";
 import { Link, useLocation } from "react-router-dom";
 
 const navItems = [
