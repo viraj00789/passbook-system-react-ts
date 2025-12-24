@@ -6,7 +6,7 @@ import {
 import { useEffect, useState } from "react";
 import AreaGraph from "../components/dashboard/Graph/AreaGraph";
 import CardStack from "../components/dashboard/Cards/CredritCardStacks";
-import TableUsageExample from "../components/dashboard/Cards/UserTable";
+import TableUsageExample from "../components/dashboard/Cards/TransactionTable";
 import CardDataStates from "../components/dashboard/Cards/CardDataStates";
 import { statsData } from "../../data/graphStatesData";
 

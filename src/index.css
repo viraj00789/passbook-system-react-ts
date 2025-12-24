@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
-
 @import "tailwindcss";
-
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
@@ -25,6 +23,21 @@
   --scroll-track: #f3f4f6;
   --scroll-thumb: #cbd5e1;
   --scroll-thumb-hover: #94a3b8;
+
+  /* Orange Status */
+  --bg-orange-status: #FFF1E5;
+  --text-orange-status: #F2994A;
+  --bg-dark-orange-status: #30292F;
+
+  /* Green Status */
+  --bg-green-status: #D9FFE9;
+  --bg-dark-green-status: #1A3131;
+
+
+  /* Red Status */
+  --bg-red-status: #FFEFEF;
+  --text-red-status: #E5363D;
+  --bg-dark-red-status: #442121;
 }
 
 .dark {
@@ -39,6 +52,9 @@ body {
   font-family: var(--font-manrope);
 }
 
+
+
+/* ======================= Custom Scrollbar ====================== */
 *::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -68,7 +84,7 @@ body {
   background-color: var(--scroll-thumb-hover);
 }
 
-/* Define Tailwind theme using your variables */
+/*======================= Define Tailwind theme using your variables ============  */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -86,9 +102,19 @@ body {
   --color-primary-900: var(--primary-900);
   --color-dark-blue: var(--dark-blue);
   --color-gray-1: var(--gray-1);
+  --color-orange-status: var(--bg-orange-status);
+  --color-green-status: var(--bg-green-status);
+  --color-red-status: var(--bg-red-status);
+  --color-font-orange-status: var(--text-orange-status);
+  --color-font-red-status: var(--text-red-status);
+  --color-dark-orange-status: var(--bg-dark-orange-status);
+  --color-dark-green-status: var(--bg-dark-green-status);
+  --color-dark-red-status: var(--bg-dark-red-status);
 }
 
 
+
+/* ========= Tailwind CSS UTILITES ========= */
 .text {
   @apply text-black dark:text-white;
 }

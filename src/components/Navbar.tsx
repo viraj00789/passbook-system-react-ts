@@ -39,7 +39,7 @@ export default function Navbar() {
 
           <div className="md:hidden">
             <svg width="30" height="32" viewBox="0 0 30 32" fill="currentColor">
-              <path d="M29.24 22.68c-.16-.39-.31-.8-.47-1.15..." />
+              {/* <path d="M29.24 22.68c-.16-.39-.31-.8-.47-1.15..." /> */}
             </svg>
           </div>
         </Link>
@@ -49,7 +49,7 @@ export default function Navbar() {
         <div className="px-2 py-1 rounded-lg items-center hidden md:flex border border-gray-200 dark:border-gray-600">
           <div className="w-2 h-2 rounded-full bg-green-500" />
           <MdOutlineAttachMoney size={25} />
-          <p>50,000</p>
+          <p>700,00,000</p>
         </div>
         <GoBell
           className="border rounded-md p-1 border-gray-200 dark:border-gray-600"

@@ -1,11 +1,12 @@
 import { Button } from "./Button";
-import type { ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 
 interface PopUpProps {
   setOpenModal: (open: boolean) => void;
   popupTitle: string;
   makeNode?: ReactNode;
   bothbuttons?: boolean;
+  openModal: boolean;
 }
 
 export default function FilterPopUp({
@@ -13,9 +14,28 @@ export default function FilterPopUp({
   popupTitle,
   makeNode,
   bothbuttons = false,
+  openModal,
 }: PopUpProps) {
+  const filterRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!openModal) return;
+
+    const handleClickOutside = (e: MouseEvent) => {
+      if (filterRef.current && !filterRef.current.contains(e.target as Node)) {
+        setOpenModal(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openModal]);
+
   return (
-    <div className="relative z-50">
+    <div className="relative z-50" ref={filterRef}>
       <div className="absolute right-1 top-7 text-center sm:block sm:p-0 bg-white dark:bg-dark-blue rounded-xl shadow-2xl border border-gray-300 dark:border-gray-600">
         <div className="flex items-center justify-between w-full border-b border-gray-300 dark:border-gray-600 p-3 lg:p-4">
           <h3 className="text-md lg:text-lg leading-6 font-bold text">

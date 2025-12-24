@@ -79,9 +79,8 @@ export default function FilterSelect({
 
           multiValue: () =>
             `flex items-center gap-1
-    bg-gray-200 dark:bg-gray-700
-    text-gray-800 dark:text-gray-100
-    rounded-sm px-1 py-1
+    bg-primary-400 text-gray-900! dark:text-gray-600! dark:text-gray-100
+    rounded-sm px-1.5 py-1 my-1
     text-xs`,
           multiValueLabel: () => "text-inherit",
           multiValueRemove: () => `

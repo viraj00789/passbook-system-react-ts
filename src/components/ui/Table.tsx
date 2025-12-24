@@ -1,18 +1,13 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { memo, useMemo, useState, type ReactNode } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { useSidebar } from "../../providers/SideBarContext";
 import { IoFilter } from "react-icons/io5";
 import FiltersPanel from "../dashboard/Filters/TableFilters";
 import FilterPopUp from "./FilterPopup";
+import { RxCross2 } from "react-icons/rx";
+import type { Column } from "../../types/TableTypes";
 
 export type SortDirection = "asc" | "desc";
-
-export interface Column<T> {
-  key: keyof T | "actions";
-  label: string;
-  sortable?: boolean;
-  render?: (row: T) => ReactNode;
-}
 
 interface DataTableProps<T extends object> {
   title: string;
@@ -22,8 +17,7 @@ interface DataTableProps<T extends object> {
   filterable?: boolean;
   filterNode?: ReactNode;
 }
-
-export default function DataTable<T extends object>({
+function DataTable<T extends object>({
   title,
   columns,
   data,
@@ -35,7 +29,6 @@ export default function DataTable<T extends object>({
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
   const { open } = useSidebar();
   const [openModal, setOpenModal] = useState(false);
-  const filterRef = useRef<HTMLDivElement>(null);
 
   /* 🔍 Search */
   const filteredData = useMemo(() => {
@@ -77,30 +70,11 @@ export default function DataTable<T extends object>({
     }
   };
 
-  useEffect(() => {
-    if (!openModal) return;
-
-    const handleClickOutside = (e: MouseEvent) => {
-      if (filterRef.current && !filterRef.current.contains(e.target as Node)) {
-        setOpenModal(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [openModal]);
-
   return (
-    <div
-      className="w-full border rounded-2xl border-gray-300 dark:border-gray-800 max-h-[calc(100vh-10px)]"
-      ref={filterRef}
-    >
+    <div className="w-full border rounded-2xl border-gray-300 dark:border-gray-800 max-h-[calc(100vh-10px)]">
       {/* Header */}
       <div className="flex justify-between items-center rounded-t-2xl p-4 bg-white dark:bg-gray-800">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-xl font-bold text-gray-900 dark:text-white">
           {title}
         </h1>
 
@@ -118,17 +92,31 @@ export default function DataTable<T extends object>({
             />
           )}
 
-          {filterable && (
-            <IoFilter
-              size={36}
-              className="text border
-              border-gray-300 dark:border-gray-700 rounded-lg px-1.5 w-11 h-9.5 cursor-pointer"
-              onClick={() => setOpenModal(!openModal)}
-            />
-          )}
+          {filterable &&
+            (openModal ? (
+              <RxCross2
+                size={36}
+                className="text border border-gray-300 dark:border-gray-700 rounded-lg px-1.5 w-11 h-9.5 cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setOpenModal(false);
+                }}
+              />
+            ) : (
+              <IoFilter
+                size={36}
+                className="text border border-gray-300 dark:border-gray-700 rounded-lg px-1.5 w-11 h-9.5 cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setOpenModal(true);
+                }}
+              />
+            ))}
+
           <>
             {openModal && (
               <FilterPopUp
+                openModal={openModal}
                 setOpenModal={setOpenModal}
                 popupTitle="Filter"
                 makeNode={<FiltersPanel />}
@@ -156,7 +144,7 @@ export default function DataTable<T extends object>({
                       ? handleSort(col.key as keyof T)
                       : undefined
                   }
-                  className={`p-4 text-left text-lg font-bold text-gray-700 dark:text-gray-400
+                  className={`p-4 text-left text-md font-bold text-gray-700 dark:text-gray-400
                     ${
                       col.sortable
                         ? "cursor-pointer select-none hover:text-primary"
@@ -168,7 +156,7 @@ export default function DataTable<T extends object>({
 
                     {/* Sort Icons */}
                     {col.sortable && col.key !== "actions" && (
-                      <span className="flex flex-col text-xs">
+                      <span className="flex flex-col ">
                         <FaChevronUp
                           className={`transition ${
                             sortKey === col.key && sortDirection === "asc"
@@ -207,7 +195,9 @@ export default function DataTable<T extends object>({
                       className="p-4 text-gray-700 dark:text-gray-300"
                     >
                       {col.render
-                        ? col.render(row)
+                        ? col.render(row, idx)
+                        : col.key === "serial"
+                        ? idx + 1
                         : col.key !== "actions"
                         ? String(row[col.key])
                         : null}
@@ -233,3 +223,5 @@ export default function DataTable<T extends object>({
     </div>
   );
 }
+
+export default memo(DataTable) as typeof DataTable;
