@@ -103,7 +103,8 @@ export default function DataTable<T extends object>({
           {filterable && (
             <IoFilter
               size={36}
-              className="text border rounded-lg p-1.5 border-gray-200 w-10 dark:border-gray-600 cursor-pointer"
+              className="text border
+              border-gray-300 dark:border-gray-700 rounded-lg p-1.5 w-11 h-9.5 cursor-pointer"
               onClick={() => setOpenModal(true)}
             />
           )}
@@ -112,8 +113,8 @@ export default function DataTable<T extends object>({
 
       {/* Table Wrapper */}
       <div
-        className={`overflow-x-auto w-full ${
-          open ? "max-w-[calc(100vw-300px)]" : "max-w-[calc(100vw-111px)]"
+        className={`overflow-x-auto w-full max-w-[calc(100vw-11px)] ${
+          open ? "lg:max-w-[calc(100vw-297px)]" : "lg:max-w-[calc(100vw-105px)]"
         }`}
       >
         <table className="min-w-max w-full text-sm">

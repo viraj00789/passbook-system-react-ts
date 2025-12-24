@@ -28,7 +28,7 @@ const DashBoard = () => {
                 </h1>
                 <Filter filter={filter} onFilterChange={setFilter} />
             </div>
-            <div className="px-2 lg:px-4 h-[calc(100vh-150px)] overflow-auto">
+            <div className="px-0 lg:px-4 h-[calc(100vh-150px)] overflow-auto">
                 <div className="grid gap-2 md:gap-3 lg:gap-4 sm:grid-cols-2 lg:grid-cols-4">
                     {statsData?.map((stat, index) => (
                         <CardDataStates key={index} {...stat} />

@@ -14,7 +14,11 @@ import { Link, useLocation } from "react-router-dom";
 
 const navItems = [
   { label: "Dashboard", icon: HiOutlineHome, href: "/" },
-  { label: "Transactions", icon: HiOutlineCurrencyDollar, href: "/transactions" },
+  {
+    label: "Transactions",
+    icon: HiOutlineCurrencyDollar,
+    href: "/transactions",
+  },
   { label: "Accounts", icon: HiOutlineCreditCard, href: "/accounts" },
   { label: "Clients", icon: HiOutlineUsers, href: "/clients" },
   { label: "Employees", icon: HiOutlineUserGroup, href: "/employees" },
@@ -40,19 +44,23 @@ export default function Sidebar() {
   return (
     <>
       {/* Mobile Overlay */}
-      {open && (
+      {/* {open && (
         <div
           className="md:hidden fixed inset-0 bg-black/50 z-40"
           onClick={() => setOpen(false)}
         />
-      )}
+      )} */}
 
       <aside
         className={`
           fixed md:relative z-50 h-full bg-white dark:bg-dark-blue
           border-r border-gray-200 dark:border-gray-600
           transition-all duration-300 flex flex-col justify-between text
-          ${open ? "w-full! max-w-64! translate-x-0" : "w-full! max-w-16! -translate-x-full md:translate-x-0"}
+          ${
+            open
+              ? "w-full! max-w-64! translate-x-0"
+              : "w-full! max-w-16! -translate-x-full md:translate-x-0"
+          }
         `}
       >
         {/* Navigation */}
