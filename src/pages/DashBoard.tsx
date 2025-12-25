@@ -9,6 +9,7 @@ import CardStack from "../components/dashboard/Cards/CredritCardStacks";
 import TableUsageExample from "../components/dashboard/Cards/TransactionTable";
 import CardDataStates from "../components/dashboard/Cards/CardDataStates";
 import { statsData } from "../../data/graphStatesData";
+import MainGraphs from "../components/dashboard/Graph/MainGraphs";
 
 const DashBoard = () => {
   const navigate = useNavigate();
@@ -41,6 +42,7 @@ const DashBoard = () => {
           <AreaGraph />
           <CardStack />
         </div>
+        <MainGraphs />
         <div className="mt-2 lg:mt-6 space-y-0 lg:space-y-4">
           <TableUsageExample />
         </div>

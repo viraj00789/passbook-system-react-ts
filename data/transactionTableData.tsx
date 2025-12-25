@@ -3,11 +3,15 @@ import { LuTrash2 } from "react-icons/lu";
 import type { Column } from "../src/types/TableTypes";
 
 interface Transaction {
-  [key: string]: string | number;
+  [key: string]: string | number | object;
   id: number;
   date: string;
   description: string;
-  client: string;
+  clientDetail: {
+    name: string;
+    image: string;
+    inv: string;
+  };
   account: string;
   amount: number;
   type: "IN" | "OUT";
@@ -19,7 +23,11 @@ export const TransactionData: Transaction[] = [
     id: 1,
     date: "2025-12-20",
     description: "Website Development",
-    client: "ACME Corp",
+    clientDetail: {
+      name: "ACME Corp",
+      image: "https://i.pravatar.cc/40?img=1",
+      inv: "INV-1001",
+    },
     account: "Bank A",
     amount: 1200,
     type: "IN",
@@ -29,7 +37,11 @@ export const TransactionData: Transaction[] = [
     id: 2,
     date: "2025-12-21",
     description: "Office Rent",
-    client: "Office Expenses",
+    clientDetail: {
+      name: "Office Expense",
+      image: "https://i.pravatar.cc/40?img=2",
+      inv: "INV-1002",
+    },
     account: "Bank B",
     amount: 500,
     type: "OUT",
@@ -39,7 +51,11 @@ export const TransactionData: Transaction[] = [
     id: 3,
     date: "2025-12-22",
     description: "Consulting Fee",
-    client: "John Doe",
+    clientDetail: {
+      name: "John Doe",
+      image: "https://i.pravatar.cc/40?img=3",
+      inv: "INV-1003",
+    },
     account: "Bank A",
     amount: 800,
     type: "IN",
@@ -49,11 +65,99 @@ export const TransactionData: Transaction[] = [
     id: 4,
     date: "2025-12-23",
     description: "Software License",
-    client: "IT Expenses",
+    clientDetail: {
+      name: "IT Expense",
+      image: "https://i.pravatar.cc/40?img=4",
+      inv: "INV-1004",
+    },
     account: "Bank C",
     amount: 300,
     type: "OUT",
     status: "Failed",
+  },
+  {
+    id: 5,
+    date: "2025-12-24",
+    description: "Mobile App Design",
+    clientDetail: {
+      name: "Creative Studio",
+      image: "https://i.pravatar.cc/40?img=5",
+      inv: "INV-1005",
+    },
+    account: "Bank A",
+    amount: 1500,
+    type: "IN",
+    status: "Completed",
+  },
+  {
+    id: 6,
+    date: "2025-12-25",
+    description: "Marketing Campaign",
+    clientDetail: {
+      name: "Marketing Team",
+      image: "https://i.pravatar.cc/40?img=6",
+      inv: "INV-1006",
+    },
+    account: "Bank B",
+    amount: 950,
+    type: "OUT",
+    status: "Pending",
+  },
+  {
+    id: 7,
+    date: "2025-12-26",
+    description: "Cloud Hosting",
+    clientDetail: {
+      name: "AWS Services",
+      image: "https://i.pravatar.cc/40?img=7",
+      inv: "INV-1007",
+    },
+    account: "Bank C",
+    amount: 420,
+    type: "OUT",
+    status: "Completed",
+  },
+  {
+    id: 8,
+    date: "2025-12-27",
+    description: "SEO Optimization",
+    clientDetail: {
+      name: "SEO Agency",
+      image: "https://i.pravatar.cc/40?img=8",
+      inv: "INV-1008",
+    },
+    account: "Bank A",
+    amount: 670,
+    type: "IN",
+    status: "Completed",
+  },
+  {
+    id: 9,
+    date: "2025-12-28",
+    description: "Hardware Purchase",
+    clientDetail: {
+      name: "Tech Supplier",
+      image: "https://i.pravatar.cc/40?img=9",
+      inv: "INV-1009",
+    },
+    account: "Bank B",
+    amount: 1100,
+    type: "OUT",
+    status: "Failed",
+  },
+  {
+    id: 10,
+    date: "2025-12-29",
+    description: "Maintenance Support",
+    clientDetail: {
+      name: "Support Team",
+      image: "https://i.pravatar.cc/40?img=10",
+      inv: "INV-1010",
+    },
+    account: "Bank A",
+    amount: 400,
+    type: "IN",
+    status: "Pending",
   },
 ];
 
@@ -65,7 +169,26 @@ export const TransactionsColumns: Column<Transaction>[] = [
     render: (_: Transaction, index: number) => index + 1,
   },
   { key: "date", label: "Date", sortable: true },
-  { key: "client", label: "Client / Employee / Expense", sortable: true },
+  {
+    key: "clientDetail",
+    label: "Client / Employee / Expense",
+    sortable: true,
+    render: (row) => (
+      <div className="flex items-center gap-3">
+        <img
+          src={row.clientDetail.image}
+          alt={row.clientDetail.name}
+          className="w-8 h-8 rounded-full"
+        />
+        <div>
+          <p className="font-semibold text-gray-800 dark:text-gray-200">
+            {row.clientDetail.name}
+          </p>
+          <p className="text-xs text-gray-500">{row.clientDetail.inv}</p>
+        </div>
+      </div>
+    ),
+  },
   { key: "account", label: "Account", sortable: true },
   {
     key: "status",
