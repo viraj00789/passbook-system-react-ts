@@ -32,18 +32,18 @@ const DashBoard = () => {
         </h1>
         <Filter filter={filter} onFilterChange={setFilter} />
       </div>
-      <div className="px-0 lg:px-4 h-[calc(100vh-150px)] overflow-auto">
-        <div className="grid gap-2 md:gap-3 lg:gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="p-1 lg:p-2 xl:p-4 h-[calc(100vh-150px)] overflow-auto">
+        <div className="grid gap-2 xl:gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
           {statsData?.map((stat, index) => (
             <CardDataStates key={index} {...stat} />
           ))}
         </div>
-        <div className="flex flex-col lg:flex-row gap-4 w-full">
+        <div className="flex flex-col 2xl:flex-row gap-0 lg:gap-0.5 xl:gap-4 w-full">
           <AreaGraph />
           <CardStack />
         </div>
         <MainGraphs />
-        <div className="mt-2 lg:mt-6 space-y-0 lg:space-y-4">
+        <div className="mt-2 lg:mt-6 space-y-0 xl:space-y-4">
           <TableUsageExample />
         </div>
       </div>

@@ -8,7 +8,7 @@ export default function MainLayout() {
       <Navbar />
       <div className="flex grow">
         <Sidebar />
-        <div className="grow">
+        <div className="w-full">
           <Outlet />
         </div>
       </div>

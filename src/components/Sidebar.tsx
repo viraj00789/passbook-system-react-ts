@@ -11,6 +11,7 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { useEffect } from "react";
 import { useSidebar } from "../providers/SideBarContext";
 import { Link, useLocation } from "react-router-dom";
+import { useWindowSize } from "../utils/useWindowSize";
 
 const navItems = [
   { label: "Dashboard", icon: HiOutlineHome, href: "/" },
@@ -30,17 +31,11 @@ const navItems = [
 export default function Sidebar() {
   const { open, setOpen, toggle } = useSidebar();
   const { pathname } = useLocation();
+  const windowSize = useWindowSize();
 
   useEffect(() => {
-    const handleResize = () => {
-      setOpen(window.innerWidth >= 768);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [setOpen]);
-
+    setOpen(windowSize > 1023);
+  }, [windowSize]);
   return (
     <>
       {/* Mobile Overlay */}
@@ -53,13 +48,13 @@ export default function Sidebar() {
 
       <aside
         className={`
-          fixed md:relative z-50 h-full bg-white dark:bg-dark-blue
+          fixed lg:relative z-50 h-full bg-white dark:bg-dark-blue
           border-r border-gray-200 dark:border-gray-600
           transition-all duration-300 flex flex-col justify-between text
           ${
             open
               ? "w-full! max-w-64! translate-x-0"
-              : "w-full! max-w-16! -translate-x-full md:translate-x-0"
+              : "w-full! max-w-16! -translate-x-full lg:translate-x-0"
           }
         `}
       >

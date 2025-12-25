@@ -131,3 +131,11 @@ body {
   display: block !important;
   width: 100% !important;
 }
+
+.border-radius-3xl {
+  @apply rounded-xl lg:rounded-3xl;
+}
+
+.border-radius-2xl {
+  @apply rounded-lg lg:rounded-2xl;
+}

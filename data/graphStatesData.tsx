@@ -5,7 +5,7 @@ import { SlCalender } from "react-icons/sl";
 
 export const statsData = [
   {
-    title: "Total In (Selected period)",
+    title: "Total In",
     value: "₹1,20,000",
     change: "+8.2%",
     changePositive: true,
@@ -15,7 +15,7 @@ export const statsData = [
     chartVisible: true,
   },
   {
-    title: "Total Out (Selected period)",
+    title: "Total Out",
     value: "₹80,000",
     change: "-3.1%",
     changePositive: false,

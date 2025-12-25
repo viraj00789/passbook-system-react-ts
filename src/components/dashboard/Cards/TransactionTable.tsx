@@ -10,6 +10,7 @@ export default function TableUsageExample() {
       title="Recent Transaction(s)"
       columns={TransactionsColumns}
       data={TransactionData}
+      paginationAtHeader
       searchable
     />
   );

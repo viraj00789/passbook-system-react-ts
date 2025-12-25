@@ -27,7 +27,7 @@ export default function CardDataStates({
   const { theme } = useTheme();
 
   return (
-    <div className="my-0 lg:my-4 p-4 space-y-4 rounded-2xl lg:rounded-4xl border border-gray-300 dark:border-gray-800 bg-gray-50 dark:bg-gray-800">
+    <div className="my-0 xl:my-4 p-4 space-y-4 border-radius-3xl  border border-gray-300 dark:border-gray-800 bg-gray-50 dark:bg-gray-800">
       {/* Header */}
       <div className="flex justify-between">
         <div
@@ -44,8 +44,8 @@ export default function CardDataStates({
           {title}
         </p>
 
-        <div className="flex items-center gap-3">
-          <p className="text-3xl font-bold text-gray-900 dark:text-white">
+        <div className="flex flex-col xl:flex-row items-start xl:items-center gap-3 flex-wrap">
+          <p className="text-2xl xl:text-3xl font-bold text-gray-900 dark:text-white">
             {value}
           </p>
           <div className="flex gap-3">

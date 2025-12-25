@@ -40,7 +40,7 @@ export function getAreaChartOptions(theme: "light" | "dark"): ApexOptions {
     chart: {
       type: "area",
       toolbar: { show: false },
-      zoom: { enabled: false },
+      width: "w-full max-w-xs",
     },
 
     stroke: {

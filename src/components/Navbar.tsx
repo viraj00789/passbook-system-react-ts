@@ -15,7 +15,7 @@ export default function Navbar() {
     <nav className="w-full text h-20! px-5 flex items-center justify-between border-b border-gray-200 dark:border-gray-600 bg-white dark:bg-dark-blue">
       <div className="flex items-center gap-4">
         <div
-          className="md:hidden cursor-pointer"
+          className="lg:hidden cursor-pointer"
           onClick={() => setOpen(!open)}
         >
           <RxHamburgerMenu size={24} />
