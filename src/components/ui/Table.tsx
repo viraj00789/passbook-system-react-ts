@@ -222,7 +222,7 @@ function DataTable<T extends object>({
             paginatedData.map((row, idx) => (
               <div
                 key={idx}
-                className="border border-gray-300 dark:border-gray-800 rounded-xl p-4 bg-gray-100 dark:bg-gray-800 space-y-2 "
+                className="border border-gray-300 dark:border-gray-800 rounded-xl p-4 bg-gray-50 dark:bg-gray-800 space-y-2 "
               >
                 {columns.map((col) => (
                   <div key={col.label} className="py-1 flex items-center gap-5">
