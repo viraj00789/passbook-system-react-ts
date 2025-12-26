@@ -2,8 +2,9 @@ import { FiEdit2 } from "react-icons/fi";
 import { LuTrash2 } from "react-icons/lu";
 import type { Column } from "../src/types/TableTypes";
 
+export type statusOptions = "Pending" | "Completed" | "Failed";
+
 interface Transaction {
-  [key: string]: string | number | object;
   id: number;
   date: string;
   description: string;
@@ -15,7 +16,7 @@ interface Transaction {
   account: string;
   amount: number;
   type: "IN" | "OUT";
-  status: "Pending" | "Completed" | "Failed";
+  status: statusOptions;
 }
 
 export const TransactionData: Transaction[] = [
@@ -417,19 +418,21 @@ export const TransactionsColumns: Column<Transaction>[] = [
   {
     key: "actions",
     label: "Actions",
-    render: (row) => (
-      <div className="flex gap-2">
-        <FiEdit2
-          onClick={() => alert(`Edit ${row.description}`)}
-          className="text-gray-500 dark:text-gray cursor-pointer"
-          size={20}
-        />
-        <LuTrash2
-          onClick={() => alert(`Delete ${row.description}`)}
-          className="text-gray-500 dark:text-gray cursor-pointer"
-          size={21.5}
-        />
-      </div>
-    ),
+    render: (row) => {
+      return (
+        <div className="flex gap-2">
+          <FiEdit2
+            onClick={() => alert(`Edit ${row.description}`)}
+            className="text-gray-500 dark:text-gray cursor-pointer"
+            size={20}
+          />
+          <LuTrash2
+            onClick={() => alert(`Delete ${row.description}`)}
+            className="text-gray-500 dark:text-gray cursor-pointer"
+            size={21.5}
+          />
+        </div>
+      );
+    },
   },
 ];

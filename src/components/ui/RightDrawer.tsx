@@ -1,6 +1,6 @@
-import { FaTimes } from "react-icons/fa";
 import { useEffect } from "react";
 import { Button } from "./Button";
+import { IoCloseCircle } from "react-icons/io5";
 
 interface RightDrawerProps {
   isOpen: boolean;
@@ -47,9 +47,9 @@ export default function RightDrawer({
       >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b dark:border-gray-600">
-          <h2 className="text-lg 2xl:text-xl font-bold">{title}</h2>
+          <h2 className="text-lg 2xl:text-2xl font-bold">{title}</h2>
           <Button
-            title={<FaTimes size={18} />}
+            title={<IoCloseCircle size={25} />}
             buttonType="button"
             buttonPadding="px-1.5 py-1.5"
             onClick={onClose}

@@ -20,7 +20,7 @@ export default function FilterSelect({
 }: SelectProps) {
   return (
     <div>
-      <label className="block mb-2 font-semibold text">{label}</label>
+      <label className="block mb-2 font-medium text text-sm">{label}</label>
 
       <Select<SelectOption, boolean>
         unstyled
@@ -75,7 +75,7 @@ export default function FilterSelect({
           singleValue: () => "text-gray-900 dark:text-gray-100 text-sm",
 
           placeholder: () =>
-            "text-gray-400 dark:text-gray-400 text-md font-medium",
+            "text-gray-400 dark:text-gray-400 text-sm font-medium",
 
           multiValue: () =>
             `flex items-center gap-1

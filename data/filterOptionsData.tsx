@@ -1,4 +1,4 @@
-import { type SelectOption } from "../src/types/FilterTypes";
+import type { SelectOption } from "../src/types/FilterTypes";
 
 export const ACCOUNT_OPTIONS: SelectOption[] = [
   { label: "Account A", value: "a" },
@@ -16,6 +16,12 @@ export const EMPLOYEE_OPTIONS: SelectOption[] = [
 ];
 
 export const TRANSACTION_OPTIONS: SelectOption[] = [
-  { label: "IN", value: "in" },
-  { label: "OUT", value: "out" },
+  { label: "IN", value: "IN" },
+  { label: "OUT", value: "OUT" },
+];
+
+export const STATUS_OPTIONS: SelectOption[] = [
+  { label: "Pending", value: "Pending" },
+  { label: "Completed", value: "Completed" },
+  { label: "Failed", value: "Failed" },
 ];
