@@ -24,6 +24,7 @@ interface DataTableProps<T extends object> {
   paginationAtFooter?: boolean;
   addTitle?: string;
   addOnClickable?: () => void;
+  pageSizeByDefault?: number;
 }
 
 function DataTable<T extends object>({
@@ -36,6 +37,7 @@ function DataTable<T extends object>({
   paginationAtFooter = false,
   addTitle = "",
   addOnClickable,
+  pageSizeByDefault = 10,
 }: DataTableProps<T>) {
   const [search, setSearch] = useState("");
   const [sortKey, setSortKey] = useState<keyof T | null>(null);
@@ -43,7 +45,7 @@ function DataTable<T extends object>({
   const { open } = useSidebar();
   const [openModal, setOpenModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
+  const pageSize = pageSizeByDefault;
   const width = useWindowSize();
   const isMobile = width < 768;
   const sortableColumns = columns.filter(

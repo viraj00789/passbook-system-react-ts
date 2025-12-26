@@ -7,6 +7,7 @@ import MainLayout from "./layouts/MainLayout";
 import ProtectedRoute from "./routes/ProtectedRoutes,";
 import DashBoard from "./pages/DashBoard";
 import Transactions from "./pages/Transactions";
+import Accounts from "./pages/Accounts";
 
 function App() {
   return (
@@ -29,7 +30,7 @@ function App() {
             <Route element={<MainLayout />}>
               <Route path="/" element={<DashBoard />} />
               <Route path="/transactions" element={<Transactions />} />
-              <Route path="/accounts" element={<div>Accounts</div>} />
+              <Route path="/accounts" element={<Accounts />} />
               <Route path="/clients" element={<div>Clients</div>} />
               <Route path="/employees" element={<div>Employees</div>} />
               <Route path="/expenses" element={<div>Expenses</div>} />

@@ -12,16 +12,9 @@ import FilterSelect from "../ui/Select";
 import { STATUS_OPTIONS } from "../../../data/filterOptionsData";
 import type { SelectOption } from "../../types/FilterTypes";
 
-/* ---------------- Types ---------------- */
-
 type FormErrors = Partial<
-  Record<
-    keyof Transaction | "clientName" | "type" | "status",
-    string
-  >
+  Record<keyof Transaction | "clientName" | "type" | "status", string>
 >;
-
-/* ---------------- Component ---------------- */
 
 export default function TransactionDrawer({
   onClose,
@@ -32,8 +25,6 @@ export default function TransactionDrawer({
   const editingTransaction = useSelector(
     (state: RootState) => state.transactions.editingTransaction
   );
-
-  /* ---------------- Initial Form ---------------- */
 
   const initialForm: Transaction = {
     id: 0,
@@ -55,8 +46,6 @@ export default function TransactionDrawer({
   );
   const [errors, setErrors] = useState<FormErrors>({});
 
-  /* ---------------- Validation ---------------- */
-
   const validate = (): boolean => {
     const newErrors: FormErrors = {};
 
@@ -65,23 +54,18 @@ export default function TransactionDrawer({
     if (!form.clientDetail.name)
       newErrors.clientName = "Client name is required";
 
-    if (!form.account)
-      newErrors.account = "Account is required";
+    if (!form.account) newErrors.account = "Account is required";
 
     if (!form.amount || form.amount <= 0)
       newErrors.amount = "Amount must be greater than 0";
 
-    if (!form.type)
-      newErrors.type = "Transaction type is required";
+    if (!form.type) newErrors.type = "Transaction type is required";
 
-    if (!form.status)
-      newErrors.status = "Transaction status is required";
+    if (!form.status) newErrors.status = "Transaction status is required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
-  /* ---------------- Submit ---------------- */
 
   const handleSubmit = () => {
     if (!validate()) return;
@@ -96,8 +80,6 @@ export default function TransactionDrawer({
     setErrors({});
     onClose();
   };
-
-  /* ---------------- UI ---------------- */
 
   return (
     <div className="space-y-4">
@@ -165,9 +147,7 @@ export default function TransactionDrawer({
         label="Description"
         placeholder="Enter the Description"
         value={form.description}
-        onChange={(e) =>
-          setForm({ ...form, description: e.target.value })
-        }
+        onChange={(e) => setForm({ ...form, description: e.target.value })}
       />
 
       {/* IN / OUT Toggle */}
@@ -206,9 +186,7 @@ export default function TransactionDrawer({
           ))}
         </div>
 
-        {errors.type && (
-          <p className="text-xs text-red-500">{errors.type}</p>
-        )}
+        {errors.type && <p className="text-xs text-red-500">{errors.type}</p>}
       </div>
 
       {/* Transaction Status */}
@@ -218,8 +196,7 @@ export default function TransactionDrawer({
           placeholder="Select a status"
           options={STATUS_OPTIONS}
           value={
-            STATUS_OPTIONS.find((opt) => opt.value === form.status) ??
-            null
+            STATUS_OPTIONS.find((opt) => opt.value === form.status) ?? null
           }
           onChange={(val) => {
             setForm({
@@ -235,9 +212,7 @@ export default function TransactionDrawer({
         />
 
         {errors.status && (
-          <p className="text-xs text-red-500 mt-1">
-            {errors.status}
-          </p>
+          <p className="text-xs text-red-500 mt-1">{errors.status}</p>
         )}
       </div>
 
