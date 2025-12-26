@@ -4,7 +4,6 @@ export const AccountsData: Account[] = [
   {
     id: 1,
     accountName: "Primary Business Account",
-    bankName: "Acme Technologies Pvt Ltd",
     accountNumber: "**** **** 1023",
     ifscOrSwift: "HDFC0001245",
     openingBalance: 250000,
@@ -13,7 +12,6 @@ export const AccountsData: Account[] = [
   {
     id: 2,
     accountName: "Payroll Account",
-    bankName: "Acme Technologies Pvt Ltd",
     accountNumber: "**** **** 8745",
     ifscOrSwift: "ICIC0000781",
     openingBalance: 180000,
@@ -22,7 +20,6 @@ export const AccountsData: Account[] = [
   {
     id: 3,
     accountName: "Tax Reserve",
-    bankName: "Acme Technologies Pvt Ltd",
     accountNumber: "**** **** 4431",
     ifscOrSwift: "SBIN0003456",
     openingBalance: 500000,
@@ -31,7 +28,6 @@ export const AccountsData: Account[] = [
   {
     id: 4,
     accountName: "Vendor Payments",
-    bankName: "Acme Technologies Pvt Ltd",
     accountNumber: "**** **** 7712",
     ifscOrSwift: "KKBK0000912",
     openingBalance: 95000,
@@ -40,7 +36,6 @@ export const AccountsData: Account[] = [
   {
     id: 5,
     accountName: "Marketing Expenses",
-    bankName: "Acme Technologies Pvt Ltd",
     accountNumber: "**** **** 6639",
     ifscOrSwift: "YESB0000561",
     openingBalance: 72000,
@@ -49,7 +44,6 @@ export const AccountsData: Account[] = [
   {
     id: 6,
     accountName: "International Receipts",
-    bankName: "Acme Global LLC",
     accountNumber: "**** **** 9920",
     ifscOrSwift: "HSBCINBB",
     openingBalance: 12000,
@@ -58,7 +52,6 @@ export const AccountsData: Account[] = [
   {
     id: 7,
     accountName: "Savings Reserve",
-    bankName: "Acme Technologies Pvt Ltd",
     accountNumber: "**** **** 5402",
     ifscOrSwift: "IDFB0000192",
     openingBalance: 300000,
@@ -67,7 +60,6 @@ export const AccountsData: Account[] = [
   {
     id: 8,
     accountName: "R&D Account",
-    bankName: "Acme Technologies Pvt Ltd",
     accountNumber: "**** **** 1147",
     ifscOrSwift: "UTIB0000789",
     openingBalance: 210000,
@@ -76,7 +68,6 @@ export const AccountsData: Account[] = [
   {
     id: 9,
     accountName: "Foreign Vendor Payments",
-    bankName: "Acme Global LLC",
     accountNumber: "**** **** 3318",
     ifscOrSwift: "CITIINBX",
     openingBalance: 45000,
@@ -85,7 +76,6 @@ export const AccountsData: Account[] = [
   {
     id: 10,
     accountName: "Branch Office – Mumbai",
-    bankName: "Acme Technologies Pvt Ltd",
     accountNumber: "**** **** 8890",
     ifscOrSwift: "BARB0MUMBAI",
     openingBalance: 92000,
@@ -94,7 +84,6 @@ export const AccountsData: Account[] = [
   {
     id: 11,
     accountName: "Branch Office – Delhi",
-    bankName: "Acme Technologies Pvt Ltd",
     accountNumber: "**** **** 2274",
     ifscOrSwift: "PUNB0123456",
     openingBalance: 88000,
@@ -103,7 +92,6 @@ export const AccountsData: Account[] = [
   {
     id: 12,
     accountName: "Refunds Account",
-    bankName: "Acme Technologies Pvt Ltd",
     accountNumber: "**** **** 6641",
     ifscOrSwift: "UBIN0003344",
     openingBalance: 67000,
@@ -112,7 +100,6 @@ export const AccountsData: Account[] = [
   {
     id: 13,
     accountName: "Cloud Services",
-    bankName: "Acme Technologies Pvt Ltd",
     accountNumber: "**** **** 9011",
     ifscOrSwift: "ICIC0000456",
     openingBalance: 99000,
@@ -121,7 +108,6 @@ export const AccountsData: Account[] = [
   {
     id: 14,
     accountName: "Overseas Operations",
-    bankName: "Acme Global LLC",
     accountNumber: "**** **** 7314",
     ifscOrSwift: "DEUTINBB",
     openingBalance: 56000,
@@ -130,7 +116,6 @@ export const AccountsData: Account[] = [
   {
     id: 15,
     accountName: "Petty Cash Account",
-    bankName: "Acme Technologies Pvt Ltd",
     accountNumber: "**** **** 6613",
     ifscOrSwift: "SIBL0000412",
     openingBalance: 25000,
@@ -139,7 +124,6 @@ export const AccountsData: Account[] = [
   {
     id: 16,
     accountName: "Subscription Revenue",
-    bankName: "Acme Technologies Pvt Ltd",
     accountNumber: "**** **** 8891",
     ifscOrSwift: "RATN0000199",
     openingBalance: 112000,
@@ -148,7 +132,6 @@ export const AccountsData: Account[] = [
   {
     id: 17,
     accountName: "Investment Account",
-    bankName: "Acme Holdings Pvt Ltd",
     accountNumber: "**** **** 4301",
     ifscOrSwift: "SCBLINBB",
     openingBalance: 75000,
@@ -157,7 +140,6 @@ export const AccountsData: Account[] = [
   {
     id: 18,
     accountName: "Reserve Holding",
-    bankName: "Acme Holdings Pvt Ltd",
     accountNumber: "**** **** 5409",
     ifscOrSwift: "UTIB0000451",
     openingBalance: 600000,
@@ -166,7 +148,6 @@ export const AccountsData: Account[] = [
   {
     id: 19,
     accountName: "Compliance Account",
-    bankName: "Acme Technologies Pvt Ltd",
     accountNumber: "**** **** 1188",
     ifscOrSwift: "FDRL0001987",
     openingBalance: 40000,
@@ -175,7 +156,6 @@ export const AccountsData: Account[] = [
   {
     id: 20,
     accountName: "Temporary Holding",
-    bankName: "Acme Technologies Pvt Ltd",
     accountNumber: "**** **** 4502",
     ifscOrSwift: "YESB0000199",
     openingBalance: 30000,

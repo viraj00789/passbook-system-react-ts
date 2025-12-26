@@ -1,16 +1,16 @@
 import DataTable from "../ui/Table";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import TransactionDrawer from "../transaction/TransactionForm";
 import { getAccountsTableColumns } from "./AccountsColumn";
 import { AccountsData } from "../../../data/accounTabletData";
 import RightDrawer from "../ui/RightDrawer";
+import AccountDrawer from "./AccountForm";
 
 export default function AccountTable() {
   const dispatch = useDispatch();
-
   const [openDrawer, setOpenDrawer] = useState(false);
-  const accounTableColumns = getAccountsTableColumns({
+
+  const accountTableColumns = getAccountsTableColumns({
     dispatch,
     setOpenDrawer,
   });
@@ -19,13 +19,14 @@ export default function AccountTable() {
     <>
       <DataTable
         title="Accounts"
-        columns={accounTableColumns}
+        columns={accountTableColumns}
         data={AccountsData}
         searchable
         filterable={false}
         paginationAtFooter
         addTitle="Add Account"
         pageSizeByDefault={12}
+        addOnClickable={() => setOpenDrawer(true)}
       />
 
       <RightDrawer
@@ -33,7 +34,7 @@ export default function AccountTable() {
         isOpen={openDrawer}
         onClose={() => setOpenDrawer(false)}
       >
-        <TransactionDrawer onClose={() => setOpenDrawer(false)} />
+        <AccountDrawer onClose={() => setOpenDrawer(false)} />
       </RightDrawer>
     </>
   );

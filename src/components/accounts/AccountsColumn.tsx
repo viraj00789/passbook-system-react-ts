@@ -11,7 +11,6 @@ interface GetAccountColumnsParams {
 export interface Account {
   id: number;
   accountName: string;
-  bankName: string;
   accountNumber: string;
   ifscOrSwift: string;
   openingBalance: number;
@@ -28,7 +27,6 @@ export const getAccountsTableColumns = ({
     render: (_: Account, index: number) => index + 1,
   },
   { key: "accountName", label: "Account Name", sortable: true },
-  { key: "bankName", label: "Bank Name", sortable: true },
   {
     key: "accountNumber",
     label: "Account Number",
