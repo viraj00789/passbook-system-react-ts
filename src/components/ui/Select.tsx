@@ -8,6 +8,7 @@ interface SelectProps {
   onChange: (value: SelectOption | SelectOption[] | null) => void;
   isMulti?: boolean;
   placeholder?: string | undefined;
+  required?: boolean;
 }
 
 export default function FilterSelect({
@@ -17,10 +18,13 @@ export default function FilterSelect({
   onChange,
   isMulti = false,
   placeholder,
+  required = false,
 }: SelectProps) {
   return (
     <div>
-      <label className="block mb-2 font-medium text text-sm">{label}</label>
+      <label className="block mb-2 font-medium text text-sm">
+        {label} {required && <span className="text-red-500">*</span>}{" "}
+      </label>
 
       <Select<SelectOption, boolean>
         unstyled

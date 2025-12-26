@@ -23,7 +23,7 @@ const Input: React.FC<InputProps> = ({
     <div className="space-y-2">
       {label && (
         <label htmlFor={id} className="block text-sm font-medium text">
-          {label}
+          {label} {props.required && <span className="text-red-500">*</span>}
         </label>
       )}
 
