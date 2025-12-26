@@ -2,12 +2,15 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { CARDS } from "../../../../data/creditCardData";
 import type { CreditCard } from "../../../../data/creditCardData";
+import { TbInfoSquareRoundedFilled } from "react-icons/tb";
 
 const CARD_OFFSET = 10;
 const SCALE_FACTOR = 0.06;
 
 const CardStack = () => {
   const [cards, setCards] = useState<CreditCard[]>(CARDS);
+  const [revealedCardId, setRevealedCardId] = useState<string | null>(null);
+  const maskAccountNumber = (num: string) => "******" + num.slice(-4);
 
   const moveToEnd = (fromIndex: number) => {
     setCards((prev) => {
@@ -25,7 +28,19 @@ const CardStack = () => {
           Accounts
         </h2>
         <div className="flex items-center justify-center h-full">
-          <ul className="relative h-100 2xl:h-50 w-[calc(100%-36px)] sm:w-[calc(100%-200px)] md:w-[calc(100%-300px)] lg:w-[calc(100%-300px)] xl:w-[calc(100%-600px)] 2xl:w-[calc(100%-100px)] flex items-center justify-center">
+          <motion.ul
+            className="relative h-100 2xl:h-50 w-[calc(100%-36px)] sm:w-[calc(100%-200px)] md:w-[calc(100%-300px)] lg:w-[calc(100%-300px)] xl:w-[calc(100%-600px)] 2xl:w-[calc(100%-100px)] flex items-center justify-center"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: {},
+              visible: {
+                transition: {
+                  staggerChildren: 0.12,
+                },
+              },
+            }}
+          >
             {cards.map((card, index) => {
               const canDrag = index === 0;
 
@@ -38,17 +53,28 @@ const CardStack = () => {
                     cursor: canDrag ? "grab" : "auto",
                     transformOrigin: "top center",
                   }}
+                  initial={{ opacity: 0, y: 40, scale: 0.95 }}
                   animate={{
+                    opacity: 1,
                     y: index * -CARD_OFFSET,
                     scale: 1 - index * SCALE_FACTOR,
                     zIndex: cards.length - index,
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 260,
+                    damping: 20,
                   }}
                   drag={canDrag ? "y" : false}
                   dragConstraints={{ top: 0, bottom: 0 }}
                   whileDrag={{
                     scale: 1.0,
                   }}
-                  onDragEnd={() => moveToEnd(index)}
+                  onDragStart={() => setRevealedCardId(null)}
+                  onDragEnd={() => {
+                    moveToEnd(index);
+                    setRevealedCardId(null);
+                  }}
                 >
                   {/* Glass overlay */}
                   <motion.div
@@ -67,9 +93,7 @@ const CardStack = () => {
                         <img
                           src={card.brandImage as string}
                           alt={card.accountName as string}
-                          // width={80}
-                          // height={20}
-                          className="bg-transparent rounded-lg w-10 h-10 xl:w-20 xl:h-5"
+                          className="bg-transparent rounded-lg w-10 h-10 lg:w-20 lg:h-5"
                         />
                       </div>
                     </div>
@@ -91,16 +115,31 @@ const CardStack = () => {
                         <p className="text-md md:text-lg lg:text-xl font-bold">
                           Account No.
                         </p>
-                        <p className="font-medium text-md opacity-60">
-                          {card.accountNumber}
-                        </p>
+                        <div className="flex items-center gap-2">
+                          <p className="font-medium text-md opacity-60">
+                            {revealedCardId === card.id
+                              ? card.accountNumber
+                              : maskAccountNumber(card.accountNumber)}
+                          </p>
+
+                          <TbInfoSquareRoundedFilled
+                            size={22}
+                            className="text-gray-100 cursor-pointer"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setRevealedCardId((prev) =>
+                                prev === card.id ? null : card.id
+                              );
+                            }}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
                 </motion.li>
               );
             })}
-          </ul>
+          </motion.ul>
         </div>
       </div>
     </>

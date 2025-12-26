@@ -1,7 +1,8 @@
 import MasterCard from "../src/assets/mastercard.svg";
 import Visa from "../src/assets/visa.svg";
 export type CreditCard = {
-  id: string; brand: "visa" | "mastercard" | "amex";
+  id: string;
+  brand: "visa" | "mastercard" | "amex";
   number: string;
   holder: string;
   expiry: string;
@@ -24,7 +25,7 @@ export const CARDS: CreditCard[] = [
     bgColor: "linear-gradient(15deg, #0f2027, #203a43, #2c5364)", // Deep Blue
     ifscode: "SBIN0001234",
     accountName: "ROBERT MARTIN",
-    accountNumber: "******678901",
+    accountNumber: "7986513221",
     brandImage: MasterCard,
     amount: "+₹100,000",
   },
@@ -38,7 +39,7 @@ export const CARDS: CreditCard[] = [
     sortCode: "40-12-34",
     ifscode: "BOBN0001234",
     accountName: "SOPHIA WILLIAMS",
-    accountNumber: "******789012",
+    accountNumber: "52266485165",
     brandImage: MasterCard,
     amount: "-₹1,000",
   },
@@ -51,7 +52,7 @@ export const CARDS: CreditCard[] = [
     bgColor: "linear-gradient(15deg, #1d976c, #93f9b9)", // Emerald Green
     ifscode: "SBIN0001234",
     accountName: "DANIEL ANDERSON",
-    accountNumber: "******890123",
+    accountNumber: "516456822222",
     brandImage: Visa,
     amount: "+₹5,000",
   },
@@ -64,7 +65,7 @@ export const CARDS: CreditCard[] = [
     bgColor: "linear-gradient(15deg, #141e30, #243b55)", // Midnight Blue
     ifscode: "HDFC0005678",
     accountName: "OLIVIA THOMAS",
-    accountNumber: "******901234",
+    accountNumber: "1221488484",
     brandImage: MasterCard,
     amount: "-₹2,000",
   },
@@ -78,10 +79,8 @@ export const CARDS: CreditCard[] = [
     sortCode: "20-45-67",
     ifscode: "SBIN0001234",
     accountName: "ETHAN WALKER",
-    accountNumber: "******012345",
+    accountNumber: "4545215654544",
     brandImage: Visa,
     amount: "+₹10,000",
   },
 ];
-
-

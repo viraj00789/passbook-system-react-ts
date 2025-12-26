@@ -10,7 +10,20 @@ export default function MonthlyInOut() {
       type: "bar",
       toolbar: { show: false },
       foreColor: isDark ? "#e5e7eb" : "#334155",
-      background: isDark ? "bg-dark-blue" : "bg-gray-50",
+      background: "transparent",
+
+      animations: {
+        enabled: true,
+        speed: 800,
+        animateGradually: {
+          enabled: true,
+          delay: 150,
+        },
+        dynamicAnimation: {
+          enabled: true,
+          speed: 350,
+        },
+      },
     },
 
     theme: {
@@ -42,13 +55,13 @@ export default function MonthlyInOut() {
 
     plotOptions: {
       bar: {
-        borderRadius: 6,
+        borderRadius: 10,
         columnWidth: "75%",
       },
     },
 
     legend: {
-      position: "top",
+      position: "bottom",
       labels: {
         colors: isDark ? "#e5e7eb" : "#334155",
       },
@@ -57,6 +70,30 @@ export default function MonthlyInOut() {
     tooltip: {
       theme: isDark ? "dark" : "light",
     },
+    responsive: [
+      {
+        breakpoint: 768,
+        options: {
+          plotOptions: {
+            bar: {
+              borderRadius: 10,
+              columnWidth: "100%",
+            },
+          },
+          xaxis: {
+            labels: {
+              rotate: -60,
+              style: {
+                fontSize: "10px",
+              },
+            },
+          },
+          legend: {
+            fontSize: "12px",
+          },
+        },
+      },
+    ],
   };
 
   const series = [
