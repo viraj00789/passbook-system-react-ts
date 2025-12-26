@@ -1,7 +1,7 @@
 import { memo, useMemo, useState, type ReactNode } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { useSidebar } from "../../providers/SideBarContext";
-import { IoFilter } from "react-icons/io5";
+import { IoAddCircle, IoFilter } from "react-icons/io5";
 import FiltersPanel from "../dashboard/Filters/TableFilters";
 import FilterPopUp from "./FilterPopup";
 import { RxCross2 } from "react-icons/rx";
@@ -22,6 +22,8 @@ interface DataTableProps<T extends object> {
   filterNode?: ReactNode;
   paginationAtHeader?: boolean;
   paginationAtFooter?: boolean;
+  addTitle?: string;
+  addOnClickable?: () => void;
 }
 
 function DataTable<T extends object>({
@@ -32,6 +34,8 @@ function DataTable<T extends object>({
   filterable = true,
   paginationAtHeader = false,
   paginationAtFooter = false,
+  addTitle = "",
+  addOnClickable,
 }: DataTableProps<T>) {
   const [search, setSearch] = useState("");
   const [sortKey, setSortKey] = useState<keyof T | null>(null);
@@ -151,7 +155,7 @@ function DataTable<T extends object>({
             (openModal ? (
               <RxCross2
                 size={36}
-                className="text border border-gray-300 dark:border-gray-700 rounded-lg px-1.5 w-11 h-9.5 cursor-pointer"
+                className="text border border-gray-300 dark:border-gray-700 rounded-lg px-1.5 w-13 h-9.5 cursor-pointer"
                 onClick={(e) => {
                   e.stopPropagation();
                   setOpenModal(false);
@@ -160,7 +164,7 @@ function DataTable<T extends object>({
             ) : (
               <IoFilter
                 size={36}
-                className="text border border-gray-300 dark:border-gray-700 rounded-lg px-1.5 w-11 h-9.5 cursor-pointer"
+                className="text border border-gray-300 dark:border-gray-700 rounded-lg px-1.5 w-13 h-9.5 cursor-pointer"
                 onClick={(e) => {
                   e.stopPropagation();
                   setOpenModal(true);
@@ -178,6 +182,17 @@ function DataTable<T extends object>({
               />
             )}
           </div>
+
+          {/* Add Button */}
+          {addTitle && (
+            <div
+              className="flex items-center border border-gray-300 dark:border-gray-700 rounded-xl gap-2 p-2 text-gray-700 cursor-pointer bg-primary"
+              onClick={addOnClickable}
+            >
+              <IoAddCircle size={22} className="font-bold" />
+              <p className="font-bold whitespace-nowrap">{addTitle}</p>
+            </div>
+          )}
         </div>
       </div>
 
@@ -338,7 +353,7 @@ function DataTable<T extends object>({
 
       {/* Pagination */}
       {paginationAtFooter && (
-        <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200 dark:border-gray-700 text">
+        <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200 dark:border-gray-700 text bg-white dark:bg-gray-800">
           <span className="text-sm text-gray-600 dark:text-gray-400">
             Page {currentPage} of {totalPages}
           </span>
