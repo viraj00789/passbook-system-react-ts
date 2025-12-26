@@ -9,6 +9,7 @@ import type { Column } from "../../types/TableTypes";
 import { getPaginationRange } from "../../utils/getPaginationBadge";
 import PaginationControls from "../PaginationButton";
 import { useWindowSize } from "../../utils/useWindowSize";
+import { FaArrowDownLong, FaArrowUpLong } from "react-icons/fa6";
 
 export type SortDirection = "asc" | "desc";
 
@@ -41,6 +42,9 @@ function DataTable<T extends object>({
   const pageSize = 10;
   const width = useWindowSize();
   const isMobile = width < 768;
+  const sortableColumns = columns.filter(
+    (col) => col.sortable && col.key !== "actions"
+  );
 
   const getCellValue = (row: T, col: Column<T>, idx: number) => {
     if (col.render) return col.render(row, idx);
@@ -109,7 +113,7 @@ function DataTable<T extends object>({
   return (
     <div className="w-full border border-radius-2xl border-gray-300 dark:border-gray-800">
       {/* Header */}
-      <div className="flex justify-start sm:justify-between items-center rounded-t-xl xl:rounded-t-2xl p-2 lg:p-4 bg-white dark:bg-gray-800">
+      <div className="flex justify-end sm:justify-between items-center rounded-t-xl xl:rounded-t-2xl p-2 lg:p-4 bg-white dark:bg-gray-800">
         <h1 className="text-lg lg:text-xl font-bold text-gray-900 dark:text-white hidden sm:flex">
           {title}
         </h1>
@@ -180,18 +184,51 @@ function DataTable<T extends object>({
       {/* Table Wrapper */}
       {isMobile ? (
         <div className="p-2 space-y-4">
+          <div className="flex gap-2 text">
+            <select
+              value={sortKey ? String(sortKey) : ""}
+              onChange={(e) => {
+                setSortKey(e.target.value as keyof T);
+                setSortDirection("asc");
+                setCurrentPage(1);
+              }}
+              className="flex-1 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700
+               bg-white dark:bg-dark-blue text-sm"
+            >
+              <option value="">Sort by</option>
+              {sortableColumns.map((col) => (
+                <option key={String(col.key)} value={String(col.key)}>
+                  {col.label}
+                </option>
+              ))}
+            </select>
+
+            <button
+              disabled={!sortKey}
+              onClick={() =>
+                setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"))
+              }
+              className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700
+               text-sm disabled:opacity-50"
+            >
+              {sortDirection === "asc" ? (
+                <FaArrowUpLong size={20} />
+              ) : (
+                <FaArrowDownLong size={20} />
+              )}
+            </button>
+          </div>
           {paginatedData.length ? (
             paginatedData.map((row, idx) => (
               <div
                 key={idx}
-                className="border border-gray-300 dark:border-gray-800 rounded-xl p-4 bg-gray-100 dark:bg-gray-800 space-y-2 "
+                className="border border-gray-300 dark:border-gray-800 rounded-xl p-4 bg-gray-50 dark:bg-gray-800 space-y-2 "
               >
                 {columns.map((col) => (
-                  <div
-                    key={col.label}
-                    className="py-1 flex items-center gap-5"
-                  >
-                    <p className="font-bold text-md lg:text-xl text">{col.label}:</p>
+                  <div key={col.label} className="py-1 flex items-center gap-5">
+                    <p className="font-bold text-md lg:text-xl text">
+                      {col.label}:
+                    </p>
                     <p className="font-semibold text:sm lg:text-lg text-gray-700 dark:text-gray-300 whitespace-nowrap truncate">
                       {getCellValue(row, col, idx)}
                     </p>
