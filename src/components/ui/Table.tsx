@@ -107,7 +107,7 @@ function DataTable<T extends object>({
   };
 
   return (
-    <div className="w-full border border-radius-2xl border-gray-300 dark:border-gray-800 max-h-[calc(100vh-10px)]">
+    <div className="w-full border border-radius-2xl border-gray-300 dark:border-gray-800">
       {/* Header */}
       <div className="flex justify-start sm:justify-between items-center rounded-t-xl xl:rounded-t-2xl p-2 lg:p-4 bg-white dark:bg-gray-800">
         <h1 className="text-lg lg:text-xl font-bold text-gray-900 dark:text-white hidden sm:flex">

@@ -26,13 +26,13 @@ const DashBoard = () => {
   }, [navigate]);
   return (
     <>
-      <div className="flex justify-between items-center sticky top-0 bg-gray-100 dark:bg-dark-blue p-2 lg:p-4 z-10">
+      <div className="flex justify-between items-center sticky top-0 bg-gray-100 dark:bg-dark-blue p-4 z-10">
         <h1 className="text-lg md:text-2xl lg:text-3xl font-bold text">
           Dashboard
         </h1>
         <Filter filter={filter} onFilterChange={setFilter} />
       </div>
-      <div className="p-1 lg:p-2 xl:p-4 h-[calc(100vh-150px)] overflow-auto">
+      <div className="p-0 lg:px-2 xl:px-4 h-[calc(100vh-150px)] overflow-auto">
         <div className="grid gap-2 xl:gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
           {statsData?.map((stat, index) => (
             <CardDataStates key={index} {...stat} />
