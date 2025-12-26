@@ -26,7 +26,7 @@ export default function TransactionActionsCell({ row }: Props) {
         size={20}
       />
       <LuTrash2
-        onClick={() => dispatch(deleteTransaction(row.id))}
+        onClick={() => dispatch(deleteTransaction(row.id as number))}
         className="text-gray-500 cursor-pointer"
         size={21.5}
       />

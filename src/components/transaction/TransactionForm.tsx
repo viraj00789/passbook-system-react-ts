@@ -31,7 +31,7 @@ export default function TransactionDrawer({
     account: "",
     amount: 0,
     type: null,
-    status: "Pending",
+    status: "Completed",
     clientDetail: {
       name: "",
       image: "",
@@ -64,21 +64,6 @@ export default function TransactionDrawer({
         onChange={(e) => setForm({ ...form, date: e.target.value })}
       />
       <Input
-        label="Client Image Link"
-        className="w-full py-2! rounded"
-        placeholder="Enter the Client Image"
-        value={form.clientDetail.image}
-        onChange={(e) =>
-          setForm({
-            ...form,
-            clientDetail: {
-              ...form.clientDetail,
-              image: e.target.value,
-            },
-          })
-        }
-      />
-      <Input
         label="Client Name"
         className="w-full py-2! rounded"
         placeholder="Enter the Client Name"
@@ -94,26 +79,12 @@ export default function TransactionDrawer({
         }
       />
       <Input
-        label="Invoice"
-        className="w-full py-2! rounded"
-        placeholder="Enter the Invoice"
-        value={form.clientDetail.inv}
-        onChange={(e) =>
-          setForm({
-            ...form,
-            clientDetail: {
-              ...form.clientDetail,
-              inv: e.target.value,
-            },
-          })
-        }
-      />
-      <Input
         label="Account"
         className="w-full py-2! rounded"
         placeholder="Enter the Bank Account"
         value={form.account}
         onChange={(e) => setForm({ ...form, account: e.target.value })}
+        required
       />
       <Input
         label="Amount"
@@ -151,7 +122,7 @@ export default function TransactionDrawer({
         label="Transaction Status"
         placeholder="Select a status"
         options={STATUS_OPTIONS}
-        value={STATUS_OPTIONS.find((opt) => opt.value === form.type) ?? null}
+        value={STATUS_OPTIONS.find((opt) => opt.value === form.status) ?? null}
         onChange={(val) =>
           setForm({
             ...form,

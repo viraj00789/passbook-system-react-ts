@@ -5,7 +5,6 @@ export interface ClientDetail {
 }
 
 export interface Transaction {
-  [key: string]: string | number | undefined | object | null;
   id?: number | string;
   date: string;
   description: string;
