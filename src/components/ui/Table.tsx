@@ -48,7 +48,7 @@ function DataTable<T extends object>({
 
   const getCellValue = (row: T, col: Column<T>, idx: number) => {
     if (col.render) return col.render(row, idx);
-    if (col.key === "serial") return idx + 1;
+    if (col.key === "serial") return (currentPage - 1) * pageSize + idx + 1;
     if (col.key === "actions") return null;
     return String(row[col.key as keyof T]);
   };
@@ -310,10 +310,10 @@ function DataTable<T extends object>({
                         key={col.label}
                         className="p-4 text-gray-700 dark:text-gray-300"
                       >
-                        {col.render
+                        {col.key === "serial"
+                          ? (currentPage - 1) * pageSize + idx + 1
+                          : col.render
                           ? col.render(row, idx)
-                          : col.key === "serial"
-                          ? idx + 1
                           : col.key !== "actions"
                           ? String(row[col.key])
                           : null}

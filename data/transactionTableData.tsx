@@ -366,12 +366,53 @@ export const TransactionsColumns: Column<Transaction>[] = [
     key: "amount",
     label: "Amount",
     sortable: true,
+
     render: (row) => {
-      return <span className="font-bold text-md text">$ {row.amount}</span>;
+      let bgAndtextColor = "";
+      switch (row.status) {
+        case "Completed":
+          bgAndtextColor = "text-secondary";
+          break;
+        case "Pending":
+          bgAndtextColor = "text-font-orange-status";
+          break;
+        case "Failed":
+          bgAndtextColor = "text-font-red-status";
+          break;
+        default:
+          bgAndtextColor = "bg-gray-400";
+      }
+      return (
+        <span className={`font-bold text-md ${bgAndtextColor}`}>
+          $ {row.amount}
+        </span>
+      );
     },
   },
   { key: "description", label: "Description", sortable: true },
-  { key: "type", label: "Type (IN/OUT)", sortable: true },
+  {
+    key: "type",
+    label: "Type (IN/OUT)",
+    sortable: true,
+    render: (row) => {
+      let bgAndtextColor = "";
+      switch (row.type) {
+        case "IN":
+          bgAndtextColor = "text-secondary";
+          break;
+        case "OUT":
+          bgAndtextColor = "text-font-red-status";
+          break;
+        default:
+          bgAndtextColor = "bg-gray-400";
+      }
+      return (
+        <span className={`font-bold text-md ${bgAndtextColor}`}>
+          {row.type}
+        </span>
+      );
+    },
+  },
 
   {
     key: "actions",
