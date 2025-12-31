@@ -6,8 +6,6 @@ import {
   setEditingTransaction,
 } from "../../store/Transactions/transactionsSlice";
 import { useAppDispatch } from "../../store/hooks";
-import { useSelector } from "react-redux";
-import type { RootState } from "../../store";
 
 interface Props {
   row: Transaction;
@@ -15,8 +13,6 @@ interface Props {
 
 export default function TransactionActionsCell({ row }: Props) {
   const dispatch = useAppDispatch();
-  const data = useSelector((state: RootState) => state.transactions);
-  console.log("🚀 ~ TransactionActionsCell ~ data:", data);
 
   return (
     <div className="flex gap-2">

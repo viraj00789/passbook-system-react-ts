@@ -59,13 +59,25 @@ function DataTable<T extends object>({
     return String(row[col.key as keyof T]);
   };
 
+  const extractSearchText = (value: unknown): string => {
+    if (value == null) return "";
+
+    if (typeof value === "object") {
+      return Object.values(value).map(extractSearchText).join(" ");
+    }
+
+    return String(value);
+  };
+
   /* 🔍 Search */
   const filteredData = useMemo(() => {
     if (!search) return data;
 
+    const searchLower = search.toLowerCase();
+
     return data.filter((row) =>
       Object.values(row).some((value) =>
-        String(value).toLowerCase().includes(search.toLowerCase())
+        extractSearchText(value).toLowerCase().includes(searchLower)
       )
     );
   }, [data, search]);
@@ -74,11 +86,15 @@ function DataTable<T extends object>({
   const sortedData = useMemo(() => {
     if (!sortKey) return filteredData;
 
-    return [...filteredData].sort((a, b) => {
-      const aVal = a[sortKey];
-      const bVal = b[sortKey];
+    const column = columns.find((c) => c.key === sortKey);
 
-      if (aVal === bVal) return 0;
+    return [...filteredData].sort((a, b) => {
+      const aVal = column?.sortValue ? column.sortValue(a) : a[sortKey];
+      const bVal = column?.sortValue ? column.sortValue(b) : b[sortKey];
+
+      if (aVal == null && bVal == null) return 0;
+      if (aVal == null) return 1;
+      if (bVal == null) return -1;
 
       if (typeof aVal === "number" && typeof bVal === "number") {
         return sortDirection === "asc" ? aVal - bVal : bVal - aVal;
@@ -88,7 +104,7 @@ function DataTable<T extends object>({
         ? String(aVal).localeCompare(String(bVal))
         : String(bVal).localeCompare(String(aVal));
     });
-  }, [filteredData, sortKey, sortDirection]);
+  }, [filteredData, sortKey, sortDirection, columns]);
 
   // Pagination
   const totalPages = Math.max(1, Math.ceil(sortedData.length / pageSize));
@@ -243,12 +259,12 @@ function DataTable<T extends object>({
               >
                 {columns.map((col) => (
                   <div key={col.label} className="py-1 flex items-center gap-5">
-                    <p className="font-bold text-md lg:text-xl text whitespace-nowrap">
+                    <div className="font-bold text-md lg:text-xl text whitespace-nowrap">
                       {col.label}:
-                    </p>
-                    <p className="font-semibold text:sm lg:text-lg text-gray-700 dark:text-gray-300 whitespace-nowrap truncate">
+                    </div>
+                    <div className="font-semibold text:sm lg:text-lg text-gray-700 dark:text-gray-300 whitespace-nowrap truncate">
                       {getCellValue(row, col, idx)}
-                    </p>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -355,7 +371,7 @@ function DataTable<T extends object>({
 
       {/* Pagination */}
       {paginationAtFooter && (
-        <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200 dark:border-gray-700 text bg-white dark:bg-gray-800">
+        <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200 dark:border-gray-700 text bg-white dark:bg-gray-800 rounded-b-2xl">
           <span className="text-sm text-gray-600 dark:text-gray-400">
             Page {currentPage} of {totalPages}
           </span>

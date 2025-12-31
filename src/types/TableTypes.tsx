@@ -5,4 +5,5 @@ export interface Column<T> {
   label: string;
   sortable?: boolean;
   render?: (row: T, index: number) => ReactNode;
+  sortValue?: (row: T) => string | number;
 }

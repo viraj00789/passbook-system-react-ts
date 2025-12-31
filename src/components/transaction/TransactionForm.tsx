@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { RootState } from "../../store";
 import type { Transaction } from "../../store/Transactions/transactionType";
 import {
@@ -18,8 +18,10 @@ type FormErrors = Partial<
 
 export default function TransactionDrawer({
   onClose,
+  setTransactionReset,
 }: {
   onClose: () => void;
+  setTransactionReset: (resetForm: () => void) => void;
 }) {
   const dispatch = useDispatch();
   const editingTransaction = useSelector(
@@ -45,6 +47,17 @@ export default function TransactionDrawer({
     editingTransaction ?? initialForm
   );
   const [errors, setErrors] = useState<FormErrors>({});
+
+  const resetForm = useCallback(() => {
+    setForm(initialForm);
+    setErrors({});
+  }, []);
+
+  useEffect(() => {
+    if (setTransactionReset) {
+      setTransactionReset(resetForm);
+    }
+  }, [setTransactionReset, resetForm, onClose]);
 
   const validate = (): boolean => {
     const newErrors: FormErrors = {};

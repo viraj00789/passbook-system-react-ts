@@ -8,6 +8,7 @@ import ProtectedRoute from "./routes/ProtectedRoutes,";
 import DashBoard from "./pages/DashBoard";
 import Transactions from "./pages/Transactions";
 import Accounts from "./pages/Accounts";
+import Clients from "./pages/Clients";
 
 function App() {
   return (
@@ -31,7 +32,7 @@ function App() {
               <Route path="/" element={<DashBoard />} />
               <Route path="/transactions" element={<Transactions />} />
               <Route path="/accounts" element={<Accounts />} />
-              <Route path="/clients" element={<div>Clients</div>} />
+              <Route path="/clients" element={<Clients />} />
               <Route path="/employees" element={<div>Employees</div>} />
               <Route path="/expenses" element={<div>Expenses</div>} />
               <Route path="/invoices" element={<div>Invoices</div>} />

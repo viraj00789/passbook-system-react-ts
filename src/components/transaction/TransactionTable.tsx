@@ -17,6 +17,13 @@ export default function TransactionTable() {
     dispatch,
     setOpenDrawer,
   });
+  const [transactionResetFn, setTransactionResetFn] = useState<
+    (() => void) | null
+  >(null);
+  const handleCloseDrawer = () => {
+    transactionResetFn?.();
+    setOpenDrawer(false);
+  };
 
   return (
     <>
@@ -35,10 +42,13 @@ export default function TransactionTable() {
 
       <RightDrawer
         isOpen={openDrawer}
-        onClose={() => setOpenDrawer(false)}
+        onClose={handleCloseDrawer}
         title={editingTransaction ? "Edit Transaction" : "Add Transaction"}
       >
-        <TransactionDrawer onClose={() => setOpenDrawer(false)} />
+        <TransactionDrawer
+          onClose={handleCloseDrawer}
+          setTransactionReset={setTransactionResetFn}
+        />
       </RightDrawer>
     </>
   );

@@ -9,11 +9,19 @@ import AccountDrawer from "./AccountForm";
 export default function AccountTable() {
   const dispatch = useDispatch();
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [accountResetFn, setAccountResetFn] = useState<(() => void) | null>(
+    null
+  );
 
   const accountTableColumns = getAccountsTableColumns({
     dispatch,
     setOpenDrawer,
   });
+
+  const handleCloseDrawer = () => {
+    accountResetFn?.();
+    setOpenDrawer(false);
+  };
 
   return (
     <>
@@ -32,9 +40,12 @@ export default function AccountTable() {
       <RightDrawer
         title="Add Account"
         isOpen={openDrawer}
-        onClose={() => setOpenDrawer(false)}
+        onClose={handleCloseDrawer}
       >
-        <AccountDrawer onClose={() => setOpenDrawer(false)} />
+        <AccountDrawer
+          onClose={handleCloseDrawer}
+          setAccount={setAccountResetFn}
+        />
       </RightDrawer>
     </>
   );

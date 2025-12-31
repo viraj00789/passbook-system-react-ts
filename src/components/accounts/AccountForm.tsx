@@ -1,14 +1,20 @@
-import { useEffect, useState } from "react";
-
+import { useCallback, useEffect, useState } from "react";
 import Input from "../ui/Input";
 import { Button } from "../ui/Button";
 import type { Account } from "./AccountsColumn";
+import { useEscapeKey } from "../../utils/useEscapekey";
 
 type FormErrors = Partial<
   Record<keyof Account | "confirmAccountNumber", string>
 >;
 
-export default function AccountDrawer({ onClose }: { onClose: () => void }) {
+export default function AccountDrawer({
+  onClose,
+  setAccount,
+}: {
+  onClose: () => void;
+  setAccount: (resetForm: () => void) => void;
+}) {
   const initialForm: Account = {
     id: 0,
     accountName: "",
@@ -22,15 +28,22 @@ export default function AccountDrawer({ onClose }: { onClose: () => void }) {
   const [confirmAccountNumber, setConfirmAccountNumber] = useState("");
   const [errors, setErrors] = useState<FormErrors>({});
 
-  useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setErrors({});
-      }
-    };
-    document.addEventListener("keydown", handleEsc);
-    return () => document.removeEventListener("keydown", handleEsc);
+  const handleEscape = useCallback(() => {
+    setErrors({});
   }, []);
+
+  useEscapeKey(handleEscape);
+
+  // Reset function
+  const resetForm = useCallback(() => {
+    setForm(initialForm);
+    setConfirmAccountNumber("");
+    setErrors({});
+  }, []);
+
+  useEffect(() => {
+    if (setAccount) setAccount(resetForm);
+  }, [setAccount, resetForm, onClose]);
 
   const validate = (): boolean => {
     const newErrors: FormErrors = {};
@@ -71,7 +84,7 @@ export default function AccountDrawer({ onClose }: { onClose: () => void }) {
   };
 
   return (
-    <div className="space-y-4 text">
+    <form className="space-y-4 text">
       {/* Account Name */}
       <Input
         label="Account Holder Name"
@@ -184,6 +197,6 @@ export default function AccountDrawer({ onClose }: { onClose: () => void }) {
           }}
         />
       </div>
-    </div>
+    </form>
   );
 }
