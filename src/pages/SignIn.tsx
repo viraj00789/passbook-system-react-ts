@@ -88,7 +88,11 @@ export default function SignIn() {
               </Link>
             </div>
 
-            <Button buttonType="submit" title="Sign In" />
+            <Button
+              buttonType="submit"
+              title="Sign In"
+              className="w-full bg-primary text-gray-900 font-bold"
+            />
           </form>
         </div>
       </div>
