@@ -243,7 +243,7 @@ function DataTable<T extends object>({
               >
                 {columns.map((col) => (
                   <div key={col.label} className="py-1 flex items-center gap-5">
-                    <p className="font-bold text-md lg:text-xl text">
+                    <p className="font-bold text-md lg:text-xl text whitespace-nowrap">
                       {col.label}:
                     </p>
                     <p className="font-semibold text:sm lg:text-lg text-gray-700 dark:text-gray-300 whitespace-nowrap truncate">

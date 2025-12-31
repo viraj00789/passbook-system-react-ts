@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Input from "../ui/Input";
 import { Button } from "../ui/Button";
@@ -22,16 +22,26 @@ export default function AccountDrawer({ onClose }: { onClose: () => void }) {
   const [confirmAccountNumber, setConfirmAccountNumber] = useState("");
   const [errors, setErrors] = useState<FormErrors>({});
 
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setErrors({});
+      }
+    };
+    document.addEventListener("keydown", handleEsc);
+    return () => document.removeEventListener("keydown", handleEsc);
+  }, []);
+
   const validate = (): boolean => {
     const newErrors: FormErrors = {};
 
-    if (!form.accountName) newErrors.accountName = "Account name is required";
+    if (!form.accountName) newErrors.accountName = "Account name is required.";
 
     if (!form.accountNumber)
-      newErrors.accountNumber = "Account number is required";
+      newErrors.accountNumber = "Account number is required.";
 
     if (!confirmAccountNumber)
-      newErrors.confirmAccountNumber = "Confirm account number is required";
+      newErrors.confirmAccountNumber = "Confirm account number is required.";
 
     if (
       form.accountNumber &&
@@ -42,7 +52,7 @@ export default function AccountDrawer({ onClose }: { onClose: () => void }) {
     }
 
     if (!form.ifscOrSwift)
-      newErrors.ifscOrSwift = "IFSC / SWIFT code is required";
+      newErrors.ifscOrSwift = "IFSC / SWIFT code is required.";
 
     if (!form.openingBalance || form.openingBalance < 0)
       newErrors.openingBalance = "Opening balance must be 0 or greater";
@@ -147,7 +157,7 @@ export default function AccountDrawer({ onClose }: { onClose: () => void }) {
 
       {/* Remark (Optional) */}
       <Input
-        label="Remark (Optional)"
+        label="Remark"
         placeholder="Add remark if any"
         value={form.remark}
         onChange={(e) => setForm({ ...form, remark: e.target.value })}
@@ -167,10 +177,10 @@ export default function AccountDrawer({ onClose }: { onClose: () => void }) {
           title="Cancel"
           className="border border-gray-600 text-gray-900 font-bold bg-transparent text"
           onClick={() => {
+            onClose();
             setForm(initialForm);
             setConfirmAccountNumber("");
             setErrors({});
-            onClose();
           }}
         />
       </div>
