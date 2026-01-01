@@ -9,6 +9,7 @@ import DashBoard from "./pages/DashBoard";
 import Transactions from "./pages/Transactions";
 import Accounts from "./pages/Accounts";
 import Clients from "./pages/Clients";
+import Employees from "./pages/Employees";
 
 function App() {
   return (
@@ -33,10 +34,9 @@ function App() {
               <Route path="/transactions" element={<Transactions />} />
               <Route path="/accounts" element={<Accounts />} />
               <Route path="/clients" element={<Clients />} />
-              <Route path="/employees" element={<div>Employees</div>} />
+              <Route path="/employees" element={<Employees />} />
               <Route path="/expenses" element={<div>Expenses</div>} />
               <Route path="/invoices" element={<div>Invoices</div>} />
-              <Route path="/settings" element={<div>Settings</div>} />
             </Route>
           </Route>
         </Routes>

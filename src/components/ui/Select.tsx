@@ -9,6 +9,7 @@ interface SelectProps {
   isMulti?: boolean;
   placeholder?: string | undefined;
   required?: boolean;
+  marginBottom?: string;
 }
 
 export default function FilterSelect({
@@ -19,10 +20,11 @@ export default function FilterSelect({
   isMulti = false,
   placeholder,
   required = false,
+  marginBottom = "mb-2",
 }: SelectProps) {
   return (
     <div>
-      <label className="block mb-2 font-medium text text-sm">
+      <label className={`block ${marginBottom} font-medium text text-sm`}>
         {label} {required && <span className="text-red-500">*</span>}{" "}
       </label>
 

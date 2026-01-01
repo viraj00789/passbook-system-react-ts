@@ -5,7 +5,6 @@ import {
   HiOutlineUserGroup,
   HiOutlineCreditCard,
   HiOutlineDocumentText,
-  HiOutlineCog,
 } from "react-icons/hi2";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { useEffect } from "react";
@@ -25,7 +24,6 @@ const navItems = [
   { label: "Employees", icon: HiOutlineUserGroup, href: "/employees" },
   { label: "Expenses", icon: HiOutlineCurrencyDollar, href: "/expenses" },
   { label: "Invoices", icon: HiOutlineDocumentText, href: "/invoices" },
-  { label: "Settings", icon: HiOutlineCog, href: "/settings" },
 ];
 
 export default function Sidebar() {
