@@ -19,7 +19,7 @@ export const getTransactionsTableColumns = ({
 }: GetColumnsParams): Column<Transaction>[] => [
   {
     key: "serial",
-    label: "Serial",
+    label: "Serial No.",
     sortable: false,
     render: (_: Transaction, index: number) => index + 1,
   },

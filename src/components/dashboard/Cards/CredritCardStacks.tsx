@@ -23,11 +23,11 @@ const CardStack = () => {
 
   return (
     <>
-      <div className="w-full 2xl:w-[35%] flex flex-col border border-gray-300 dark:border-gray-800 border-radius-3xl bg-gray-50 dark:bg-gray-800">
-        <h2 className="text-lg lg:text-xl xl:text-2xl font-bold text-gray-900 dark:text-white p-4 xl:p-6">
+      <div className="w-full 2xl:w-[35%] flex flex-col justify-between border border-gray-300 dark:border-gray-800 border-radius-3xl bg-gray-50 dark:bg-gray-800 p-4">
+        <h2 className="text-lg lg:text-xl xl:text-2xl font-bold text-gray-900 dark:text-white">
           Accounts
         </h2>
-        <div className="flex items-center justify-center h-full">
+        <div className="flex items-center justify-center h-full max-h-86 xl:max-h-80">
           <motion.ul
             className="relative h-100 2xl:h-50 w-[calc(100%-36px)] sm:w-[calc(100%-200px)] md:w-[calc(100%-300px)] lg:w-[calc(100%-300px)] xl:w-[calc(100%-600px)] 2xl:w-[calc(100%-100px)] flex items-center justify-center"
             initial="hidden"
@@ -47,7 +47,7 @@ const CardStack = () => {
               return (
                 <motion.li
                   key={card.id}
-                  className="absolute h-65 w-full sm:w-[calc(100%-60px)] md:w-[calc(100%-80px)] list-none border-radius-2xl border border-white/20 backdop-blur-xl shadow-2xl"
+                  className="absolute h-65 w-full sm:w-[calc(100%-60px)] md:w-[calc(100%-80px)] lg:w-[calc(100%-10px)] list-none border-radius-2xl border border-white/20 backdop-blur-xl shadow-2xl"
                   style={{
                     background: card.bgColor,
                     cursor: canDrag ? "grab" : "auto",

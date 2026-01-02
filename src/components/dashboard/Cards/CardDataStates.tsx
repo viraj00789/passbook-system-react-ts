@@ -1,7 +1,8 @@
 import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
-import Chart from "react-apexcharts";
 import { useTheme } from "../../../providers/ThemesProvider";
 import { getMiniBarChartOptions } from "../../../utils/graphconfig";
+import React, { Suspense } from "react";
+import BarChartSkeleton from "../../skeleton/dashboard/BarChartSkeleton";
 
 interface CardDataStatesProps {
   title: string;
@@ -12,6 +13,7 @@ interface CardDataStatesProps {
   chartData?: number[];
   color?: string;
   chartVisible?: boolean;
+  textColor?: string;
 }
 
 export default function CardDataStates({
@@ -23,11 +25,13 @@ export default function CardDataStates({
   color = "",
   changePositive,
   chartVisible = false,
+  textColor = "",
 }: CardDataStatesProps) {
   const { theme } = useTheme();
+  const LazyChart = React.lazy(() => import("react-apexcharts"));
 
   return (
-    <div className="my-0 xl:my-4 p-4 space-y-4 border-radius-3xl  border border-gray-300 dark:border-gray-800 bg-gray-50 dark:bg-gray-800">
+    <div className="my-0 xl:my-0 p-4 space-y-4 border-radius-3xl  border border-gray-300 dark:border-gray-800 bg-gray-50 dark:bg-gray-800">
       {/* Header */}
       <div className="flex justify-between">
         <div
@@ -50,16 +54,12 @@ export default function CardDataStates({
           </p>
           <div className="flex gap-3">
             {changePositive && change ? (
-              <FaArrowTrendUp className="text-green-500" />
+              <FaArrowTrendUp className={`${textColor}`} />
             ) : (
-              <FaArrowTrendDown className="text-red-500" />
+              <FaArrowTrendDown className={`${textColor}`} />
             )}
             {change && (
-              <span
-                className={`text-sm font-medium ${
-                  changePositive ? "text-green-500" : "text-red-500"
-                }`}
-              >
+              <span className={`text-sm font-medium ${textColor}`}>
                 {change}
               </span>
             )}
@@ -69,13 +69,17 @@ export default function CardDataStates({
 
       {/* Chart */}
       {chartVisible && (
-        <Chart
-          options={getMiniBarChartOptions(theme, color)}
-          series={[{ data: chartData }]}
-          type="bar"
-          height={48}
-          width="100%"
-        />
+        <div className="min-h-12.5">
+          <Suspense fallback={<BarChartSkeleton />}>
+            <LazyChart
+              options={getMiniBarChartOptions(theme, color)}
+              series={[{ data: chartData }]}
+              type="bar"
+              height={48}
+              width="100%"
+            />
+          </Suspense>
+        </div>
       )}
     </div>
   );

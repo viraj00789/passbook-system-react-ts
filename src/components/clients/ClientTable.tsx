@@ -24,7 +24,7 @@ export default function ClientTable() {
   return (
     <>
       <DataTable
-        title="Clients"
+        title="Client(s)"
         columns={clientTableColumns}
         data={ClientsData}
         searchable

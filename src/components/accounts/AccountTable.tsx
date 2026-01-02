@@ -26,7 +26,7 @@ export default function AccountTable() {
   return (
     <>
       <DataTable
-        title="Accounts"
+        title="Account(s)"
         columns={accountTableColumns}
         data={AccountsData}
         searchable

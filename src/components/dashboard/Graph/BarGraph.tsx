@@ -55,8 +55,10 @@ export default function MonthlyInOut() {
 
     plotOptions: {
       bar: {
-        borderRadius: 10,
-        columnWidth: "75%",
+        borderRadius: 5,
+        columnWidth: "55%",
+        borderRadiusApplication: "end",
+        horizontal: false,
       },
     },
 
@@ -69,6 +71,16 @@ export default function MonthlyInOut() {
 
     tooltip: {
       theme: isDark ? "dark" : "light",
+    },
+
+    dataLabels: {
+      enabled: false, // ⬅ removes text from bars
+    },
+
+    stroke: {
+      show: true,
+      width: 5,
+      colors: ["transparent"],
     },
     responsive: [
       {

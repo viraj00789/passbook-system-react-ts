@@ -26,7 +26,7 @@ export default function EmployeeTable() {
   return (
     <>
       <DataTable
-        title="Employees"
+        title="Employee(s)"
         columns={employeeTableColumns}
         data={employeesData}
         searchable

@@ -1,14 +1,15 @@
-import { useMemo, useState } from "react";
+import React, { Suspense, useMemo, useState } from "react";
 import { useTheme } from "../../../providers/ThemesProvider";
 import { areaChartData } from "../../../../data/areaGraphData";
 import { getAreaChartOptions } from "../../../utils/graphconfig";
-import Chart from "react-apexcharts";
+import LineChartSkeleton from "../../skeleton/dashboard/LineChartSkeleton";
 
 type FilterType = "day" | "month" | "year";
 
 export default function AreaGraph() {
   const { theme } = useTheme();
   const [filter, setFilter] = useState<FilterType>("day");
+  const LazyLineChart = React.lazy(() => import("react-apexcharts"));
 
   const series = useMemo(
     () => [
@@ -58,12 +59,17 @@ export default function AreaGraph() {
       </div>
 
       {/* Chart */}
-      <Chart
-        options={getAreaChartOptions(theme)}
-        series={series}
-        type="area"
-        height={320}
-      />
+
+      <div className="min-h-85">
+        <Suspense fallback={<LineChartSkeleton />}>
+          <LazyLineChart
+            options={getAreaChartOptions(theme)}
+            series={series}
+            type="area"
+            height={320}
+          />
+        </Suspense>
+      </div>
     </div>
   );
 }

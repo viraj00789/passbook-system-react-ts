@@ -28,7 +28,7 @@ export default function TransactionTable() {
   return (
     <>
       <DataTable
-        title="Transaction"
+        title="Transaction(s)"
         columns={TransactionTableColumns}
         data={transactions}
         searchable

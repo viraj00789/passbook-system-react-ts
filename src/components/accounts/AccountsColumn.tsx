@@ -22,7 +22,7 @@ export const getAccountsTableColumns = ({
 }: GetAccountColumnsParams): Column<Account>[] => [
   {
     key: "serial",
-    label: "Serial",
+    label: "Serial No.",
     sortable: false,
     render: (_: Account, index: number) => index + 1,
   },

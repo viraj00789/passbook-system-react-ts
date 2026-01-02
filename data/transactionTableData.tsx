@@ -305,7 +305,7 @@ export const TransactionData: Transaction[] = [
 export const TransactionsColumns: Column<Transaction>[] = [
   {
     key: "serial",
-    label: "Serial",
+    label: "Serial No.",
     sortable: false,
     render: (_: Transaction, index: number) => index + 1,
   },
