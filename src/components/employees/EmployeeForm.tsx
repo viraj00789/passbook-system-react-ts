@@ -7,7 +7,7 @@ import type { Employee, PaymentAccount, Role } from "./EmployeeColumn";
 import {
   paymentAccountOptions,
   roleOptions,
-} from "../../types/employeeOptionTypes";
+} from "../../types/EmployeeOptionTypes";
 import FilterSelect from "../ui/Select";
 
 type FormErrors = Partial<

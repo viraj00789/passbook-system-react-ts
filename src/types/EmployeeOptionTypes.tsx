@@ -1,5 +1,3 @@
-// employeeSelectOptions.ts
-
 import type { SelectOption } from "./FilterTypes";
 
 export const roleOptions: SelectOption[] = [
