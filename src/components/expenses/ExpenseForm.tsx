@@ -94,11 +94,8 @@ export default function ExpenseForm({
             }));
             setErrors({ ...errors, expenseOptions: "" });
           }}
+          error={errors.expenseOptions}
         />
-
-        {errors.expenseOptions && (
-          <p className="text-xs text-red-400">{errors.expenseOptions}</p>
-        )}
       </div>
 
       {/* Notes */}
@@ -122,7 +119,7 @@ export default function ExpenseForm({
           onClick={handleSubmit}
           buttonType="submit"
           className="bg-primary text-gray-900 font-bold"
-          buttonPadding="px-2! py-1! lg:px-1.5! lg:py-2!"
+          buttonPadding="px-2 lg:px-3 lg:py-2"
         />
         <Button
           title="Cancel"
@@ -132,7 +129,7 @@ export default function ExpenseForm({
             resetForm();
             onClose();
           }}
-          buttonPadding="px-2! py-1! lg:px-1.5! lg:py-2!"
+          buttonPadding="px-2 lg:px-3 lg:py-2"
         />
       </div>
     </div>

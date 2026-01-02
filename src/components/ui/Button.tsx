@@ -13,7 +13,7 @@ export const Button: React.FC<ButtonProps> = ({
   buttonType = "button",
   onClick,
   className = "",
-  buttonPadding = "px-3 py-2 lg:px-4 lg:py-3",
+  buttonPadding = "px-2 lg:px-3 lg:py-2",
   disabled = false,
 }) => {
   return (

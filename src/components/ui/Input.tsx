@@ -40,12 +40,14 @@ const Input: React.FC<InputProps> = ({
           focus:outline-none
           focus:ring-2 focus:ring-primary
           transition placeholder:text-gray-500 bg-gray-100! dark:bg-dark-blue!
-          ${error ? "border-red-400 focus:ring-red-200" : ""}
+          ${error ? "border-red-400! focus:ring-red-300!" : ""}
           ${className}
         `}
       />
 
-      {error && <p className="text-xs text-red-500 dark:text-red-400">{error}</p>}
+      {error && (
+        <p className="text-xs text-red-500 dark:text-red-400">{error}</p>
+      )}
     </div>
   );
 };

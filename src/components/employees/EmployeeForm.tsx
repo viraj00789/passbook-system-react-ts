@@ -97,7 +97,7 @@ export default function EmployeeForm({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Employee Name */}
       <Input
         label="Employee Name"
@@ -145,8 +145,8 @@ export default function EmployeeForm({
             setErrors({ ...errors, role: "" });
           }}
           placeholder="Select role"
+          error={errors.role}
         />
-        {errors.role && <p className="text-xs mt-2 text-red-400">{errors.role}</p>}
       </div>
 
       {/* Monthly Salary */}

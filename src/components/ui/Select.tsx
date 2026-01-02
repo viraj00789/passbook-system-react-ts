@@ -10,6 +10,7 @@ interface SelectProps {
   placeholder?: string | undefined;
   required?: boolean;
   marginBottom?: string;
+  error?: string | boolean;
 }
 
 export default function FilterSelect({
@@ -21,6 +22,7 @@ export default function FilterSelect({
   placeholder,
   required = false,
   marginBottom = "mb-2",
+  error,
 }: SelectProps) {
   return (
     <div>
@@ -44,12 +46,14 @@ export default function FilterSelect({
     px-3
     transition-colors
     ${
-      isFocused
+      error
+        ? "border-red-400 ring-red-300"
+        : isFocused
         ? "border-gray-400 dark:border-gray-300 ring-1 ring-gray-400/40"
         : "border-gray-300 dark:border-gray-600"
     }
     hover:border-gray-400 dark:hover:border-gray-400
-    `,
+  `,
 
           valueContainer: () => "flex gap-1 overflow-hidden ",
 
@@ -67,7 +71,7 @@ export default function FilterSelect({
 
           option: ({ isFocused, isSelected }) =>
             `
-    px-3 py-2 cursor-pointer text-sm
+    px-3 py-2 cursor-pointer text-xs
     transition-colors
     ${
       isSelected
@@ -94,6 +98,10 @@ export default function FilterSelect({
     cursor-pointer`,
         }}
       />
+      {/* Error message */}
+      {error && (
+        <p className="mt-1 text-xs text-red-500 dark:text-red-400">{error}</p>
+      )}
     </div>
   );
 }
