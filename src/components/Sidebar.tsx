@@ -48,16 +48,15 @@ export default function Sidebar() {
         className={`
           fixed lg:relative z-50 h-full bg-white dark:bg-dark-blue
           border-r border-gray-200 dark:border-gray-600
-          transition-all duration-300 flex flex-col justify-between text
-          ${
-            open
-              ? "w-full! max-w-64! translate-x-0"
-              : "w-full! max-w-16! -translate-x-full lg:translate-x-0"
+          transition-width duration-200 flex flex-col justify-between text
+          ${open
+            ? "w-full! max-w-64! translate-x-0"
+            : "w-full! max-w-16! -translate-x-full lg:translate-x-0"
           }
         `}
       >
         {/* Navigation */}
-        <nav className={`space-y-3 ${open ? "p-4" : "px-1.5 py-4"}`}>
+        <nav className={`space-y-3 transition-none ${open ? "p-4" : "px-1.5 py-4"}`}>
           {navItems.map(({ label, icon: Icon, href }) => {
             const isActive = pathname === href;
 
@@ -66,10 +65,10 @@ export default function Sidebar() {
                 key={label}
                 to={href}
                 className={`
-                  flex items-center gap-3 p-3 rounded-md font-semibold transition
-                  hover:bg-primary-300 hover:text-black
-                  ${isActive ? "bg-primary-500 text-black" : ""}
-                `}
+                      flex items-center gap-3 p-3 rounded-md font-semibold
+                      hover:bg-primary-300 hover:text-black
+                      ${isActive ? "bg-primary-500 text-black" : ""}
+                      `}
                 onClick={() => {
                   if (window.innerWidth < 768) setOpen(false);
                 }}

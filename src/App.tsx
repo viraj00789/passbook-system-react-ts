@@ -11,6 +11,7 @@ import Accounts from "./pages/Accounts";
 import Clients from "./pages/Clients";
 import Employees from "./pages/Employees";
 import { Expenses } from "./pages/Expense";
+import { Invoices } from "./pages/Invoice";
 
 function App() {
   return (
@@ -37,7 +38,7 @@ function App() {
               <Route path="/clients" element={<Clients />} />
               <Route path="/employees" element={<Employees />} />
               <Route path="/expenses" element={<Expenses />} />
-              <Route path="/invoices" element={<div>Invoices</div>} />
+              <Route path="/invoices" element={<Invoices />} />
             </Route>
           </Route>
         </Routes>

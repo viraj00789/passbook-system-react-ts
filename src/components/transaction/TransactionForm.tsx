@@ -166,15 +166,14 @@ export default function TransactionDrawer({
       {/* IN / OUT Toggle */}
       <div className="flex flex-col gap-1">
         <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-          Clients Status (IN / OUT) <span className="text-red-500">*</span>
+          Payment Status (IN / OUT) <span className="text-red-500">*</span>
         </label>
 
         <div
           className={`flex w-fit rounded-xl p-1 bg-gray-100 dark:bg-dark-blue
-            ${
-              errors.type
-                ? "border border-red-500"
-                : "border border-gray-300 dark:border-gray-700"
+            ${errors.type
+              ? "border border-red-500"
+              : "border border-gray-300 dark:border-gray-700"
             }`}
         >
           {(["IN", "OUT"] as const).map((type) => (
@@ -186,12 +185,11 @@ export default function TransactionDrawer({
                 setErrors({ ...errors, type: "" });
               }}
               className={`px-4 py-1 rounded-lg text-sm font-bold transition-all
-                ${
-                  form.type === type
-                    ? type === "IN"
-                      ? "bg-green-status text-secondary"
-                      : "bg-red-status text-font-red-status"
-                    : "text-gray-500 hover:text-gray-700 dark:text-gray-400"
+                ${form.type === type
+                  ? type === "IN"
+                    ? "bg-green-status text-secondary"
+                    : "bg-red-status text-font-red-status"
+                  : "text-gray-500 hover:text-gray-700 dark:text-gray-400"
                 }`}
             >
               {type}

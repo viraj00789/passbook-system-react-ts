@@ -34,7 +34,7 @@ const Input: React.FC<InputProps> = ({
         className={`
           block w-full rounded-md
           border border-gray-300 dark:border-gray-600 hover:border-gray-400
-          px-3 py-2 lg:py-3 lg:px-4
+          px-3 py-2 lg:py-2 lg:px-4
           text-sm
           text
           focus:outline-none
