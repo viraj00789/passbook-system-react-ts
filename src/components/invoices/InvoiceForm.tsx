@@ -8,6 +8,9 @@ import { GrAdd } from "react-icons/gr";
 import { VscRemove } from "react-icons/vsc";
 import { generateInvoiceNumber } from "../../utils/genrateInvoiceNumbers";
 import ImageUpload from "../ui/ImageUpload";
+import PdfDownload from "./PdfDownLoad";
+import { InvoiceClientOptions } from "../../types/InvoiceClientTypes";
+import { expenseAccountOptions } from "../../types/InvoiceAccountTypes";
 
 interface InvoiceItem {
   description: string;
@@ -15,7 +18,7 @@ interface InvoiceItem {
   rate: number | string;
 }
 
-interface InvoiceFormState {
+export interface InvoiceFormState {
   client: SelectOption | null;
   receivingAccount: SelectOption | null;
   invoiceNumber: string;
@@ -67,6 +70,7 @@ export default function InvoiceForm({
   console.log("🚀 ~ InvoiceForm ~ invoiceForm:", invoiceForm);
 
   const [errors, setErrors] = useState<FormErrors>({});
+  const [valid, setValid] = useState(false);
 
   /* ---------------- RESET ---------------- */
 
@@ -250,7 +254,7 @@ export default function InvoiceForm({
       <FilterSelect
         label="Select Client"
         required
-        options={[]}
+        options={InvoiceClientOptions}
         value={invoiceForm.client}
         onChange={(val) => {
           setInvoiceForm({ ...invoiceForm, client: val as SelectOption });
@@ -262,7 +266,7 @@ export default function InvoiceForm({
       <FilterSelect
         label="Select Receiving Account"
         required
-        options={[]}
+        options={expenseAccountOptions}
         value={invoiceForm.receivingAccount}
         onChange={(val) => {
           setInvoiceForm({
@@ -406,7 +410,7 @@ export default function InvoiceForm({
       />
 
       <Input
-        label="Tax"
+        label="Tax (%)"
         type="number"
         placeholder="Enter tax"
         required
@@ -447,6 +451,7 @@ export default function InvoiceForm({
           buttonType="submit"
           className="bg-primary text-gray-900 font-bold"
         />
+
         <Button
           title="Cancel"
           buttonType="button"
@@ -456,6 +461,7 @@ export default function InvoiceForm({
             onClose();
           }}
         />
+        <PdfDownload disabled={valid} invoiceForm={invoiceForm} />
       </div>
     </div>
   );
