@@ -59,13 +59,6 @@ export default function ExpenseForm({
   const handleSubmit = () => {
     if (!validate()) return;
 
-    const payload: Expense = {
-      ...expenseForm,
-      expenseOptions: expenseForm.expenseOptions as ExpenseOptions,
-    };
-
-    console.log("Expense Saved:", payload);
-
     resetForm();
     onClose();
   };
