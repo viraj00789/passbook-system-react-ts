@@ -275,7 +275,7 @@ function DataTable<T extends object>({
         </div>
       ) : (
         <div
-          className={`overflow-x-auto w-full max-w-[calc(100vw-11px)] h-full max-h-[calc(100vh-225px)] xl:max-h-[calc(100vh-231px)] ${
+          className={`overflow-x-auto w-full max-w-[calc(100vw-11px)] h-full max-h-[calc(100vh-209px)] xl:max-h-[calc(100vh-231px)] ${
             open
               ? "lg:max-w-[calc(100vw-250px)]"
               : "lg:max-w-[calc(100vw-90px)]"

@@ -46,53 +46,56 @@ export default function Sidebar() {
 
       <aside
         className={`
-          fixed lg:relative z-50 h-screen max-h-[calc(100vh-70px)] bg-white dark:bg-dark-blue
-          border-r border-gray-200 dark:border-gray-600
-          transition-width duration-200 flex flex-col justify-between text
+          fixed lg:relative z-50 transition-all duration-300
           ${
             open
-              ? "w-full! max-w-64! translate-x-0"
-              : "w-full! max-w-16! -translate-x-full lg:translate-x-0"
+              ? "w-full! max-w-64! translate-x-0  "
+              : "w-full! max-w-16! -translate-x-full lg:translate-x-0  "
           }
         `}
       >
         {/* Navigation */}
-        <nav
-          className={`space-y-3 transition-none ${
-            open ? "p-4" : "px-1.5 py-4"
-          }`}
+        <div
+          className="bg-white dark:bg-dark-blue w-full h-screen max-h-[calc(100vh-70px)] border-r border-gray-200 dark:border-gray-600
+           flex flex-col justify-between text"
         >
-          {navItems.map(({ label, icon: Icon, href }) => {
-            const isActive = pathname === href;
+          <nav
+            className={`space-y-3 transition-none ${
+              open ? "p-4" : "px-2 py-4"
+            }`}
+          >
+            {navItems.map(({ label, icon: Icon, href }) => {
+              const isActive = pathname === href;
 
-            return (
-              <Link
-                key={label}
-                to={href}
-                className={`
+              return (
+                <Link
+                  key={label}
+                  to={href}
+                  className={`
                       flex items-center gap-3 p-3 rounded-md font-semibold
                       hover:bg-primary-300 hover:text-black
                       ${isActive ? "bg-primary-500 text-black" : ""}
                       `}
-                onClick={() => {
-                  if (window.innerWidth < 768) setOpen(false);
-                }}
-              >
-                <Icon size={24} />
-                {open && <span>{label}</span>}
-              </Link>
-            );
-          })}
-        </nav>
+                  onClick={() => {
+                    if (window.innerWidth < 768) setOpen(false);
+                  }}
+                >
+                  <Icon size={24} />
+                  {open && <span>{label}</span>}
+                </Link>
+              );
+            })}
+          </nav>
 
-        {/* Toggle Button */}
-        <button
-          onClick={toggle}
-          className="p-5 flex items-center gap-2 border-t border-gray-200 dark:border-gray-600 cursor-pointer text"
-        >
-          {open ? <FiChevronLeft /> : <FiChevronRight />}
-          {open && <span>Collapse</span>}
-        </button>
+          {/* Toggle Button */}
+          <button
+            onClick={toggle}
+            className="p-5 flex items-center gap-2 border-t border-gray-200 dark:border-gray-600 cursor-pointer text"
+          >
+            {open ? <FiChevronLeft /> : <FiChevronRight />}
+            {open && <span>Collapse</span>}
+          </button>
+        </div>
       </aside>
     </>
   );

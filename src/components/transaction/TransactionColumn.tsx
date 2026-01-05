@@ -7,7 +7,7 @@ import type { AppDispatch } from "../../store";
 
 interface GetColumnsParams {
   dispatch: AppDispatch;
-  setOpenDrawer: (open: boolean) => void;
+  setOpenDrawer?: (open: boolean) => void;
   onDeleteClick: () => void;
 }
 
@@ -107,7 +107,7 @@ export const getTransactionsTableColumns = ({
         <FiEdit2
           onClick={() => {
             dispatch(setEditingTransaction(row));
-            setOpenDrawer(true);
+            setOpenDrawer?.(true);
           }}
           className="text-gray-500 dark:text-gray cursor-pointer"
           size={20}

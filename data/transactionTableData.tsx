@@ -302,6 +302,7 @@ export const TransactionData: Transaction[] = [
   },
 ];
 
+
 export const TransactionsColumns: Column<Transaction>[] = [
   {
     key: "serial",
@@ -436,3 +437,5 @@ export const TransactionsColumns: Column<Transaction>[] = [
     },
   },
 ];
+
+
