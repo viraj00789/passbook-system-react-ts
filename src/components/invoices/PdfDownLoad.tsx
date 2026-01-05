@@ -3,14 +3,10 @@ import InvoicePDF from "./InvoicePDF";
 
 export default function PdfDownload({
   invoiceForm,
-  disabled,
 }: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   invoiceForm: any;
-  disabled: boolean;
 }) {
-  console.log("🚀 ~ PdfDownload ~ disabled:", disabled);
-
   return (
     <>
       <PDFDownloadLink
