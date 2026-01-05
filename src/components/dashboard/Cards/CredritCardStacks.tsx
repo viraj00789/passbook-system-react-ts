@@ -2,7 +2,8 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { CARDS } from "../../../../data/creditCardData";
 import type { CreditCard } from "../../../../data/creditCardData";
-import { TbInfoSquareRoundedFilled } from "react-icons/tb";
+import { RiEyeLine } from "react-icons/ri";
+import { PiEyeClosedBold } from "react-icons/pi";
 
 const CARD_OFFSET = 10;
 const SCALE_FACTOR = 0.06;
@@ -122,16 +123,25 @@ const CardStack = () => {
                               : maskAccountNumber(card.accountNumber)}
                           </p>
 
-                          <TbInfoSquareRoundedFilled
-                            size={22}
-                            className="text-gray-100 cursor-pointer"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setRevealedCardId((prev) =>
-                                prev === card.id ? null : card.id
-                              );
-                            }}
-                          />
+                          {revealedCardId === card.id ? (
+                            <RiEyeLine
+                              size={22}
+                              className="text-gray-100 cursor-pointer hover:opacity-80"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setRevealedCardId(null);
+                              }}
+                            />
+                          ) : (
+                            <PiEyeClosedBold
+                              size={22}
+                              className="text-gray-100 cursor-pointer hover:opacity-80"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setRevealedCardId(card.id);
+                              }}
+                            />
+                          )}
                         </div>
                       </div>
                     </div>

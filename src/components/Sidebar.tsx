@@ -46,17 +46,22 @@ export default function Sidebar() {
 
       <aside
         className={`
-          fixed lg:relative z-50 h-full bg-white dark:bg-dark-blue
+          fixed lg:relative z-50 h-screen max-h-[calc(100vh-70px)] bg-white dark:bg-dark-blue
           border-r border-gray-200 dark:border-gray-600
           transition-width duration-200 flex flex-col justify-between text
-          ${open
-            ? "w-full! max-w-64! translate-x-0"
-            : "w-full! max-w-16! -translate-x-full lg:translate-x-0"
+          ${
+            open
+              ? "w-full! max-w-64! translate-x-0"
+              : "w-full! max-w-16! -translate-x-full lg:translate-x-0"
           }
         `}
       >
         {/* Navigation */}
-        <nav className={`space-y-3 transition-none ${open ? "p-4" : "px-1.5 py-4"}`}>
+        <nav
+          className={`space-y-3 transition-none ${
+            open ? "p-4" : "px-1.5 py-4"
+          }`}
+        >
           {navItems.map(({ label, icon: Icon, href }) => {
             const isActive = pathname === href;
 

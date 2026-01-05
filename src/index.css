@@ -139,3 +139,7 @@ body {
 .border-radius-2xl {
   @apply rounded-lg lg:rounded-2xl;
 }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}

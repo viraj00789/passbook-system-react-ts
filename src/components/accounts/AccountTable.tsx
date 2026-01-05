@@ -33,7 +33,7 @@ export default function AccountTable() {
         filterable={false}
         paginationAtFooter
         addTitle="Add Account"
-        pageSizeByDefault={12}
+        pageSizeByDefault={10}
         addOnClickable={() => setOpenDrawer(true)}
       />
 

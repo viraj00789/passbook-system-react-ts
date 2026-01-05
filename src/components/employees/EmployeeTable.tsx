@@ -33,7 +33,7 @@ export default function EmployeeTable() {
         paginationAtFooter
         filterable={false}
         addTitle="Add Employee"
-        pageSizeByDefault={12}
+        pageSizeByDefault={10}
         addOnClickable={() => setOpenDrawer(true)}
       />
       <RightDrawer

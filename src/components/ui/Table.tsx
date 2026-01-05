@@ -133,7 +133,7 @@ function DataTable<T extends object>({
   };
 
   return (
-    <div className="w-full border border-radius-2xl border-gray-300 dark:border-gray-800">
+    <div className="w-full border border-radius-2xl border-gray-300 dark:border-gray-800 h-full">
       {/* Header */}
       <div className="flex justify-end sm:justify-between items-center rounded-t-xl xl:rounded-t-2xl p-2 lg:p-4 bg-white dark:bg-gray-800">
         <h1 className="text-lg lg:text-xl font-bold text-gray-900 dark:text-white hidden sm:flex">
@@ -275,13 +275,13 @@ function DataTable<T extends object>({
         </div>
       ) : (
         <div
-          className={`overflow-x-auto w-full max-w-[calc(100vw-11px)] ${
+          className={`overflow-x-auto w-full max-w-[calc(100vw-11px)] h-full max-h-[calc(100vh-231px)] ${
             open
               ? "lg:max-w-[calc(100vw-250px)]"
               : "lg:max-w-[calc(100vw-90px)]"
           }`}
         >
-          <table className="min-w-max w-full text-sm">
+          <table className="min-w-max w-full text-sm h-full">
             {/* Header */}
             <thead>
               <tr>
@@ -293,7 +293,7 @@ function DataTable<T extends object>({
                         ? handleSort(col.key as keyof T)
                         : undefined
                     }
-                    className={`p-4 text-left text-md font-bold text-gray-700 dark:text-gray-400
+                    className={`p-4 text-left text-md font-bold text-gray-700 dark:text-gray-400 sticky top-0 bg-gray-100 dark:bg-gray-900
                     ${
                       col.sortable
                         ? "cursor-pointer select-none hover:text-primary"
@@ -336,12 +336,12 @@ function DataTable<T extends object>({
                 paginatedData.map((row, idx) => (
                   <tr
                     key={idx}
-                    className="hover:bg-gray-100 dark:hover:bg-gray-900 transition"
+                    className="hover:bg-gray-100 dark:hover:bg-gray-700 transition"
                   >
                     {columns.map((col) => (
                       <td
                         key={col.label}
-                        className="p-4 text-gray-700 dark:text-gray-300"
+                        className="p-4 text-gray-700 dark:text-gray-300 h-5"
                       >
                         {col.key === "serial"
                           ? (currentPage - 1) * pageSize + idx + 1
