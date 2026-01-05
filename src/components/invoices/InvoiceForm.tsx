@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Input from "../ui/Input";
 import { Button } from "../ui/Button";
 import { useEscapeKey } from "../../utils/useEscapekey";
@@ -8,6 +8,10 @@ import { GrAdd } from "react-icons/gr";
 import { VscRemove } from "react-icons/vsc";
 import { generateInvoiceNumber } from "../../utils/genrateInvoiceNumbers";
 import ImageUpload from "../ui/ImageUpload";
+import PdfDownload from "./PdfDownLoad";
+import { InvoiceClientOptions } from "../../types/InvoiceClientTypes";
+import { expenseAccountOptions } from "../../types/InvoiceAccountTypes";
+import { isDueDateValid } from "../../utils/validDates";
 
 interface InvoiceItem {
   description: string;
@@ -15,7 +19,7 @@ interface InvoiceItem {
   rate: number | string;
 }
 
-interface InvoiceFormState {
+export interface InvoiceFormState {
   client: SelectOption | null;
   receivingAccount: SelectOption | null;
   invoiceNumber: string;
@@ -58,13 +62,12 @@ export default function InvoiceForm({
     issueDate: "",
     dueDate: "",
     items: [{ description: "", quantity: "", rate: "" }],
-    discount: "",
-    tax: "",
+    discount: 0,
+    tax: 0,
     logo: null,
   };
 
   const [invoiceForm, setInvoiceForm] = useState<InvoiceFormState>(initialForm);
-  console.log("🚀 ~ InvoiceForm ~ invoiceForm:", invoiceForm);
 
   const [errors, setErrors] = useState<FormErrors>({});
 
@@ -159,6 +162,13 @@ export default function InvoiceForm({
       newErrors.receivingAccount = "Receiving account is required.";
     if (!invoiceForm.issueDate) newErrors.issueDate = "Issue date is required.";
     if (!invoiceForm.dueDate) newErrors.dueDate = "Due date is required.";
+    if (
+      invoiceForm.issueDate &&
+      invoiceForm.dueDate &&
+      new Date(invoiceForm.dueDate) <= new Date(invoiceForm.issueDate)
+    ) {
+      newErrors.dueDate = "Due date must be after issue date.";
+    }
 
     invoiceForm.items.forEach((item, index) => {
       const err: ItemErrors = {};
@@ -213,7 +223,6 @@ export default function InvoiceForm({
 
     setErrors((prev) => ({ ...prev, [field]: error }));
   };
-
   const validateFeild = (
     field: keyof InvoiceFormState,
     value: string | null | SelectOption
@@ -227,9 +236,17 @@ export default function InvoiceForm({
     }
 
     if (field === "issueDate" || field === "dueDate") {
-      error = value
-        ? undefined
-        : `${field === "issueDate" ? "Issue date" : "Due date"} is required.`;
+      if (!value) {
+        error = `${
+          field === "issueDate" ? "Issue date" : "Due date"
+        } is required.`;
+      } else if (
+        field === "dueDate" &&
+        invoiceForm.issueDate &&
+        new Date(value as string) <= new Date(invoiceForm.issueDate)
+      ) {
+        error = "Due date must be after issue date.";
+      }
     }
 
     setErrors((prev) => ({ ...prev, [field]: error }));
@@ -238,19 +255,45 @@ export default function InvoiceForm({
   const handleSubmit = () => {
     if (!validate()) return;
 
-    console.log("Invoice Saved:", invoiceForm);
-
     resetForm();
     setErrors({});
     onClose();
   };
+
+  const isInvoiceFormValid = (form: InvoiceFormState): boolean => {
+    if (!form.client) return false;
+    if (!form.receivingAccount) return false;
+    if (!form.issueDate) return false;
+    if (!form.dueDate) return false;
+
+    if (!form.items.length) return false;
+    if (!isDueDateValid(form.issueDate, form.dueDate)) return false;
+
+    for (const item of form.items) {
+      if (!item.description.trim()) return false;
+      if (item.quantity === "" || Number(item.quantity) <= 0) return false;
+      if (item.rate === "" || Number(item.rate) <= 0) return false;
+    }
+
+    if (form.discount === "" || form.discount < 0) return false;
+    if (form.tax === "" || form.tax < 0) return false;
+
+    if (!form.logo) return false;
+    if (form.logo.type !== "image/png") return false;
+
+    return true;
+  };
+
+  const isFormValid = useMemo(() => {
+    return isInvoiceFormValid(invoiceForm);
+  }, [invoiceForm]);
 
   return (
     <div className="space-y-4">
       <FilterSelect
         label="Select Client"
         required
-        options={[]}
+        options={InvoiceClientOptions}
         value={invoiceForm.client}
         onChange={(val) => {
           setInvoiceForm({ ...invoiceForm, client: val as SelectOption });
@@ -262,7 +305,7 @@ export default function InvoiceForm({
       <FilterSelect
         label="Select Receiving Account"
         required
-        options={[]}
+        options={expenseAccountOptions}
         value={invoiceForm.receivingAccount}
         onChange={(val) => {
           setInvoiceForm({
@@ -354,7 +397,7 @@ export default function InvoiceForm({
                 />
 
                 <Input
-                  label="Rate"
+                  label="Rate (INR)"
                   type="number"
                   required
                   placeholder="Enter rate"
@@ -406,7 +449,7 @@ export default function InvoiceForm({
       />
 
       <Input
-        label="Tax"
+        label="Tax (%)"
         type="number"
         placeholder="Enter tax"
         required
@@ -415,6 +458,9 @@ export default function InvoiceForm({
         error={errors.tax}
         onChange={(e) => {
           const val = e.target.value === "" ? "" : Number(e.target.value);
+          if (val !== "") {
+            val = Math.max(0, Math.min(99, val as number));
+          }
           setInvoiceForm({ ...invoiceForm, tax: val });
           validateNumberField("tax", val);
         }}
@@ -456,6 +502,7 @@ export default function InvoiceForm({
             onClose();
           }}
         />
+        {isFormValid && <PdfDownload invoiceForm={invoiceForm} />}
       </div>
     </div>
   );

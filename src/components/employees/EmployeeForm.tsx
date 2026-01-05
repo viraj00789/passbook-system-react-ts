@@ -3,7 +3,7 @@ import Input from "../ui/Input";
 import { Button } from "../ui/Button";
 import { useEscapeKey } from "../../utils/useEscapekey";
 import type { SelectOption } from "../../types/FilterTypes";
-import type { Employee, PaymentAccount, Role } from "./EmployeeColumn";
+import type { Employee } from "./EmployeeColumn";
 import {
   paymentAccountOptions,
   roleOptions,
@@ -81,16 +81,6 @@ export default function EmployeeForm({
   /** Submit */
   const handleSubmit = () => {
     if (!validate()) return;
-
-    const payload: Employee = {
-      ...employeeForm,
-      role: role?.value as Role,
-      paymentAccount: paymentAccount
-        ? (paymentAccount.value as PaymentAccount)
-        : undefined,
-    };
-
-    console.log("Employee Saved:", payload);
 
     resetForm();
     onClose();
