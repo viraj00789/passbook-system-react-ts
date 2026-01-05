@@ -68,7 +68,6 @@ export default function InvoiceForm({
   };
 
   const [invoiceForm, setInvoiceForm] = useState<InvoiceFormState>(initialForm);
-  console.log("🚀 ~ InvoiceForm ~ invoiceForm:", invoiceForm);
 
   const [errors, setErrors] = useState<FormErrors>({});
 
@@ -255,8 +254,6 @@ export default function InvoiceForm({
 
   const handleSubmit = () => {
     if (!validate()) return;
-
-    console.log("Invoice Saved:", invoiceForm);
 
     resetForm();
     setErrors({});
