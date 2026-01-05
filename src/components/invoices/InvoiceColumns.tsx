@@ -16,10 +16,12 @@ export interface Invoice {
 interface GetInvoiceColumnsParams {
   dispatch: AppDispatch;
   setOpenDrawer: (open: boolean) => void;
+  onDeleteClick: () => void;
 }
 
 export const getInvoiceTableColumns = ({
   setOpenDrawer,
+  onDeleteClick,
 }: GetInvoiceColumnsParams): Column<Invoice>[] => [
   {
     key: "serial",
@@ -70,7 +72,11 @@ export const getInvoiceTableColumns = ({
           title="Edit Invoice"
           onClick={() => setOpenDrawer(true)}
         />
-        <LuTrash2 size={21} className="cursor-pointer text-gray-500" />
+        <LuTrash2
+          size={21}
+          className="cursor-pointer text-gray-500"
+          onClick={onDeleteClick}
+        />
       </div>
     ),
   },

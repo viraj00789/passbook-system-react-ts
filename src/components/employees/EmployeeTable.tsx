@@ -5,6 +5,7 @@ import RightDrawer from "../ui/RightDrawer";
 import { employeesData } from "../../../data/employeeTableData";
 import { getEmployeeeTableColumns } from "./EmployeeColumn";
 import EmployeeForm from "./EmployeeForm";
+import PopUp from "../ui/PopUp";
 
 export default function EmployeeTable() {
   const dispatch = useAppDispatch();
@@ -12,10 +13,17 @@ export default function EmployeeTable() {
   const [employeeResetFn, setEmployeeResetFn] = useState<(() => void) | null>(
     null
   );
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const handleConfirmDelete = () => {
+    setOpenDeleteModal(false);
+  };
 
   const employeeTableColumns = getEmployeeeTableColumns({
     dispatch,
     setOpenDrawer,
+    onDeleteClick: () => {
+      setOpenDeleteModal(true);
+    },
   });
 
   const handleCloseDrawer = () => {
@@ -46,6 +54,20 @@ export default function EmployeeTable() {
           setEmployeeDataReset={setEmployeeResetFn}
         />
       </RightDrawer>
+      {openDeleteModal && (
+        <PopUp
+          popupTitle="Delete Employee"
+          setOpenModal={setOpenDeleteModal}
+          makeNode={
+            <>
+              <p className="mb-2 text-bold font-medium text-gray-600 dark:text-gray-200">
+                Are you sure you want to delete this employee?
+              </p>
+            </>
+          }
+          onConfirm={handleConfirmDelete}
+        />
+      )}
     </>
   );
 }

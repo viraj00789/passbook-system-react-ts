@@ -6,6 +6,7 @@ import { LuTrash2 } from "react-icons/lu";
 interface GetEmplyoeesColumnsParams {
   dispatch: AppDispatch;
   setOpenDrawer: (open: boolean) => void;
+  onDeleteClick: () => void;
 }
 
 export type Role = "Web" | "App" | "Designer" | "Admin";
@@ -26,6 +27,7 @@ export interface Employee {
 
 export const getEmployeeeTableColumns = ({
   setOpenDrawer,
+  onDeleteClick,
 }: GetEmplyoeesColumnsParams): Column<Employee>[] => [
   {
     key: "serial",
@@ -70,7 +72,11 @@ export const getEmployeeeTableColumns = ({
             setOpenDrawer(true);
           }}
         />
-        <LuTrash2 size={21} className="cursor-pointer text-gray-500" />
+        <LuTrash2
+          size={21}
+          className="cursor-pointer text-gray-500"
+          onClick={onDeleteClick}
+        />
       </div>
     ),
   },

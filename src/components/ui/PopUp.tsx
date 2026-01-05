@@ -6,19 +6,21 @@ interface PopUpProps {
   setOpenModal: (open: boolean) => void;
   popupTitle: string;
   makeNode?: ReactNode;
+  onConfirm?: () => void;
 }
 
 export default function PopUp({
   setOpenModal,
   popupTitle,
   makeNode,
+  onConfirm,
 }: PopUpProps) {
   return (
-    <div className="fixed z-50 inset-0 overflow-y-auto bg-gray-900/40 backdrop-blur-xs">
+    <div className="fixed z-50 inset-0 overflow-y-auto bg-gray-900/40 backdrop-blur-xs text">
       <div className="w-full flex items-center justify-center h-[calc(100vh-100px)] p-4 text-center sm:block sm:p-0">
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen" />
         <div className="inline-block bg-white dark:bg-dark-blue rounded-lg text-left overflow-hidden shadow-xl sm:my-8 sm:align-middle max-w-lg w-full">
-          <div className="flex items-center justify-between w-full py-4 lg:py-6 border-b border-gray-500 px-4 lg:px-6">
+          <div className="flex items-center justify-between w-full border-b border-gray-500 p-4 lg:p-5">
             <h3 className="text-lg lg:text-2xl leading-6 font-bold text-gray-900 text">
               {popupTitle}
             </h3>
@@ -43,8 +45,11 @@ export default function PopUp({
             <Button
               buttonType="button"
               className="inline-flex justify-center w-full rounded-lg border border-transparent bg-primary-600 text-base leading-6 font-medium text-black shadow-sm hover:bg-primary-800 focus:outline-none "
-              title="Apply Filter(s)"
+              title="Confirm"
               buttonPadding="px-1.5 py-1.5"
+              onClick={() => {
+                onConfirm?.();
+              }}
             />
           </div>
         </div>

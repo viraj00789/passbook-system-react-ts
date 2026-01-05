@@ -6,6 +6,7 @@ import { type RootState } from "../../store";
 import { setEditingTransaction } from "../../store/Transactions/transactionsSlice";
 import TransactionDrawer from "./TransactionForm";
 import { getTransactionsTableColumns } from "./TransactionColumn";
+import PopUp from "../ui/PopUp";
 
 export default function TransactionTable() {
   const dispatch = useDispatch();
@@ -13,10 +14,7 @@ export default function TransactionTable() {
     (state: RootState) => state.transactions
   );
   const [openDrawer, setOpenDrawer] = useState(false);
-  const TransactionTableColumns = getTransactionsTableColumns({
-    dispatch,
-    setOpenDrawer,
-  });
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [transactionResetFn, setTransactionResetFn] = useState<
     (() => void) | null
   >(null);
@@ -24,6 +22,18 @@ export default function TransactionTable() {
     transactionResetFn?.();
     setOpenDrawer(false);
   };
+
+  const handleConfirmDelete = () => {
+    setOpenDeleteModal(false);
+  };
+
+  const TransactionTableColumns = getTransactionsTableColumns({
+    dispatch,
+    setOpenDrawer,
+    onDeleteClick: () => {
+      setOpenDeleteModal(true);
+    },
+  });
 
   return (
     <>
@@ -50,6 +60,20 @@ export default function TransactionTable() {
           setTransactionReset={setTransactionResetFn}
         />
       </RightDrawer>
+      {openDeleteModal && (
+        <PopUp
+          popupTitle="Delete Transaction"
+          setOpenModal={setOpenDeleteModal}
+          makeNode={
+            <>
+              <p className="mb-2 text-bold font-medium text-gray-600 dark:text-gray-200">
+                Are you sure you want to delete this transaction?
+              </p>
+            </>
+          }
+          onConfirm={handleConfirmDelete}
+        />
+      )}
     </>
   );
 }

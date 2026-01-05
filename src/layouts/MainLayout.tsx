@@ -8,9 +8,7 @@ export default function MainLayout() {
       <Navbar />
       <div className="flex">
         <Sidebar />
-        <div className="w-full">
-          <Outlet />
-        </div>
+        <Outlet />
       </div>
     </div>
   );

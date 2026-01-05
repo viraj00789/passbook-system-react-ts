@@ -6,6 +6,7 @@ import { LuTrash2 } from "react-icons/lu";
 interface GetExpensesColumnsParams {
   dispatch: AppDispatch;
   setOpenDrawer: (open: boolean) => void;
+  onDeleteClick: () => void;
 }
 
 export type ExpenseOptions =
@@ -23,6 +24,7 @@ export interface Expense {
 
 export const getExpenseTableColumns = ({
   setOpenDrawer,
+  onDeleteClick,
 }: GetExpensesColumnsParams): Column<Expense>[] => [
   {
     key: "serial",
@@ -57,7 +59,11 @@ export const getExpenseTableColumns = ({
             setOpenDrawer(true);
           }}
         />
-        <LuTrash2 size={21} className="cursor-pointer text-gray-500" />
+        <LuTrash2
+          size={21}
+          className="cursor-pointer text-gray-500"
+          onClick={onDeleteClick}
+        />
       </div>
     ),
   },

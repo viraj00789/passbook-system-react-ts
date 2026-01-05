@@ -5,6 +5,7 @@ import RightDrawer from "../ui/RightDrawer";
 import { getExpenseTableColumns } from "./ExpenseColumn";
 import { ExpenseTableData } from "../../../data/expenseTableData";
 import ExpenseForm from "./ExpenseForm";
+import PopUp from "../ui/PopUp";
 
 export default function ExpenseTable() {
   const dispatch = useAppDispatch();
@@ -12,10 +13,17 @@ export default function ExpenseTable() {
   const [expenseResetFn, setExpenseResetFn] = useState<(() => void) | null>(
     null
   );
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const handleConfirmDelete = () => {
+    setOpenDeleteModal(false);
+  };
 
   const expenseTableColumns = getExpenseTableColumns({
     dispatch,
     setOpenDrawer,
+    onDeleteClick: () => {
+      setOpenDeleteModal(true);
+    },
   });
 
   const handleCloseDrawer = () => {
@@ -45,6 +53,20 @@ export default function ExpenseTable() {
           setExpenseDataReset={setExpenseResetFn}
         />
       </RightDrawer>
+      {openDeleteModal && (
+        <PopUp
+          popupTitle="Delete Expense"
+          setOpenModal={setOpenDeleteModal}
+          makeNode={
+            <>
+              <p className="mb-2 text-bold font-medium text-gray-600 dark:text-gray-200">
+                Are you sure you want to delete this expense?
+              </p>
+            </>
+          }
+          onConfirm={handleConfirmDelete}
+        />
+      )}
     </>
   );
 }

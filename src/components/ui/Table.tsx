@@ -133,7 +133,7 @@ function DataTable<T extends object>({
   };
 
   return (
-    <div className="w-full border border-radius-2xl border-gray-300 dark:border-gray-800 h-full">
+    <div className="w-full border border-radius-2xl border-gray-300 dark:border-gray-800 h-full grow">
       {/* Header */}
       <div className="flex justify-end sm:justify-between items-center rounded-t-xl xl:rounded-t-2xl p-2 lg:p-4 bg-white dark:bg-gray-800">
         <h1 className="text-lg lg:text-xl font-bold text-gray-900 dark:text-white hidden sm:flex">
@@ -275,7 +275,7 @@ function DataTable<T extends object>({
         </div>
       ) : (
         <div
-          className={`overflow-x-auto w-full max-w-[calc(100vw-11px)] h-full max-h-[calc(100vh-231px)] ${
+          className={`overflow-x-auto w-full max-w-[calc(100vw-11px)] h-full max-h-[calc(100vh-225px)] xl:max-h-[calc(100vh-231px)] ${
             open
               ? "lg:max-w-[calc(100vw-250px)]"
               : "lg:max-w-[calc(100vw-90px)]"

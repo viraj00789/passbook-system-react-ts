@@ -6,6 +6,7 @@ import type { AppDispatch } from "../../store";
 interface GetAccountColumnsParams {
   dispatch: AppDispatch;
   setOpenDrawer: (open: boolean) => void;
+  onDeleteClick: (account: Account) => void;
 }
 
 export interface Account {
@@ -19,6 +20,7 @@ export interface Account {
 
 export const getAccountsTableColumns = ({
   setOpenDrawer,
+  onDeleteClick,
 }: GetAccountColumnsParams): Column<Account>[] => [
   {
     key: "serial",
@@ -68,7 +70,7 @@ export const getAccountsTableColumns = ({
   {
     key: "actions",
     label: "Actions",
-    render: () => (
+    render: (row) => (
       <div className="flex gap-2">
         <FiEdit2
           size={20}
@@ -77,7 +79,11 @@ export const getAccountsTableColumns = ({
             setOpenDrawer(true);
           }}
         />
-        <LuTrash2 size={21} className="cursor-pointer text-gray-500" />
+        <LuTrash2
+          size={21}
+          className="cursor-pointer text-gray-500"
+          onClick={() => onDeleteClick(row)}
+        />
       </div>
     ),
   },

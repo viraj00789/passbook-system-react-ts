@@ -6,6 +6,7 @@ import { LuTrash2 } from "react-icons/lu";
 interface GetClientsColumnsParams {
   dispatch: AppDispatch;
   setOpenDrawer: (open: boolean) => void;
+  onDeleteClick: () => void;
 }
 
 export interface Client {
@@ -23,6 +24,7 @@ export interface Client {
 
 export const getClientTableColumns = ({
   setOpenDrawer,
+  onDeleteClick,
 }: GetClientsColumnsParams): Column<Client>[] => [
   {
     key: "serial",
@@ -106,7 +108,11 @@ export const getClientTableColumns = ({
             setOpenDrawer(true);
           }}
         />
-        <LuTrash2 size={21} className="cursor-pointer text-gray-500" />
+        <LuTrash2
+          size={21}
+          className="cursor-pointer text-gray-500"
+          onClick={() => onDeleteClick()}
+        />
       </div>
     ),
   },

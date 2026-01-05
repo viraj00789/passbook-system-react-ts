@@ -1,9 +1,6 @@
 import { FiEdit2 } from "react-icons/fi";
 import { LuTrash2 } from "react-icons/lu";
-import {
-  deleteTransaction,
-  setEditingTransaction,
-} from "../../store/Transactions/transactionsSlice";
+import { setEditingTransaction } from "../../store/Transactions/transactionsSlice";
 import type { Transaction } from "../../store/Transactions/transactionType";
 import type { Column } from "../../types/TableTypes";
 import type { AppDispatch } from "../../store";
@@ -11,11 +8,13 @@ import type { AppDispatch } from "../../store";
 interface GetColumnsParams {
   dispatch: AppDispatch;
   setOpenDrawer: (open: boolean) => void;
+  onDeleteClick: () => void;
 }
 
 export const getTransactionsTableColumns = ({
   dispatch,
   setOpenDrawer,
+  onDeleteClick,
 }: GetColumnsParams): Column<Transaction>[] => [
   {
     key: "serial",
@@ -114,7 +113,7 @@ export const getTransactionsTableColumns = ({
           size={20}
         />
         <LuTrash2
-          onClick={() => dispatch(deleteTransaction(row.id as number))}
+          onClick={() => onDeleteClick()}
           className="text-gray-500 dark:text-gray cursor-pointer"
           size={21.5}
         />
