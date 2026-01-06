@@ -32,7 +32,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-white dark:bg-dark-blue">
+    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-white dark:bg-dark-blue text">
       {/* LEFT SIDE */}
       <div className="flex items-center justify-center px-6 py-12">
         <div className="w-full max-w-sm space-y-8">
