@@ -1,5 +1,10 @@
 import { memo, useMemo, useState, type ReactNode } from "react";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import {
+  FaChevronDown,
+  FaChevronLeft,
+  FaChevronRight,
+  FaChevronUp,
+} from "react-icons/fa";
 import { useSidebar } from "../../providers/SideBarContext";
 import { IoAddCircle, IoFilter } from "react-icons/io5";
 import FiltersPanel from "../dashboard/Filters/TableFilters";
@@ -10,6 +15,7 @@ import { getPaginationRange } from "../../utils/getPaginationBadge";
 import PaginationControls from "../PaginationButton";
 import { useWindowSize } from "../../utils/useWindowSize";
 import { FaArrowDownLong, FaArrowUpLong } from "react-icons/fa6";
+import { Button } from "./Button";
 
 export type SortDirection = "asc" | "desc";
 
@@ -45,7 +51,7 @@ function DataTable<T extends object>({
   const { open } = useSidebar();
   const [openModal, setOpenModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = pageSizeByDefault;
+  const [pageSize, setPageSize] = useState(pageSizeByDefault);
   const width = useWindowSize();
   const isMobile = width < 768;
   const sortableColumns = columns.filter(
@@ -57,6 +63,11 @@ function DataTable<T extends object>({
     if (col.key === "serial") return (currentPage - 1) * pageSize + idx + 1;
     if (col.key === "actions") return null;
     return String(row[col.key as keyof T]);
+  };
+
+  const handlePageSizeChange = (size: number) => {
+    setPageSize(size);
+    setCurrentPage(1);
   };
 
   const extractSearchText = (value: unknown): string => {
@@ -119,7 +130,7 @@ function DataTable<T extends object>({
     const start = (currentPage - 1) * pageSize;
     const end = start + pageSize;
     return sortedData.slice(start, end);
-  }, [sortedData, currentPage]);
+  }, [sortedData, currentPage, pageSize]);
 
   const handleSort = (key: keyof T) => {
     if (sortKey === key) {
@@ -275,7 +286,7 @@ function DataTable<T extends object>({
         </div>
       ) : (
         <div
-          className={`overflow-x-auto w-full max-w-[calc(100vw-11px)]  h-full max-h-[calc(100vh-209px)] xl:max-h-[calc(100vh-231px)] ${
+          className={`overflow-x-auto w-full max-w-[calc(100vw-11px)]  h-full max-h-[calc(100vh-209px)] xl:max-h-[calc(100vh-240px)] ${
             open
               ? "lg:max-w-[calc(100vw-250px)]"
               : "lg:max-w-[calc(100vw-90px)]"
@@ -371,39 +382,89 @@ function DataTable<T extends object>({
 
       {/* Pagination */}
       {paginationAtFooter && (
-        <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200 dark:border-gray-700 text bg-white dark:bg-gray-800 rounded-b-2xl">
+        <div
+          className="flex flex-wrap items-center justify-between gap-4 px-4 py-3
+                  border-t border-gray-200 dark:border-gray-700
+                  bg-white dark:bg-gray-800 rounded-b-2xl text"
+        >
+          {/* Page info */}
           <span className="text-sm text-gray-600 dark:text-gray-400">
             Page {currentPage} of {totalPages}
           </span>
 
-          <div>
-            {paginationRange.map((item, idx) =>
-              item === "..." ? (
-                <span key={idx} className="px-2 text-gray-500">
-                  …
-                </span>
-              ) : (
-                <button
-                  key={item}
-                  onClick={() => setCurrentPage(item)}
-                  className={`px-3 py-1 rounded-full text-sm transition cursor-pointer
-          ${
-            item === safePage
-              ? "bg-primary text-gray-600"
-              : "hover:bg-gray-100 dark:hover:bg-gray-800"
-          }`}
-                >
-                  {item}
-                </button>
-              )
-            )}
+          {/* Page numbers */}
+          <div className="flex items-center gap-2">
+            {/* Prev Button */}
+            <Button
+              buttonType="button"
+              title={<FaChevronLeft size={20} />}
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage(Math.max(currentPage - 1, 1))}
+              className="text-sm px-2 py-1
+      disabled:opacity-50 disabled:cursor-not-allowed"
+            />
+
+            {/* Page Numbers */}
+            <div className="flex items-center">
+              {paginationRange.map((item, idx) =>
+                item === "..." ? (
+                  <span
+                    key={`dots-${idx}`}
+                    className="px-2 text-gray-500 select-none"
+                  >
+                    …
+                  </span>
+                ) : (
+                  <button
+                    key={item}
+                    onClick={() => setCurrentPage(item)}
+                    className={`px-3 py-1 rounded-full text-sm transition
+            ${
+              item === safePage
+                ? "bg-primary text-gray-600"
+                : "hover:bg-gray-100 dark:hover:bg-gray-800"
+            }`}
+                  >
+                    {item}
+                  </button>
+                )
+              )}
+            </div>
+
+            {/* Next Button */}
+            <Button
+              buttonType="button"
+              title={<FaChevronRight size={20} />}
+              disabled={currentPage === totalPages}
+              onClick={() =>
+                setCurrentPage(Math.min(currentPage + 1, totalPages))
+              }
+              className="text-sm px-2 py-1
+      disabled:opacity-50 disabled:cursor-not-allowed"
+            />
           </div>
 
-          <PaginationControls
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-          />
+          {/* Rows per page selector */}
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-gray-600 dark:text-gray-400">
+                Rows per page:
+              </span>
+
+              <select
+                value={pageSize}
+                onChange={(e) => handlePageSizeChange(Number(e.target.value))}
+                className="px-2 py-1 rounded-md border border-gray-300 dark:border-gray-700
+                   bg-white dark:bg-dark-blue text-sm"
+              >
+                {[10, 50, 100].map((size) => (
+                  <option key={size} value={size}>
+                    {size}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </div>
       )}
     </div>
