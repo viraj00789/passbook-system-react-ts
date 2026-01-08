@@ -228,7 +228,7 @@ export default function InvoicePDF({ data }: InvoicePDFProps) {
             <Text style={styles.sectionTitle}>Bill To</Text>
             <Text style={styles.infoText}>Name: {data.client?.label}</Text>
             <Text style={styles.infoText}>Email: johndoe@gmail.com</Text>
-            <Text style={style.infoText}> Phone: +1 (101)445-532 </Text>
+            <Text style={styles.infoText}> Phone: +1 (101)445-532 </Text>
             <Text style={styles.infoText}>Address: New york, USA, 100001</Text>
             <Text style={styles.infoText}>
               Bank: {data.receivingAccount?.label}
