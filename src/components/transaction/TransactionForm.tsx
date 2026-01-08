@@ -1,16 +1,18 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useCallback, useEffect, useState } from "react";
 import type { RootState } from "../../store";
 import type { Transaction } from "../../store/Transactions/transactionType";
-import {
-  addTransaction,
-  updateTransaction,
-} from "../../store/Transactions/transactionsSlice";
+
 import Input from "../ui/Input";
 import { Button } from "../ui/Button";
 import FilterSelect from "../ui/Select";
-import { STATUS_OPTIONS } from "../../../data/filterOptionsData";
+
 import type { SelectOption } from "../../types/FilterTypes";
+import {
+  CLIENT_OPTIONS,
+  EMPLOYEE_OPTIONS,
+  STATUS_OPTIONS,
+} from "../../types/TransactionType";
 
 type FormErrors = Partial<
   Record<keyof Transaction | "clientName" | "type" | "status", string>
@@ -23,7 +25,6 @@ export default function TransactionDrawer({
   onClose: () => void;
   setTransactionReset: (resetForm: () => void) => void;
 }) {
-  const dispatch = useDispatch();
   const editingTransaction = useSelector(
     (state: RootState) => state.transactions.editingTransaction
   );
@@ -34,7 +35,7 @@ export default function TransactionDrawer({
     description: "",
     account: "",
     amount: 0,
-    type: "IN",
+    type: "IN", // ✅ default IN
     status: "Completed",
     clientDetail: {
       name: "",
@@ -54,26 +55,23 @@ export default function TransactionDrawer({
   }, []);
 
   useEffect(() => {
-    if (setTransactionReset) {
-      setTransactionReset(resetForm);
-    }
-  }, [setTransactionReset, resetForm, onClose]);
+    setTransactionReset(resetForm);
+  }, [setTransactionReset, resetForm]);
 
   const validate = (): boolean => {
     const newErrors: FormErrors = {};
 
     if (!form.date) newErrors.date = "Date is required";
-
-    if (!form.clientDetail.name)
-      newErrors.clientName = "Client name is required";
-
     if (!form.account) newErrors.account = "Account is required";
-
     if (!form.amount || form.amount <= 0)
       newErrors.amount = "Amount must be greater than 0";
 
-    if (!form.type) newErrors.type = "Transaction type is required";
+    if (!form.clientDetail.name) {
+      newErrors.clientName =
+        form.type === "IN" ? "Client is required" : "Employee is required";
+    }
 
+    if (!form.type) newErrors.type = "Transaction type is required";
     if (!form.status) newErrors.status = "Transaction status is required";
 
     setErrors(newErrors);
@@ -83,14 +81,7 @@ export default function TransactionDrawer({
   const handleSubmit = () => {
     if (!validate()) return;
 
-    if (editingTransaction) {
-      dispatch(updateTransaction(form));
-    } else {
-      dispatch(addTransaction(form));
-    }
-
-    setForm(initialForm);
-    setErrors({});
+    resetForm();
     onClose();
   };
 
@@ -109,17 +100,27 @@ export default function TransactionDrawer({
         error={errors.date}
       />
 
-      {/* Client Name */}
-      <Input
-        label="Client Name"
-        placeholder="Enter the Client Name"
-        value={form.clientDetail.name}
-        onChange={(e) => {
+      {/* Client / Employee Select */}
+      <FilterSelect
+        label={form.type === "IN" ? "Client" : "Employee"}
+        placeholder={
+          form.type === "IN" ? "Select a client" : "Select an employee"
+        }
+        options={form.type === "IN" ? CLIENT_OPTIONS : EMPLOYEE_OPTIONS}
+        value={
+          form.clientDetail.name
+            ? {
+                label: form.clientDetail.name,
+                value: form.clientDetail.name,
+              }
+            : null
+        }
+        onChange={(val) => {
           setForm({
             ...form,
             clientDetail: {
               ...form.clientDetail,
-              name: e.target.value,
+              name: (val as SelectOption).value,
             },
           });
           setErrors({ ...errors, clientName: "" });
@@ -131,7 +132,7 @@ export default function TransactionDrawer({
       {/* Account */}
       <Input
         label="Account"
-        placeholder="Enter the Bank Account"
+        placeholder="Enter Bank Account"
         value={form.account}
         onChange={(e) => {
           setForm({ ...form, account: e.target.value });
@@ -158,38 +159,40 @@ export default function TransactionDrawer({
       {/* Description */}
       <Input
         label="Description"
-        placeholder="Enter the Description"
+        placeholder="Enter description"
         value={form.description}
         onChange={(e) => setForm({ ...form, description: e.target.value })}
       />
 
       {/* IN / OUT Toggle */}
       <div className="flex flex-col gap-1">
-        <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-          Payment Status (IN / OUT) <span className="text-red-500">*</span>
+        <label className="text-sm font-semibold">
+          Payment Type <span className="text-red-500">*</span>
         </label>
 
-        <div
-          className={`flex w-fit rounded-xl p-1 bg-gray-100 dark:bg-dark-blue
-            ${errors.type
-              ? "border border-red-500"
-              : "border border-gray-300 dark:border-gray-700"
-            }`}
-        >
+        <div className="flex w-fit rounded-xl p-1 bg-gray-100 dark:bg-dark-blue border">
           {(["IN", "OUT"] as const).map((type) => (
             <button
               key={type}
               type="button"
               onClick={() => {
-                setForm({ ...form, type });
-                setErrors({ ...errors, type: "" });
+                setForm({
+                  ...form,
+                  type,
+                  clientDetail: {
+                    ...form.clientDetail,
+                    name: "", // ✅ reset
+                  },
+                });
+                setErrors({ ...errors, type: "", clientName: "" });
               }}
-              className={`px-4 py-1 rounded-lg text-sm font-bold transition-all
-                ${form.type === type
-                  ? type === "IN"
-                    ? "bg-green-status text-secondary"
-                    : "bg-red-status text-font-red-status"
-                  : "text-gray-500 hover:text-gray-700 dark:text-gray-400"
+              className={`px-4 py-1 rounded-lg text-sm font-bold transition
+                ${
+                  form.type === type
+                    ? type === "IN"
+                      ? "bg-green-status text-secondary"
+                      : "bg-red-status text-font-red-status"
+                    : "text-gray-500"
                 }`}
             >
               {type}
@@ -201,48 +204,40 @@ export default function TransactionDrawer({
       </div>
 
       {/* Transaction Status */}
-      <div>
-        <FilterSelect
-          label="Transaction Status"
-          placeholder="Select a status"
-          options={STATUS_OPTIONS}
-          value={
-            STATUS_OPTIONS.find((opt) => opt.value === form.status) ?? null
-          }
-          onChange={(val) => {
-            setForm({
-              ...form,
-              status: (val as SelectOption).value as
-                | "Pending"
-                | "Completed"
-                | "Failed",
-            });
-            setErrors({ ...errors, status: "" });
-          }}
-          required
-        />
-
-        {errors.status && (
-          <p className="text-xs text-red-500 mt-1">{errors.status}</p>
-        )}
-      </div>
+      <FilterSelect
+        label="Transaction Status"
+        placeholder="Select status"
+        options={STATUS_OPTIONS}
+        value={STATUS_OPTIONS.find((opt) => opt.value === form.status) ?? null}
+        onChange={(val) => {
+          setForm({
+            ...form,
+            status: (val as SelectOption).value as
+              | "Pending"
+              | "Completed"
+              | "Failed",
+          });
+          setErrors({ ...errors, status: "" });
+        }}
+        required
+        error={errors.status}
+      />
 
       {/* Actions */}
       <div className="flex gap-2">
         <Button
           buttonType="button"
-          title={`${editingTransaction ? "Update" : "Add"} Transaction`}
+          title={editingTransaction ? "Update Transaction" : "Add Transaction"}
           onClick={handleSubmit}
-          className="bg-primary text-gray-900 font-bold"
+          className="bg-primary font-bold text-black"
         />
 
         <Button
           buttonType="button"
           title="Cancel"
-          className="border border-gray-600 text-gray-900 font-bold bg-transparent text"
+          className="border"
           onClick={() => {
-            setForm(initialForm);
-            setErrors({});
+            resetForm();
             onClose();
           }}
         />

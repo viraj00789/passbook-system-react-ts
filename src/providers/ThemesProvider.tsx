@@ -9,41 +9,34 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+/* ✅ Detect theme BEFORE first render */
+const getInitialTheme = (): Theme => {
+  if (typeof window === "undefined") return "light";
+
+  const storedTheme = localStorage.getItem("theme") as Theme | null;
+  if (storedTheme) return storedTheme;
+
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+};
+
 export function ThemesProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("light");
+  const [theme, setTheme] = useState<Theme>(getInitialTheme);
 
+  /* ✅ Single source of truth for DOM */
   useEffect(() => {
-    // Check localStorage or system preference
-    const storedTheme = localStorage.getItem("theme") as Theme;
-    if (storedTheme) {
-      if (storedTheme !== theme) {
-        setTheme(storedTheme);
-      }
-      if (storedTheme === "dark") {
-        document.documentElement.classList.add("dark");
-      }
-    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      if (theme !== "dark") {
-        setTheme("dark");
-      }
-      document.documentElement.classList.add("dark");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    document.documentElement.classList.toggle("dark", theme === "dark");
+  }, [theme]);
 
+  /* ✅ Listen to system changes ONLY if user hasn't chosen */
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
     const handleChange = (e: MediaQueryListEvent) => {
       const storedTheme = localStorage.getItem("theme");
       if (!storedTheme) {
-        const newTheme = e.matches ? "dark" : "light";
-        setTheme(newTheme);
-        if (newTheme === "dark") {
-          document.documentElement.classList.add("dark");
-        } else {
-          document.documentElement.classList.remove("dark");
-        }
+        setTheme(e.matches ? "dark" : "light");
       }
     };
 
@@ -52,15 +45,11 @@ export function ThemesProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-
-    if (newTheme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
+    setTheme((prev) => {
+      const next = prev === "light" ? "dark" : "light";
+      localStorage.setItem("theme", next);
+      return next;
+    });
   };
 
   return (
@@ -72,8 +61,8 @@ export function ThemesProvider({ children }: { children: React.ReactNode }) {
 
 export function useTheme() {
   const context = useContext(ThemeContext);
-  if (context === undefined) {
-    throw new Error("useTheme must be used within a ThemesProvider");
+  if (!context) {
+    throw new Error("useTheme must be used within ThemesProvider");
   }
   return context;
 }
