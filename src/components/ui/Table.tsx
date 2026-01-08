@@ -383,12 +383,12 @@ function DataTable<T extends object>({
       {/* Pagination */}
       {paginationAtFooter && (
         <div
-          className="flex flex-wrap items-center justify-between gap-4 px-4 py-3
+          className="flex flex-wrap items-center justify-center md:justify-between gap-4 px-4 py-3
                   border-t border-gray-200 dark:border-gray-700
                   bg-white dark:bg-gray-800 rounded-b-2xl text"
         >
           {/* Page info */}
-          <span className="text-sm text-gray-600 dark:text-gray-400">
+          <span className="hidden md:inline text-sm text-gray-600 dark:text-gray-400">
             Page {currentPage} of {totalPages}
           </span>
 
@@ -446,7 +446,7 @@ function DataTable<T extends object>({
 
           {/* Rows per page selector */}
           <div>
-            <div className="flex items-center gap-2">
+            <div className="hidden md:flex items-center gap-2">
               <span className="text-sm text-gray-600 dark:text-gray-400">
                 Rows per page:
               </span>
