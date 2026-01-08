@@ -457,7 +457,7 @@ export default function InvoiceForm({
         value={invoiceForm.tax}
         error={errors.tax}
         onChange={(e) => {
-          const val = e.target.value === "" ? "" : Number(e.target.value);
+          let val = e.target.value === "" ? "" : Number(e.target.value);
           if (val !== "") {
             val = Math.max(0, Math.min(99, val as number));
           }
