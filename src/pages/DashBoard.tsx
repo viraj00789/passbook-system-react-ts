@@ -1,9 +1,6 @@
 import { useNavigate } from "react-router";
-import {
-  Filter,
-  type FilterState,
-} from "../components/dashboard/Filters/GlobalFilter";
-import { useEffect, useState } from "react";
+import { Filter } from "../components/dashboard/Filters/GlobalFilter";
+import { useEffect } from "react";
 import AreaGraph from "../components/dashboard/Graph/AreaGraph";
 import CardStack from "../components/dashboard/Cards/CredritCardStacks";
 import TableUsageExample from "../components/dashboard/Cards/RecentTransaction";
@@ -13,13 +10,7 @@ import MainGraphs from "../components/dashboard/Graph/MainGraphs";
 
 const DashBoard = () => {
   const navigate = useNavigate();
-  const [filter, setFilter] = useState<FilterState>({
-    type: "all",
-    dateRange: {
-      start: null,
-      end: null,
-    },
-  });
+
   useEffect(() => {
     const isAuthenticated = !!localStorage.getItem("auth");
     navigate(isAuthenticated ? "/" : "/sign-in");
@@ -31,20 +22,20 @@ const DashBoard = () => {
           <h1 className="text-lg md:text-2xl lg:text-3xl font-bold text">
             Dashboard
           </h1>
-          <Filter filter={filter} onFilterChange={setFilter} />
+          <Filter />
         </div>
-        <div className="px-2 xl:px-4 h-[calc(100vh-150px)] overflow-auto w-full">
-          <div className="grid gap-2 xl:gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 pb-0 xl:pb-4">
+        <div className="px-2 lg:px-3 xl:px-4 h-[calc(100vh-150px)] overflow-auto w-full">
+          <div className="grid gap-2 lg:gap-3 xl:gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-4 py-2 lg:py-3 xl:py-4">
             {statsData?.map((stat, index) => (
               <CardDataStates key={index} {...stat} />
             ))}
           </div>
-          <div className="flex flex-col 2xl:flex-row gap-0 lg:gap-0.5 xl:gap-4 w-full">
+          <div className="flex flex-col 2xl:flex-row gap-2 lg:gap-3 xl:gap-4 w-full">
             <AreaGraph />
             <CardStack />
           </div>
           <MainGraphs />
-          <div className="mt-2 lg:mt-4.5 space-y-0 xl:space-y-4">
+          <div className="mt-2 lg:mt-3 xl:mt-4 space-y-0 xl:space-y-4">
             <TableUsageExample />
           </div>
         </div>

@@ -81,7 +81,7 @@ const CardStack = () => {
                   <motion.div
                     className="absolute inset-0 rounded-2xl bg-white/20 pointer-events-none"
                     initial={{ opacity: 0 }}
-                    whileDrag={{ opacity: 1 }} // show overlay while dragging
+                    whileDrag={{ opacity: 1 }}
                   />
 
                   {/* Card content */}
@@ -94,7 +94,7 @@ const CardStack = () => {
                         <img
                           src={card.brandImage as string}
                           alt={card.accountName as string}
-                          className="bg-transparent rounded-lg w-10 h-10 lg:w-20 lg:h-5"
+                          className="bg-transparent rounded-lg w-10 h-10 lg:w-20 lg:h-10"
                         />
                       </div>
                     </div>

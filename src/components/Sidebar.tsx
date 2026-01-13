@@ -90,7 +90,7 @@ export default function Sidebar() {
           {/* Toggle Button */}
           <button
             onClick={toggle}
-            className="p-5 flex items-center gap-2 border-t border-gray-200 dark:border-gray-600 cursor-pointer text"
+            className="p-5 md:flex hidden items-center gap-2 border-t border-gray-200 dark:border-gray-600 cursor-pointer text"
           >
             {open ? <FiChevronLeft /> : <FiChevronRight />}
             {open && <span>Collapse</span>}

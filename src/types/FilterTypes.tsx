@@ -8,6 +8,7 @@ export interface FiltersState {
     start: Date | null;
     end: Date | null;
   };
+  type: "all" | "month" | "custom";
   accounts: SelectOption[];
   clients: SelectOption | null;
   employees: SelectOption | null;

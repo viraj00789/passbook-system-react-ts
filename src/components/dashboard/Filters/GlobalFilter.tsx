@@ -2,31 +2,33 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../../react-date-picker.css";
 import { useEffect, useRef, useState } from "react";
+import type { FiltersState } from "../../../types/FilterTypes";
 
 export type FilterType = "all" | "month" | "custom";
-export interface FilterState {
-  type: FilterType;
-  dateRange?: {
-    start: Date | null;
-    end: Date | null;
-  };
-}
-interface FilterProps {
-  filter: FilterState;
-  onFilterChange: (filter: FilterState) => void;
-}
 
-export function Filter({ filter, onFilterChange }: FilterProps) {
+export function Filter() {
   const today = new Date();
   const [openDate, setOpenDate] = useState(false);
   const globalFilterRef = useRef<HTMLDivElement | null>(null);
+  const [filter, setFilter] = useState<FiltersState>({
+    type: "all",
+    dateRange: {
+      start: null,
+      end: null,
+    },
+    accounts: [],
+    clients: null,
+    employees: null,
+    isCheckBoxVisible: false,
+    checkOptions: [],
+  });
 
   const handleTypeChange = (type: FilterType) => {
-    let dateRange: FilterState["dateRange"];
+    let dateRange: FiltersState["dateRange"];
 
     switch (type) {
       case "all":
-        dateRange = undefined;
+        dateRange = { start: null, end: null };
         break;
 
       case "month": {
@@ -42,7 +44,11 @@ export function Filter({ filter, onFilterChange }: FilterProps) {
         break;
     }
 
-    onFilterChange({ type, dateRange });
+    setFilter({
+      ...filter,
+      type,
+      dateRange,
+    });
   };
 
   useEffect(() => {
@@ -94,17 +100,19 @@ export function Filter({ filter, onFilterChange }: FilterProps) {
               if (!dates) return;
 
               const [start, end] = dates;
-              onFilterChange({
+              setFilter({
                 ...filter,
                 dateRange: { start, end },
               });
-              if (start && end) setOpenDate(false);
             }}
             isClearable
             placeholderText="Select date range"
-            className="px-3 py-2.5 text-sm border border-primary border-radius-3xl w-64
-               placeholder:text-gray-500 dark:placeholder:text-gray-50
-               placeholder:font-medium text bg-text-500 dark:bg-dark-blue"
+            showPopperArrow={false}
+            dateFormat="dd/MM/yyyy"
+            className="px-3 py-2.5 text-sm border-radius-2xl  border border-gray-300 dark:border-gray-600 placeholder:text-gray-500 dark:placeholder:text-gray-50
+               placeholder:font-medium text bg-text-500 dark:bg-dark-blue w-64 focus:outline-none caret-transparent bg-white"
+            preventOpenOnFocus
+            onKeyDown={(e) => e.preventDefault()}
           />
         </div>
       )}

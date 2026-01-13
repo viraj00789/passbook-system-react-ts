@@ -3,13 +3,21 @@ import { getItemFromLocalStorage } from "../utils/helper";
 import { GoBell } from "react-icons/go";
 import { MdOutlineAttachMoney } from "react-icons/md";
 import { useSidebar } from "../providers/SideBarContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ThemeToggle from "../providers/ThemeToggle";
 import Maglo from "../assets/maglo.svg";
+import { useState } from "react";
 
 export default function Navbar() {
   const { email } = getItemFromLocalStorage("auth") || {};
   const { open, setOpen } = useSidebar();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("auth");
+    navigate("/sign-in");
+  };
 
   return (
     <nav className="w-full text px-5 py-4 flex items-center justify-between border-b border-gray-200 dark:border-gray-600 bg-white dark:bg-dark-blue">
@@ -57,7 +65,10 @@ export default function Navbar() {
         />
         <ThemeToggle />
 
-        <div className="w-8 h-8 min-w-8 min-h-8 rounded-lg flex items-center justify-centerw">
+        <div
+          className="w-8 h-8 min-w-8 min-h-8 rounded-lg flex items-center justify-center relative cursor-pointer"
+          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+        >
           {email ? (
             <div className="w-full h-full bg-primary text-black flex items-center justify-center text-2xl font-bold rounded-full">
               {email?.charAt(0)?.toUpperCase() || "?"}
@@ -68,6 +79,18 @@ export default function Navbar() {
             </div>
           )}
         </div>
+        {isDropdownOpen && (
+          <div className="absolute max-w-50 w-full right-5 top-15 text z-30 rounded-md">
+            <div className="h-auto bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 hover:dark:bg-gray-600 rounded-md p-2">
+              <p
+                className="text-md font-medium cursor-pointer"
+                onClick={handleLogout}
+              >
+                Logout
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );

@@ -35,7 +35,7 @@ export default function TransactionDrawer({
     description: "",
     account: "",
     amount: 0,
-    type: "IN", // ✅ default IN
+    type: "IN",
     status: "Completed",
     clientDetail: {
       name: "",
@@ -104,7 +104,7 @@ export default function TransactionDrawer({
       <FilterSelect
         label={form.type === "IN" ? "Client" : "Employee"}
         placeholder={
-          form.type === "IN" ? "Select a client" : "Select an employee"
+          form.type === "IN" ? "Select a client" : "Select a employee"
         }
         options={form.type === "IN" ? CLIENT_OPTIONS : EMPLOYEE_OPTIONS}
         value={
@@ -170,7 +170,7 @@ export default function TransactionDrawer({
           Payment Type <span className="text-red-500">*</span>
         </label>
 
-        <div className="flex w-fit rounded-xl p-1 bg-gray-100 dark:bg-dark-blue border">
+        <div className="flex w-fit rounded-xl p-1 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-600">
           {(["IN", "OUT"] as const).map((type) => (
             <button
               key={type}
@@ -181,17 +181,17 @@ export default function TransactionDrawer({
                   type,
                   clientDetail: {
                     ...form.clientDetail,
-                    name: "", // ✅ reset
+                    name: "",
                   },
                 });
                 setErrors({ ...errors, type: "", clientName: "" });
               }}
-              className={`px-4 py-1 rounded-lg text-sm font-bold transition
+              className={`px-4 py-1 rounded-lg text-sm font-bold transition text-gray-200 dark:text-white
                 ${
                   form.type === type
                     ? type === "IN"
-                      ? "bg-green-status text-secondary"
-                      : "bg-red-status text-font-red-status"
+                      ? "bg-green-500 "
+                      : "bg-red-400 "
                     : "text-gray-500"
                 }`}
             >
