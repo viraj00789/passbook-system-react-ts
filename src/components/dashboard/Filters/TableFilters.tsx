@@ -21,6 +21,8 @@ export default function FiltersPanel() {
       start: null,
       end: null,
     },
+
+    type: "all",
     accounts: [],
     clients: null,
     employees: null,

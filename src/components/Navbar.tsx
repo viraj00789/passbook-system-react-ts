@@ -6,18 +6,37 @@ import { useSidebar } from "../providers/SideBarContext";
 import { Link, useNavigate } from "react-router-dom";
 import ThemeToggle from "../providers/ThemeToggle";
 import Maglo from "../assets/maglo.svg";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Navbar() {
   const { email } = getItemFromLocalStorage("auth") || {};
   const { open, setOpen } = useSidebar();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
+  const logOutRef = useRef<HTMLDivElement>(null);
 
   const handleLogout = () => {
     localStorage.removeItem("auth");
     navigate("/sign-in");
   };
+  const onClickOutSide = () => {
+    setIsDropdownOpen(false);
+  };
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        logOutRef.current &&
+        !logOutRef.current.contains(event.target as Node)
+      ) {
+        onClickOutSide();
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [logOutRef]);
 
   return (
     <nav className="w-full text px-5 py-4 flex items-center justify-between border-b border-gray-200 dark:border-gray-600 bg-white dark:bg-dark-blue">
@@ -53,7 +72,7 @@ export default function Navbar() {
         </Link>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2" ref={logOutRef}>
         <div className="px-2 py-1 rounded-lg items-center hidden md:flex border border-gray-200 dark:border-gray-600">
           <div className="w-2 h-2 rounded-full bg-green-500" />
           <MdOutlineAttachMoney size={25} />
