@@ -18,7 +18,7 @@ const DashBoard = () => {
   return (
     <>
       <div className="flex flex-col w-full">
-        <div className="flex items-center justify-between sticky top-0 bg-gray-100 dark:bg-dark-blue py-3 xl:py-4 px-3 xl:px-5 z-10 w-full">
+        <div className="flex flex-row items-center justify-between sticky top-0 bg-gray-100 dark:bg-dark-blue py-3 xl:py-4 px-3 xl:px-5 z-10 w-full">
           <h1 className="text-lg md:text-2xl lg:text-3xl font-bold text">
             Dashboard
           </h1>

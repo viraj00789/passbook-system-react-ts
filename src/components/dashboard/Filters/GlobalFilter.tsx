@@ -3,8 +3,27 @@ import "react-datepicker/dist/react-datepicker.css";
 import "../../../react-date-picker.css";
 import { useEffect, useRef, useState } from "react";
 import type { FiltersState } from "../../../types/FilterTypes";
+import { forwardRef } from "react";
 
 export type FilterType = "all" | "month" | "custom";
+
+const HiddenInput = forwardRef<HTMLInputElement>((_, ref) => {
+  return (
+    <input
+      ref={ref}
+      tabIndex={-1}
+      style={{
+        width: 0,
+        height: 0,
+        padding: 0,
+        margin: 0,
+        border: 0,
+        opacity: 0,
+        position: "absolute",
+      }}
+    />
+  );
+});
 
 export function Filter() {
   const today = new Date();
@@ -70,7 +89,41 @@ export function Filter() {
 
   return (
     <>
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+      <div
+        className="flex justify-end lg:justify-between gap-4 sm:flex-row sm:items-center cursor-pointer mt-2"
+        onClick={() => setOpenDate(true)}
+      >
+        {filter.type === "custom" &&
+          filter.dateRange.start &&
+          filter.dateRange.end && (
+            <div
+              className="flex items-center gap-2 px-3 py-1.5 rounded-lg
+                         bg-gray-200 text-gray-700
+                         dark:bg-gray-700 dark:text-gray-100
+                         text-xs md:text-sm font-semibold shadow-sm"
+            >
+              <span>
+                {filter.dateRange.start.toLocaleDateString()} –{" "}
+                {filter.dateRange.end.toLocaleDateString()}
+              </span>
+
+              <button
+                onClick={(e: React.MouseEvent) => {
+                  e.stopPropagation();
+                  setFilter({
+                    ...filter,
+                    dateRange: { start: null, end: null },
+                  });
+                }}
+                className="w-4 h-4 flex items-center justify-center
+                           rounded-full hover:bg-white/20
+                           cursor-pointer transition-colors"
+                aria-label="Clear date range"
+              >
+                ✕
+              </button>
+            </div>
+          )}
         <div className="flex bg-gray-100 border-gray-300 dark:border-gray-600 border dark:bg-gray-700 p-1 rounded-lg xl:rounded-2xl">
           {(["all", "month", "custom"] as FilterType[]).map((type) => (
             <button
@@ -87,12 +140,13 @@ export function Filter() {
           ))}
         </div>
       </div>
-      {filter.type === "custom" && openDate && (
+      {filter.type === "custom" && (
         <div
           className="absolute top-15 lg:top-18 right-2 lg:right-3.5"
           ref={globalFilterRef}
         >
           <DatePicker
+            open={openDate}
             selectsRange
             startDate={filter.dateRange?.start ?? null}
             endDate={filter.dateRange?.end ?? null}
@@ -100,19 +154,25 @@ export function Filter() {
               if (!dates) return;
 
               const [start, end] = dates;
+
               setFilter({
                 ...filter,
                 dateRange: { start, end },
               });
+
+              if (start && end) {
+                setOpenDate(false);
+              }
             }}
-            isClearable
             placeholderText="Select date range"
             showPopperArrow={false}
-            dateFormat="dd/MM/yyyy"
+            dateFormat="dd/MMM/yyyy"
             className="px-3 py-2.5 text-sm border-radius-2xl  border border-gray-300 dark:border-gray-600 placeholder:text-gray-500 dark:placeholder:text-gray-50
                placeholder:font-medium text bg-text-500 dark:bg-dark-blue w-64 focus:outline-none caret-transparent bg-white"
             preventOpenOnFocus
             onKeyDown={(e) => e.preventDefault()}
+            customInput={<HiddenInput />}
+            onClickOutside={() => setOpenDate(false)}
           />
         </div>
       )}
