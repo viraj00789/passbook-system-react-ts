@@ -143,3 +143,20 @@ body {
 input[type="date"]::-webkit-calendar-picker-indicator {
   opacity: 0;
 }
+
+/* Range animation */
+.range-flow {
+  animation: flow 0.2s ease-out;
+}
+
+@keyframes flow {
+  from {
+    opacity: 0.6;
+    transform: scaleX(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}

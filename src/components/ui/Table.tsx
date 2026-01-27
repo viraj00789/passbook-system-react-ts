@@ -55,7 +55,7 @@ function DataTable<T extends object>({
   const width = useWindowSize();
   const isMobile = width < 768;
   const sortableColumns = columns.filter(
-    (col) => col.sortable && col.key !== "actions"
+    (col) => col.sortable && col.key !== "actions",
   );
 
   const getCellValue = (row: T, col: Column<T>, idx: number) => {
@@ -88,8 +88,8 @@ function DataTable<T extends object>({
 
     return data.filter((row) =>
       Object.values(row).some((value) =>
-        extractSearchText(value).toLowerCase().includes(searchLower)
-      )
+        extractSearchText(value).toLowerCase().includes(searchLower),
+      ),
     );
   }, [data, search]);
 
@@ -123,7 +123,7 @@ function DataTable<T extends object>({
 
   const paginationRange = useMemo(
     () => getPaginationRange(safePage, totalPages),
-    [safePage, totalPages]
+    [safePage, totalPages],
   );
 
   const paginatedData = useMemo(() => {
@@ -144,7 +144,7 @@ function DataTable<T extends object>({
   };
 
   return (
-    <div className="w-full border border-radius-2xl border-gray-300 dark:border-gray-800 h-full grow">
+    <div className="w-full border border-radius-2xl border-gray-300 dark:border-gray-800 h-full">
       {/* Header */}
       <div className="flex justify-end sm:justify-between items-center rounded-t-xl xl:rounded-t-2xl p-2 lg:p-4 bg-white dark:bg-gray-800">
         <h1 className="text-lg lg:text-xl font-bold text-gray-900 dark:text-white hidden sm:flex">
@@ -357,10 +357,10 @@ function DataTable<T extends object>({
                         {col.key === "serial"
                           ? (currentPage - 1) * pageSize + idx + 1
                           : col.render
-                          ? col.render(row, idx)
-                          : col.key !== "actions"
-                          ? String(row[col.key])
-                          : null}
+                            ? col.render(row, idx)
+                            : col.key !== "actions"
+                              ? String(row[col.key])
+                              : null}
                       </td>
                     ))}
                   </tr>
@@ -427,7 +427,7 @@ function DataTable<T extends object>({
                   >
                     {item}
                   </button>
-                )
+                ),
               )}
             </div>
 

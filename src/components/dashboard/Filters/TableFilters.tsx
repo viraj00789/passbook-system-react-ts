@@ -21,8 +21,7 @@ export default function FiltersPanel() {
       start: null,
       end: null,
     },
-
-    type: "all",
+    type: "today",
     accounts: [],
     clients: null,
     employees: null,
@@ -40,7 +39,7 @@ export default function FiltersPanel() {
         : {
             ...filters,
             checkOptions: [...filters.checkOptions, option],
-          }
+          },
     );
   };
 

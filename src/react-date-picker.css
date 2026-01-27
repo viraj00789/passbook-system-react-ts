@@ -36,9 +36,7 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
-.react-datepicker-wrapper {
-    width: 0 !important;
-}
+.react-datepicker-wrapper {}
 
 /* ============================ HEADER ============================= */
 .react-datepicker__header {
@@ -157,10 +155,11 @@
    POPPER
 ============================ */
 .react-datepicker-popper-offset {
-    margin: 0;
-    transform: none !important;
-    left: -350px !important;
-    top: -10px !important;
+    /* margin: 0; */
+    /* transform: none !important; */
+    left: -60px !important;
+    top: -20px !important;
+    /* position: relative !important; */
 }
 
 /* ============================
@@ -223,6 +222,6 @@
 .react-datepicker__year-text:not([aria-disabled=true]):hover {
     background-color: var(--dp-primary) !important;
     color: var(--dp-black) !important;
-    border-radius: 50% !important;
+    border-radius: 0% !important;
 
 }
