@@ -5,6 +5,11 @@ import Input from "../components/ui/Input";
 import Maglo from "../assets/maglo.svg";
 import auth from "../assets/auth-bg.png";
 
+export type Errors = {
+  email?: string;
+  password?: string;
+};
+
 export default function SignIn() {
   const navigate = useNavigate();
 
@@ -12,6 +17,26 @@ export default function SignIn() {
     email: "",
     password: "",
   });
+  const [errors, setErrors] = useState<Errors>({});
+
+  const validate = (): boolean => {
+    const newErrors: Errors = {};
+
+    if (!formData.email) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Enter a valid email address";
+    }
+
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+    } else if (formData.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   useEffect(() => {
     const isAuthenticated = !!localStorage.getItem("auth");
@@ -23,11 +48,9 @@ export default function SignIn() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const { email, password } = formData;
-    if (!email || !password) return;
+    if (!validate()) return;
 
-    localStorage.setItem("auth", JSON.stringify({ email }));
-
+    localStorage.setItem("auth", JSON.stringify({ email: formData.email }));
     navigate("/", { replace: true });
   };
 
@@ -50,7 +73,7 @@ export default function SignIn() {
             </p>
           </div>
 
-          <form className="space-y-6" onSubmit={handleSubmit}>
+          <form className="space-y-6" onSubmit={handleSubmit} noValidate>
             <Input
               id="email"
               name="email"
@@ -58,9 +81,11 @@ export default function SignIn() {
               label="Email address"
               placeholder="Enter the email"
               value={formData.email}
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
+              onChange={(e) => {
+                setFormData({ ...formData, email: e.target.value });
+                setErrors((prev) => ({ ...prev, email: undefined }));
+              }}
+              error={errors.email}
               required
             />
 
@@ -71,9 +96,11 @@ export default function SignIn() {
               label="Password"
               placeholder="Enter the password"
               value={formData.password}
-              onChange={(e) =>
-                setFormData({ ...formData, password: e.target.value })
-              }
+              onChange={(e) => {
+                setFormData({ ...formData, password: e.target.value });
+                setErrors((prev) => ({ ...prev, password: undefined }));
+              }}
+              error={errors.password}
               required
             />
 
@@ -92,6 +119,7 @@ export default function SignIn() {
               buttonType="submit"
               title="Sign In"
               className="w-full bg-primary text-gray-900 font-bold"
+              buttonPadding="p-2"
             />
           </form>
         </div>
@@ -103,6 +131,7 @@ export default function SignIn() {
           src={auth}
           alt="Hero"
           className="object-cover h-[calc(100vh)] w-full"
+          loading="lazy"
         />
       </div>
     </div>

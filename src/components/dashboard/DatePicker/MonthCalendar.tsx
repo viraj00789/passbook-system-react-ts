@@ -57,7 +57,7 @@ export default function MonthCalendar({
         ))}
       </div>
 
-      <div className="grid grid-cols-7 gap-1">
+      <div className="grid grid-cols-7 gap-1 cursor-pointer">
         {days.map((date, i) =>
           date ? (
             <button
@@ -65,7 +65,7 @@ export default function MonthCalendar({
               onClick={() => onSelect(date)}
               onMouseEnter={() => setHoverDate(date)}
               onMouseLeave={() => setHoverDate(null)}
-              className={`h-8 rounded-md text-sm transition-all duration-200
+              className={`h-8 rounded-md text-sm transition-all duration-200 cursor-pointer
     ${
       isSameDay(date, start) || isSameDay(date, end)
         ? "bg-primary text-black"

@@ -143,12 +143,7 @@
     border-color: var(--dp-primary);
 }
 
-/* ============================
-   INPUT FIELD
-============================ */
-.react-datepicker__input-container {
-    width: 16rem !important;
-}
+
 
 
 /* ============================

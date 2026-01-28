@@ -1,5 +1,5 @@
 import Chart from "react-apexcharts";
-import { useTheme } from "../../../providers/ThemesProvider";
+import { useTheme } from "../../../hooks/useTheme";
 
 export default function AccountDonut() {
   const { theme } = useTheme();

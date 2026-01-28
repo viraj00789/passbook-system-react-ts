@@ -1,8 +1,8 @@
 import React, { Suspense, useMemo, useState } from "react";
-import { useTheme } from "../../../providers/ThemesProvider";
 import { areaChartData } from "../../../../data/areaGraphData";
 import { getAreaChartOptions } from "../../../utils/graphconfig";
 import LineChartSkeleton from "../../skeleton/dashboard/LineChartSkeleton";
+import { useTheme } from "../../../hooks/useTheme";
 
 type FilterType = "day" | "month" | "year";
 
@@ -22,11 +22,11 @@ export default function AreaGraph() {
         data: areaChartData[filter].expense,
       },
     ],
-    [filter]
+    [filter],
   );
 
   return (
-    <div className="w-full max-w-full 2xl:max-w-[65%] space-y-4 border-radius-3xl border border-gray-300 dark:border-gray-800 bg-gray-50 dark:bg-gray-800 p-0 md:p-3 xl:p-4">
+    <div className="w-full max-w-full 2xl:max-w-[65%] space-y-4 border-radius-3xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-0 md:p-3 xl:p-4">
       {/* Header */}
       <div className="flex justify-between items-center p-2 md:p-0">
         <h2 className="text-lg lg:text-xl xl:text-2xl font-bold text-gray-900 dark:text-white">

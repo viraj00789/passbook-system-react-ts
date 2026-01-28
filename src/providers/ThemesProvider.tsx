@@ -1,13 +1,5 @@
-import { createContext, useContext, useEffect, useState } from "react";
-
-type Theme = "light" | "dark";
-
-interface ThemeContextType {
-  theme: Theme;
-  toggleTheme: () => void;
-}
-
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+import { useEffect, useState } from "react";
+import { ThemeContext, type Theme } from "../types/ThemeContextType";
 
 /* ✅ Detect theme BEFORE first render */
 const getInitialTheme = (): Theme => {
@@ -24,12 +16,10 @@ const getInitialTheme = (): Theme => {
 export function ThemesProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>(getInitialTheme);
 
-  /* ✅ Single source of truth for DOM */
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
   }, [theme]);
 
-  /* ✅ Listen to system changes ONLY if user hasn't chosen */
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -57,12 +47,4 @@ export function ThemesProvider({ children }: { children: React.ReactNode }) {
       {children}
     </ThemeContext.Provider>
   );
-}
-
-export function useTheme() {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error("useTheme must be used within ThemesProvider");
-  }
-  return context;
 }

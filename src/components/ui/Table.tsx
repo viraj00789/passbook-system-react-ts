@@ -144,9 +144,9 @@ function DataTable<T extends object>({
   };
 
   return (
-    <div className="w-full border border-radius-2xl border-gray-300 dark:border-gray-800 h-full">
+    <div className="w-full h-full">
       {/* Header */}
-      <div className="flex justify-end sm:justify-between items-center rounded-t-xl xl:rounded-t-2xl p-2 lg:p-4 bg-white dark:bg-gray-800">
+      <div className="flex justify-end sm:justify-between items-center border-t border-x border-gray-300 dark:border-gray-700 rounded-t-xl xl:rounded-t-2xl p-2 lg:p-4 bg-white dark:bg-gray-800">
         <h1 className="text-lg lg:text-xl font-bold text-gray-900 dark:text-white hidden sm:flex">
           {title}
         </h1>
@@ -227,7 +227,7 @@ function DataTable<T extends object>({
 
       {/* Table Wrapper */}
       {isMobile ? (
-        <div className="p-2 space-y-4">
+        <div className="p-2 border border-gray-200 dark:border-gray-700 space-y-4">
           <div className="flex gap-2 text">
             <select
               value={sortKey ? String(sortKey) : ""}
@@ -266,7 +266,7 @@ function DataTable<T extends object>({
             paginatedData.map((row, idx) => (
               <div
                 key={idx}
-                className="border border-gray-300 dark:border-gray-800 rounded-xl p-4 bg-gray-50 dark:bg-gray-800 space-y-2 "
+                className="border border-gray-300 dark:border-gray-800 rounded-xl p-4 bg-gray-50 dark:bg-gray-800 space-y-1"
               >
                 {columns.map((col) => (
                   <div key={col.label} className="py-1 flex items-center gap-5">
@@ -286,13 +286,13 @@ function DataTable<T extends object>({
         </div>
       ) : (
         <div
-          className={`overflow-x-auto w-full max-w-[calc(100vw-11px)]  h-full max-h-[calc(100vh-209px)] xl:max-h-[calc(100vh-240px)] ${
+          className={`overflow-x-auto w-full max-w-[calc(100vw-11px)] h-full max-h-[calc(100vh-209px)] xl:max-h-[calc(100vh-240px)] border-x border-gray-300 dark:border-gray-700 ${
             open
               ? "lg:max-w-[calc(100vw-250px)]"
               : "lg:max-w-[calc(100vw-90px)]"
-          }`}
+          } ${!paginationAtFooter ? "rounded-b-2xl border-b" : "rounded-b-none border-b-0"}`}
         >
-          <table className="min-w-max w-full text-sm h-full">
+          <table className="w-full text-sm h-full ">
             {/* Header */}
             <thead>
               <tr>
@@ -384,7 +384,7 @@ function DataTable<T extends object>({
       {paginationAtFooter && (
         <div
           className="flex flex-wrap items-center justify-center md:justify-between gap-4 px-4 py-3
-                  border-t border-gray-200 dark:border-gray-700
+                  border border-gray-300 dark:border-gray-700
                   bg-white dark:bg-gray-800 rounded-b-2xl text"
         >
           {/* Page info */}

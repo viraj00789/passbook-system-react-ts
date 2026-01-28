@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes } from "react-router";
 import { SidebarProvider } from "./providers/SideBarContext";
-import { ThemesProvider } from "./providers/ThemesProvider";
 import SignIn from "./pages/SignIn";
 import { Route } from "react-router";
 import MainLayout from "./layouts/MainLayout";
@@ -12,6 +11,7 @@ import Clients from "./pages/Clients";
 import Employees from "./pages/Employees";
 import { Expenses } from "./pages/Expense";
 import { Invoices } from "./pages/Invoice";
+import ForgotPassword from "./pages/ForgotPassword";
 
 function App() {
   return (
@@ -20,14 +20,13 @@ function App() {
         <Routes>
           {/* Public */}
           <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
 
           {/* Protected */}
           <Route
             element={
               <SidebarProvider>
-                <ThemesProvider>
-                  <ProtectedRoute />
-                </ThemesProvider>
+                <ProtectedRoute />
               </SidebarProvider>
             }
           >

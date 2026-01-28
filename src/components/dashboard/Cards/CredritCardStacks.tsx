@@ -24,7 +24,7 @@ const CardStack = () => {
 
   return (
     <>
-      <div className="w-full 2xl:w-[35%] flex flex-col justify-between border border-gray-300 dark:border-gray-800 border-radius-3xl bg-gray-50 dark:bg-gray-800 p-4">
+      <div className="w-full 2xl:w-[34%] flex flex-col justify-between border border-gray-300 dark:border-gray-700 border-radius-3xl bg-gray-50 dark:bg-gray-800 p-4">
         <h2 className="text-lg lg:text-xl xl:text-2xl font-bold text-gray-900 dark:text-white">
           Accounts
         </h2>

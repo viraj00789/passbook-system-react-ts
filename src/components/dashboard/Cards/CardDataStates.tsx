@@ -1,8 +1,8 @@
 import { FaArrowTrendDown, FaArrowTrendUp } from "react-icons/fa6";
-import { useTheme } from "../../../providers/ThemesProvider";
 import { getMiniBarChartOptions } from "../../../utils/graphconfig";
 import React, { Suspense } from "react";
 import BarChartSkeleton from "../../skeleton/dashboard/BarChartSkeleton";
+import { useTheme } from "../../../hooks/useTheme";
 
 interface CardDataStatesProps {
   title: string;
@@ -31,7 +31,7 @@ export default function CardDataStates({
   const LazyChart = React.lazy(() => import("react-apexcharts"));
 
   return (
-    <div className="my-0 xl:my-0 p-4 space-y-4 border-radius-3xl  border border-gray-300 dark:border-gray-800 bg-gray-50 dark:bg-gray-800">
+    <div className="my-0 xl:my-0 p-4 space-y-4 border-radius-3xl  border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
       {/* Header */}
       <div className="flex justify-between">
         <div

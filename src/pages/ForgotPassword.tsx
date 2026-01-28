@@ -4,16 +4,40 @@ import Maglo from "../assets/maglo.svg";
 import auth from "../assets/auth-bg.png";
 import Input from "../components/ui/Input";
 import { Button } from "../components/ui/Button";
+import { FaArrowLeft } from "react-icons/fa";
+
+type Errors = {
+  email?: string;
+};
 
 export default function ForgotPassword() {
   const router = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
   });
 
+  const [errors, setErrors] = useState<Errors>({});
+
+  const validate = (): boolean => {
+    const newErrors: Errors = {};
+
+    if (!formData.email) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Enter a valid email address";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!formData) return;
+
+    if (!validate()) return;
+
+    // fake success flow
     router("/");
   };
 
@@ -40,8 +64,7 @@ export default function ForgotPassword() {
           </div>
 
           {/* Form */}
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            {/* Email */}
+          <form className="space-y-6" onSubmit={handleSubmit} noValidate>
             <Input
               id="email"
               name="email"
@@ -49,28 +72,42 @@ export default function ForgotPassword() {
               label="Email address"
               placeholder="Enter the email"
               value={formData.email}
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
+              onChange={(e) => {
+                setFormData({ email: e.target.value });
+                setErrors((prev) => ({ ...prev, email: undefined }));
+              }}
+              error={errors.email}
               required
             />
 
-            {/* Button */}
-            <Button buttonType="submit" title="Send" />
-            <Link to="/sign-in">
+            <Button
+              buttonType="submit"
+              title="Send"
+              className="w-full bg-primary text-gray-900 font-bold"
+              buttonPadding="p-2"
+            />
+
+            <Link
+              to="/sign-in"
+              className="flex gap-3 items-center justify-center"
+            >
+              <FaArrowLeft size={18} className="text-primary" />
               <p className="text-md text-center font-medium text-primary-600 hover:text-primary-700">
                 Back to Sign In
               </p>
             </Link>
           </form>
-
-          {/* Link */}
         </div>
       </div>
 
       {/* RIGHT SIDE – IMAGE */}
-      <div className="relative hidden lg:block h-[calc(100vh)] w-full">
-        <img src={auth} alt="Hero Image" className="object-cover" />
+      <div className="hidden lg:block">
+        <img
+          src={auth}
+          alt="Hero"
+          className="object-cover h-screen w-full"
+          loading="lazy"
+        />
       </div>
     </div>
   );
