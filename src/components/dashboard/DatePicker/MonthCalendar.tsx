@@ -41,7 +41,7 @@ export default function MonthCalendar({
     start && previewEnd && start < previewEnd ? previewEnd : start;
 
   return (
-    <div className="w-64">
+    <div className="w-full md:w-64">
       <div className="text-center font-semibold mb-2">
         {month.toLocaleString("default", {
           month: "long",
@@ -57,7 +57,7 @@ export default function MonthCalendar({
         ))}
       </div>
 
-      <div className="grid grid-cols-7 gap-1 cursor-pointer">
+      <div className="grid grid-cols-7 gap-2 md:gap-1 cursor-pointer">
         {days.map((date, i) =>
           date ? (
             <button

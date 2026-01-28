@@ -6,6 +6,7 @@ import "../../../react-date-picker.css";
 import { BsArrowRight } from "react-icons/bs";
 import { RxCrossCircled } from "react-icons/rx";
 import { MdOutlineDateRange } from "react-icons/md";
+import { Button } from "../../ui/Button";
 
 export function Filter() {
   const [open, setOpen] = useState(false);
@@ -78,11 +79,11 @@ export function Filter() {
       {open && (
         <div
           ref={ref}
-          className="absolute right-0 mt-3 z-50 flex rounded-2xl
-            bg-gray-100 dark:bg-dark-blue text border border-gray-500 text-dp-text shadow-xl"
+          className="absolute -right-3 md:right-0 mt-3 z-50 md:flex rounded-x-2xl rounded-t-2xl md:rounded-b-2xl top-[calc(100vh-570px)] md:top-8
+            bg-gray-100 dark:bg-dark-blue text border border-gray-500 text-dp-text shadow-xl w-screen md:w-fit min-h-119 md:h-fit md:min-h-0"
         >
           {/* PRESETS */}
-          <div className="w-44 border-r border-gray-500 p-2.5 space-y-0.5 font-medium">
+          <div className="w-full md:w-45 md:border-r border-gray-500 p-2.5 space-y-0.5 font-medium flex flex-row md:flex-col whitespace-nowrap overflow-y-auto">
             {[
               "today",
               "yesterday",
@@ -99,9 +100,9 @@ export function Filter() {
                   const r = getPresetRange(p as PresetType);
                   setRange(r);
                 }}
-                className={`w-full text-left px-3 py-2 rounded-lg capitalize cursor-pointer transition-colors ${
+                className={`w-full text-left mx-1 md:mx-0 px-2 py-1.5 md:px-3 md:py-2 rounded-lg capitalize cursor-pointer transition-colors font-semibold ${
                   activePreset === p
-                    ? "bg-primary text-black font-semibold"
+                    ? "bg-primary text-black"
                     : "hover:bg-black/5 dark:hover:bg-white/5"
                 }`}
               >
@@ -111,33 +112,35 @@ export function Filter() {
           </div>
 
           {/* CALENDAR */}
-          <div className="p-4 w-140">
-            <RangePicker
-              range={range || { start: null, end: null }}
-              onChange={(r) => {
-                setActivePreset(null);
-                setRange(r);
-              }}
-            />
+          <div className="p-4 w-full flex flex-col max-md:h-[calc(60vh-100px)]! max-md:justify-between gap-6">
+            <div>
+              <RangePicker
+                range={range || { start: null, end: null }}
+                onChange={(r) => {
+                  setActivePreset(null);
+                  setRange(r);
+                }}
+              />
+            </div>
 
-            <div className="flex items-center justify-end pt-7">
-              <button
+            <div className="flex justify-end gap-2 w-full">
+              <Button
                 onClick={() => {
                   setActivePreset(null);
                   setRange({ start: null, end: null });
                   setOpen(false);
                 }}
-                className="px-4 py-2 rounded-lg text-sm cursor-pointer font-semibold"
-              >
-                Cancel
-              </button>
-              <button
+                className="px-4 py-2 rounded-lg text-sm cursor-pointer font-semibold w-full sm:w-fit border border-gray-400"
+                title="Cancel"
+                buttonType="button"
+              />
+              <Button
                 onClick={() => setOpen(false)}
                 className="px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer
-                  bg-primary text-black"
-              >
-                Apply
-              </button>
+                  bg-primary text-black w-full sm:w-fit"
+                title="Apply"
+                buttonType="button"
+              />
             </div>
           </div>
         </div>

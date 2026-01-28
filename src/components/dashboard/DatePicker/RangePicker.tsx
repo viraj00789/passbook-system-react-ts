@@ -47,22 +47,26 @@ export const RangePicker = ({ range, onChange }: RangePickerProps) => {
       </div>
 
       <div className="flex gap-6">
-        <MonthCalendar
-          month={baseMonth}
-          start={range.start}
-          end={range.end}
-          onSelect={handleSelect}
-          setHoverDate={setHoverDate}
-          hoverDate={hoverDate}
-        />
-        <MonthCalendar
-          month={AddMonths(baseMonth, 1)}
-          start={range.start}
-          end={range.end}
-          onSelect={handleSelect}
-          setHoverDate={setHoverDate}
-          hoverDate={hoverDate}
-        />
+        <div className="w-full">
+          <MonthCalendar
+            month={baseMonth}
+            start={range.start}
+            end={range.end}
+            onSelect={handleSelect}
+            setHoverDate={setHoverDate}
+            hoverDate={hoverDate}
+          />
+        </div>
+        <div className="hidden sm:block w-full">
+          <MonthCalendar
+            month={AddMonths(baseMonth, 1)}
+            start={range.start}
+            end={range.end}
+            onSelect={handleSelect}
+            setHoverDate={setHoverDate}
+            hoverDate={hoverDate}
+          />
+        </div>
       </div>
     </>
   );
