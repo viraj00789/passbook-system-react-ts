@@ -112,7 +112,7 @@ export function Filter() {
           </div>
 
           {/* CALENDAR */}
-          <div className="p-4 w-full flex flex-col max-md:h-[calc(60vh-100px)]! max-md:justify-between gap-6">
+          <div className="p-4 w-full flex flex-col max-md:h-[calc(60vh-105px)]! max-md:justify-between">
             <div>
               <RangePicker
                 range={range || { start: null, end: null }}
