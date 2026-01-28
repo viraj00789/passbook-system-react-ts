@@ -36,7 +36,7 @@ export function Filter() {
     <div className="relative">
       <div
         className={`flex justify-between items-center border p-1 border-gray-300 dark:border-gray-600 rounded-md ${
-          range?.start && range?.end ? "w-fit" : "w-45"
+          range?.start && range?.end ? "w-fit" : "w-42"
         }`}
         onMouseDown={(e) => {
           e.stopPropagation();
@@ -49,7 +49,7 @@ export function Filter() {
           }
         />
         {!range?.start && !range?.end && (
-          <p className="text-gray-800 dark:text-gray-100 text-sm ml-3">
+          <p className="text-gray-800 dark:text-gray-100 text-sm ml-1">
             Select Date Range
           </p>
         )}
