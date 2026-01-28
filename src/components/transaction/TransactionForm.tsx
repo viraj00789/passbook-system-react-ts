@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
 import { useCallback, useEffect, useState } from "react";
 import type { RootState } from "../../store";
-import type { Transaction } from "../../store/Transactions/transactionType";
 
 import Input from "../ui/Input";
 import { Button } from "../ui/Button";
@@ -13,6 +12,7 @@ import {
   EMPLOYEE_OPTIONS,
   STATUS_OPTIONS,
 } from "../../types/TransactionType";
+import type { Transaction } from "../../store/Transactions/transactionType";
 
 type FormErrors = Partial<
   Record<keyof Transaction | "clientName" | "type" | "status", string>
@@ -26,7 +26,7 @@ export default function TransactionDrawer({
   setTransactionReset: (resetForm: () => void) => void;
 }) {
   const editingTransaction = useSelector(
-    (state: RootState) => state.transactions.editingTransaction
+    (state: RootState) => state.transactions.editingTransaction,
   );
 
   const initialForm: Transaction = {
@@ -45,7 +45,7 @@ export default function TransactionDrawer({
   };
 
   const [form, setForm] = useState<Transaction>(
-    editingTransaction ?? initialForm
+    editingTransaction ?? initialForm,
   );
   const [errors, setErrors] = useState<FormErrors>({});
 

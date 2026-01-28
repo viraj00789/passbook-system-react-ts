@@ -4,11 +4,12 @@ import { Button } from "../ui/Button";
 import { useEscapeKey } from "../../utils/useEscapekey";
 import type { SelectOption } from "../../types/FilterTypes";
 import type { Employee } from "./EmployeeColumn";
+
+import FilterSelect from "../ui/Select";
 import {
   paymentAccountOptions,
   roleOptions,
 } from "../../types/EmployeeOptionTypes";
-import FilterSelect from "../ui/Select";
 
 type FormErrors = Partial<
   Record<"employeeName" | "email" | "role" | "monthlySalary", string>
@@ -34,7 +35,7 @@ export default function EmployeeForm({
 
   const [role, setRole] = useState<SelectOption | null>(null);
   const [paymentAccount, setPaymentAccount] = useState<SelectOption | null>(
-    null
+    null,
   );
 
   const [errors, setErrors] = useState<FormErrors>({});

@@ -9,9 +9,9 @@ import { VscRemove } from "react-icons/vsc";
 import { generateInvoiceNumber } from "../../utils/genrateInvoiceNumbers";
 import ImageUpload from "../ui/ImageUpload";
 import PdfDownload from "./PdfDownLoad";
+import { isDueDateValid } from "../../utils/validDates";
 import { InvoiceClientOptions } from "../../types/InvoiceClientTypes";
 import { expenseAccountOptions } from "../../types/InvoiceAccountTypes";
-import { isDueDateValid } from "../../utils/validDates";
 
 interface InvoiceItem {
   description: string;
@@ -108,7 +108,7 @@ export default function InvoiceForm({
 
   const validateItemField = (
     field: keyof InvoiceItem,
-    value: string | number
+    value: string | number,
   ): string | undefined => {
     if (field === "description") {
       return value && String(value).trim()
@@ -134,7 +134,7 @@ export default function InvoiceForm({
   const updateItem = (
     index: number,
     field: keyof InvoiceItem,
-    value: string | number
+    value: string | number,
   ) => {
     // Update form
     setInvoiceForm((prev) => {
@@ -214,7 +214,7 @@ export default function InvoiceForm({
 
   const validateNumberField = (
     field: "discount" | "tax",
-    value: number | ""
+    value: number | "",
   ) => {
     const error =
       value === "" || value < 0 || value > 99
@@ -225,7 +225,7 @@ export default function InvoiceForm({
   };
   const validateFeild = (
     field: keyof InvoiceFormState,
-    value: string | null | SelectOption
+    value: string | null | SelectOption,
   ) => {
     let error: string | undefined = undefined;
 
@@ -390,7 +390,7 @@ export default function InvoiceForm({
                     updateItem(
                       index,
                       "quantity",
-                      e.target.value === "" ? "" : Number(e.target.value)
+                      e.target.value === "" ? "" : Number(e.target.value),
                     )
                   }
                   min={0}
@@ -407,7 +407,7 @@ export default function InvoiceForm({
                     updateItem(
                       index,
                       "rate",
-                      e.target.value === "" ? "" : Number(e.target.value)
+                      e.target.value === "" ? "" : Number(e.target.value),
                     )
                   }
                   min={0}
@@ -479,8 +479,8 @@ export default function InvoiceForm({
             logo: !file
               ? "Logo is required."
               : file.type !== "image/png"
-              ? "Only PNG files are allowed."
-              : undefined,
+                ? "Only PNG files are allowed."
+                : undefined,
           }));
         }}
       />
