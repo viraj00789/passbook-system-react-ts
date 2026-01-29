@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Input from "../ui/Input";
 import { Button } from "../ui/Button";
-import { useEscapeKey } from "../../utils/useEscapekey";
+import { useEscapeKey } from "../../hooks/useEscapekey";
 import type { SelectOption } from "../../types/FilterTypes";
 import type { Employee } from "./EmployeeColumn";
 

@@ -10,7 +10,7 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { useEffect } from "react";
 import { useSidebar } from "../providers/SideBarContext";
 import { Link, useLocation } from "react-router-dom";
-import { useWindowSize } from "../utils/useWindowSize";
+import { useWindowSize } from "../hooks/useWindowSize";
 
 const navItems = [
   { label: "Dashboard", icon: HiOutlineHome, href: "/" },

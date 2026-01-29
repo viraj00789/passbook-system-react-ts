@@ -2,7 +2,7 @@ import { useCallback, useState, useEffect } from "react";
 import type { Client } from "./ClientsColumn";
 import Input from "../ui/Input";
 import { Button } from "../ui/Button";
-import { useEscapeKey } from "../../utils/useEscapekey";
+import { useEscapeKey } from "../../hooks/useEscapekey";
 
 type FormErrors = Partial<
   Record<

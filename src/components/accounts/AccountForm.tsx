@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import Input from "../ui/Input";
 import { Button } from "../ui/Button";
 import type { Account } from "./AccountsColumn";
-import { useEscapeKey } from "../../utils/useEscapekey";
+import { useEscapeKey } from "../../hooks/useEscapekey";
 
 type FormErrors = Partial<
   Record<keyof Account | "confirmAccountNumber", string>

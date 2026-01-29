@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Input from "../ui/Input";
 import { Button } from "../ui/Button";
-import { useEscapeKey } from "../../utils/useEscapekey";
+import { useEscapeKey } from "../../hooks/useEscapekey";
 import FilterSelect from "../ui/Select";
 import type { SelectOption } from "../../types/FilterTypes";
 import { GrAdd } from "react-icons/gr";

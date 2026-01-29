@@ -13,7 +13,7 @@ import { RxCross2 } from "react-icons/rx";
 import type { Column } from "../../types/TableTypes";
 import { getPaginationRange } from "../../utils/getPaginationBadge";
 import PaginationControls from "../PaginationButton";
-import { useWindowSize } from "../../utils/useWindowSize";
+import { useWindowSize } from "../../hooks/useWindowSize";
 import { FaArrowDownLong, FaArrowUpLong } from "react-icons/fa6";
 import { Button } from "./Button";
 

@@ -1,6 +1,7 @@
-import { RxCrossCircled } from "react-icons/rx";
+import { BsTrash3 } from "react-icons/bs";
 import { Button } from "./Button";
-import type { ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
+import { useEscapeKey } from "../../hooks/useEscapekey";
 
 interface PopUpProps {
   setOpenModal: (open: boolean) => void;
@@ -15,37 +16,64 @@ export default function PopUp({
   makeNode,
   onConfirm,
 }: PopUpProps) {
+  useEscapeKey(() => setOpenModal(false), true);
+  const outsideRef = useRef<HTMLDivElement>(null);
+  // Handle outside click
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        outsideRef.current &&
+        !outsideRef.current.contains(event.target as Node)
+      ) {
+        setOpenModal(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setOpenModal]);
+
   return (
     <div className="fixed z-50 inset-0 overflow-y-auto bg-gray-900/40 backdrop-blur-xs text">
       <div className="w-full flex items-center justify-center h-[calc(100vh-100px)] p-4 text-center sm:block sm:p-0">
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen" />
-        <div className="inline-block bg-white dark:bg-dark-blue rounded-lg text-left overflow-hidden shadow-xl sm:my-8 sm:align-middle max-w-lg w-full">
-          <div className="flex items-center justify-between w-full border-b border-gray-500 p-4 lg:p-5">
-            <h3 className="text-lg lg:text-2xl leading-6 font-bold text-gray-900 text">
-              {popupTitle}
-            </h3>
+        <div
+          className="inline-block bg-white dark:bg-dark-blue rounded-lg text-left overflow-hidden shadow-xl sm:my-8 sm:align-middle max-w-lg w-full"
+          ref={outsideRef}
+        >
+          <div className="flex justify-center items-center mt-12 relative">
+            <div className="absolute w-15 h-15 rounded-full border-2 border-red-600/20  bg-red-800/10"></div>
+            <div className="absolute w-20 h-20 rounded-full border-2 border-red-600/15  bg-red-800/10"></div>
+            <div className="absolute w-24 h-24 rounded-full border-2 border-red-600/10  bg-red-800/10"></div>
 
-            <RxCrossCircled
-              size={20}
-              className="text-gray-400 cursor-pointer"
-              onClick={() => setOpenModal(false)}
+            <BsTrash3
+              className="text-red-600 drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]"
+              size={30}
             />
           </div>
-          <div className="p-4 lg:p-6">
-            <p className="text-sm leading-5 text-gray-400">{makeNode}</p>
+
+          <div className="mt-10 space-y-2 p-3 lg:p-4">
+            <h3 className="text-lg lg:text-2xl leading-6 font-bold text-gray-900 text text-center">
+              {popupTitle}
+            </h3>
+            <div className="text-center">
+              <p className="text-sm leading-5 text-gray-400">{makeNode}</p>
+            </div>
           </div>
           <div className="px-4 pb-4 lg:px-6 lg:pb-6 flex gap-2">
             <Button
               buttonType="button"
-              className="inline-flex justify-center w-full rounded-lg border-none text-basefont-medium text-gray-100 shadow-sm hover:bg-gray-500 sm:text-sm border border-gray-200 dark:border-gray-600 bg-gray-500 dark:bg-gray-700 focus:outline-none "
+              className="inline-flex justify-center w-full rounded-lg border-none text-md font-bold text-gray-100 shadow-sm hover:bg-gray-600 sm:text-sm border border-gray-200 dark:border-gray-600 bg-gray-500 dark:bg-gray-700 focus:outline-none "
               title="Cancel"
               buttonPadding="px-1.5 py-1.5"
               onClick={() => setOpenModal(false)}
             />
             <Button
               buttonType="button"
-              className="inline-flex justify-center w-full rounded-lg border border-transparent bg-primary-600 text-base leading-6 font-medium text-black shadow-sm hover:bg-primary-800 focus:outline-none "
-              title="Confirm"
+              className="inline-flex justify-center w-full rounded-lg border border-transparent bg-red-500 text text-md leading-6 font-bold text-black shadow-sm hover:bg-red-600 focus:outline-none "
+              title="Delete"
               buttonPadding="px-1.5 py-1.5"
               onClick={() => {
                 onConfirm?.();
