@@ -195,7 +195,6 @@ export default function AccountDrawer({
             setConfirmAccountNumber("");
             setErrors({});
           }}
-          // buttonPadding="p-2"
         />
       </div>
     </form>

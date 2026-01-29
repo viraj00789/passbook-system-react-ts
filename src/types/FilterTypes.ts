@@ -1,6 +1,6 @@
 export interface SelectOption {
   label: string;
-  value: string | number;
+  value: string;
 }
 export interface DateRange {
   start: Date | null;
