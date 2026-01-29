@@ -34,24 +34,27 @@ export default function Sidebar() {
   useEffect(() => {
     setOpen(windowSize > 1023);
   }, [windowSize]);
+
+
   return (
     <>
       {/* Mobile Overlay */}
-      {/* {open && (
+      {open && (
         <div
-          className="md:hidden fixed inset-0 bg-black/50 z-40"
+          className="lg:hidden fixed inset-0 bg-black/10 z-40"
           onClick={() => setOpen(false)}
         />
-      )} */}
+      )}
 
       <aside
-        className={`
+  className={`
     fixed lg:relative z-50
     bg-white dark:bg-dark-blue
     transition-[width,transform] duration-300 ease-in-out
     ${open ? "w-70 translate-x-0" : "w-16 -translate-x-full lg:translate-x-0"}
   `}
-      >
+>
+
         {/* Navigation */}
         <div
           className="bg-white dark:bg-dark-blue w-full h-screen max-h-[calc(100vh-70px)] border-r border-gray-200 dark:border-gray-600

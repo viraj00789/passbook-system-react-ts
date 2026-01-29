@@ -54,7 +54,7 @@ function DataTable<T extends object>({
   const width = useWindowSize();
   const isMobile = width < 768;
   const sortableColumns = columns.filter(
-    (col) => col.sortable && col.key !== "actions",
+    (col) => col.sortable && col.key !== "actions"
   );
   const debouncedSearch = useDebounce(search, 400);
 
@@ -88,8 +88,8 @@ function DataTable<T extends object>({
 
     return data.filter((row) =>
       Object.values(row).some((value) =>
-        extractSearchText(value).toLowerCase().includes(searchLower),
-      ),
+        extractSearchText(value).toLowerCase().includes(searchLower)
+      )
     );
   }, [data, debouncedSearch]);
 
@@ -123,7 +123,7 @@ function DataTable<T extends object>({
 
   const paginationRange = useMemo(
     () => getPaginationRange(safePage, totalPages),
-    [safePage, totalPages],
+    [safePage, totalPages]
   );
 
   const paginatedData = useMemo(() => {
@@ -146,7 +146,7 @@ function DataTable<T extends object>({
   return (
     <div className="w-full h-full">
       {/* Header */}
-      <div className="flex justify-end sm:justify-between items-center border-t border-x border-gray-300 dark:border-gray-700 rounded-t-xl xl:rounded-t-2xl p-2 lg:p-4 bg-white dark:bg-gray-800">
+      <div className="flex justify-end sm:justify-between items-center border-t border-x border-gray-300 dark:border-gray-700 rounded-t-xl xl:rounded-t-2xl p-2 lg:p-4 bg-white dark:bg-gray-800 px-5 lg:px-4">
         <h1 className="text-lg lg:text-xl font-bold text-gray-900 dark:text-white hidden sm:flex">
           {title}
         </h1>
@@ -297,9 +297,17 @@ function DataTable<T extends object>({
         </div>
       ) : (
         <div
-          className={`overflow-x-auto w-full max-w-[calc(100vw-11px)] h-full max-h-[calc(100vh-209px)] xl:max-h-[calc(100vh-240px)] border-x border-gray-300 dark:border-gray-700 ${!paginationAtFooter ? "rounded-b-2xl border-b" : "rounded-b-none border-b-0"}`}
+          className={`overflow-x-auto w-full max-w-[calc(100vw-11px)] max-h-[calc(100vh-210px)] lg:max-h-[calc(100vh-220px)] xl:max-h-[calc(100vh-240px)]  ${
+            paginatedData.length >= pageSize
+              ? "h-full overflow-auto"
+              : "max-h-[calc(100vh-209px)] overflow-auto"
+          } border-x border-gray-300 dark:border-gray-700 ${
+            !paginationAtFooter
+              ? "rounded-b-2xl border-b"
+              : "rounded-b-none border-b-0"
+          }`}
         >
-          <table className="w-full text-sm h-full">
+          <table className="w-full text-sm">
             {/* Header */}
             <thead>
               <tr className=" whitespace-nowrap space-x-2">
@@ -311,7 +319,7 @@ function DataTable<T extends object>({
                         ? handleSort(col.key as keyof T)
                         : undefined
                     }
-                    className={`p-4 text-left text-md font-bold text-gray-700 dark:text-gray-400 sticky top-0 bg-gray-100 dark:bg-gray-900
+                    className={`p-6 text-left text-md font-bold text-gray-700 dark:text-gray-400 sticky top-0 bg-gray-100 dark:bg-gray-900
                     ${
                       col.sortable
                         ? "cursor-pointer select-none hover:text-primary"
@@ -359,15 +367,15 @@ function DataTable<T extends object>({
                     {columns.map((col) => (
                       <td
                         key={col.label}
-                        className="p-4 text-gray-700 dark:text-gray-300 h-5 "
+                        className="p-4 text-gray-700 dark:text-gray-300 h-20"
                       >
                         {col.key === "serial"
                           ? (currentPage - 1) * pageSize + idx + 1
                           : col.render
-                            ? col.render(row, idx)
-                            : col.key !== "actions"
-                              ? String(row[col.key])
-                              : null}
+                          ? col.render(row, idx)
+                          : col.key !== "actions"
+                          ? String(row[col.key])
+                          : null}
                       </td>
                     ))}
                   </tr>
@@ -433,7 +441,7 @@ function DataTable<T extends object>({
                   >
                     {item}
                   </button>
-                ),
+                )
               )}
             </div>
 
