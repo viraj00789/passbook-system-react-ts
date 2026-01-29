@@ -107,7 +107,7 @@ export default function SignIn() {
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-2">
                 <Input id="remember" name="remember" type="checkbox" />
-                <span className="text-sm">Remember me</span>
+                <span className="text-sm cursor-pointer">Remember me</span>
               </div>
 
               <Link to="/forgot-password" className="text-sm text-primary-600">

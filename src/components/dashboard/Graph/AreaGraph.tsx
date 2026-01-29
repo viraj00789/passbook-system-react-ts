@@ -45,7 +45,7 @@ export default function AreaGraph() {
               <button
                 key={type}
                 onClick={() => setFilter(type)}
-                className={`px-2 py-1.5 lg:px-3 lg:py-1 text-xs sm:text-sm rounded-md capitalize transition font-bold ${
+                className={`px-2 py-1.5 lg:px-3 lg:py-1 text-xs sm:text-sm rounded-md capitalize transition font-bold cursor-pointer ${
                   filter === type
                     ? "bg-white dark:bg-black text-primary-600 shadow"
                     : "text-gray-500 hover:text-gray-900 dark:hover:text-gray-300"
@@ -60,7 +60,7 @@ export default function AreaGraph() {
 
       {/* Chart */}
 
-      <div className="min-h-85">
+      <div className="min-h-85 user-select-none">
         <Suspense fallback={<LineChartSkeleton />}>
           <LazyLineChart
             options={getAreaChartOptions(theme)}

@@ -5,7 +5,6 @@ import {
   FaChevronRight,
   FaChevronUp,
 } from "react-icons/fa";
-import { useSidebar } from "../../providers/SideBarContext";
 import { IoAddCircle, IoFilter } from "react-icons/io5";
 import FiltersPanel from "../dashboard/Filters/TableFilters";
 import FilterPopUp from "./FilterPopup";
@@ -14,8 +13,9 @@ import type { Column } from "../../types/TableTypes";
 import { getPaginationRange } from "../../utils/getPaginationBadge";
 import PaginationControls from "../PaginationButton";
 import { useWindowSize } from "../../hooks/useWindowSize";
-import { FaArrowDownLong, FaArrowUpLong } from "react-icons/fa6";
+import { FaCircleArrowDown, FaCircleArrowUp } from "react-icons/fa6";
 import { Button } from "./Button";
+import { useDebounce } from "../../hooks/useDebounce";
 
 export type SortDirection = "asc" | "desc";
 
@@ -48,7 +48,6 @@ function DataTable<T extends object>({
   const [search, setSearch] = useState("");
   const [sortKey, setSortKey] = useState<keyof T | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
-  const { open } = useSidebar();
   const [openModal, setOpenModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(pageSizeByDefault);
@@ -57,6 +56,7 @@ function DataTable<T extends object>({
   const sortableColumns = columns.filter(
     (col) => col.sortable && col.key !== "actions",
   );
+  const debouncedSearch = useDebounce(search, 400);
 
   const getCellValue = (row: T, col: Column<T>, idx: number) => {
     if (col.render) return col.render(row, idx);
@@ -82,16 +82,16 @@ function DataTable<T extends object>({
 
   /* 🔍 Search */
   const filteredData = useMemo(() => {
-    if (!search) return data;
+    if (!debouncedSearch) return data;
 
-    const searchLower = search.toLowerCase();
+    const searchLower = debouncedSearch.toLowerCase();
 
     return data.filter((row) =>
       Object.values(row).some((value) =>
         extractSearchText(value).toLowerCase().includes(searchLower),
       ),
     );
-  }, [data, search]);
+  }, [data, debouncedSearch]);
 
   /* 🔃 Sort */
   const sortedData = useMemo(() => {
@@ -168,14 +168,19 @@ function DataTable<T extends object>({
               type="text"
               placeholder="Search..."
               value={search}
+              onKeyDown={(e) => {
+                if (e.key === " " && search.length === 0) {
+                  e.preventDefault();
+                }
+              }}
               onChange={(e) => {
                 setCurrentPage(1);
                 setSearch(e.target.value);
               }}
               className="w-full max-w-62.5 px-4 py-2 rounded-xl
-              bg-background text-foreground border
-              border-gray-300 dark:border-gray-700
-              focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-gray-400 dark:placeholder:text-gray-200  dark:bg-dark-blue"
+                 bg-background text-foreground border
+                 border-gray-300 dark:border-gray-700
+                 focus:outline-none focus:ring-2 focus:ring-primary"
             />
           )}
 
@@ -227,25 +232,31 @@ function DataTable<T extends object>({
 
       {/* Table Wrapper */}
       {isMobile ? (
-        <div className="p-2 border border-gray-200 dark:border-gray-700 space-y-4">
+        <div className="p-2 border border-gray-300 dark:border-gray-700 space-y-4">
           <div className="flex gap-2 text">
-            <select
-              value={sortKey ? String(sortKey) : ""}
-              onChange={(e) => {
-                setSortKey(e.target.value as keyof T);
-                setSortDirection("asc");
-                setCurrentPage(1);
-              }}
-              className="flex-1 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700
-               bg-white dark:bg-dark-blue text-sm"
-            >
-              <option value="">Sort by</option>
-              {sortableColumns.map((col) => (
-                <option key={String(col.key)} value={String(col.key)}>
-                  {col.label}
-                </option>
-              ))}
-            </select>
+            <div className="relative w-full">
+              <select
+                value={sortKey ? String(sortKey) : ""}
+                onChange={(e) => {
+                  setSortKey(e.target.value as keyof T);
+                  setSortDirection("asc");
+                  setCurrentPage(1);
+                }}
+                className="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-700
+               bg-white dark:bg-dark-blue text-sm w-full appearance-none focus:outline-none cursor-pointer"
+              >
+                <option value="">Sort by</option>
+                {sortableColumns.map((col) => (
+                  <option key={String(col.key)} value={String(col.key)}>
+                    {col.label}
+                  </option>
+                ))}
+              </select>
+              <FaChevronDown
+                className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                size={12}
+              />
+            </div>
 
             <button
               disabled={!sortKey}
@@ -256,9 +267,9 @@ function DataTable<T extends object>({
                text-sm disabled:opacity-50"
             >
               {sortDirection === "asc" ? (
-                <FaArrowUpLong size={20} />
+                <FaCircleArrowUp size={20} />
               ) : (
-                <FaArrowDownLong size={20} />
+                <FaCircleArrowDown size={20} />
               )}
             </button>
           </div>
@@ -286,16 +297,12 @@ function DataTable<T extends object>({
         </div>
       ) : (
         <div
-          className={`overflow-x-auto w-full max-w-[calc(100vw-11px)] h-full max-h-[calc(100vh-209px)] xl:max-h-[calc(100vh-240px)] border-x border-gray-300 dark:border-gray-700 ${
-            open
-              ? "lg:max-w-[calc(100vw-250px)]"
-              : "lg:max-w-[calc(100vw-90px)]"
-          } ${!paginationAtFooter ? "rounded-b-2xl border-b" : "rounded-b-none border-b-0"}`}
+          className={`overflow-x-auto w-full max-w-[calc(100vw-11px)] h-full max-h-[calc(100vh-209px)] xl:max-h-[calc(100vh-240px)] border-x border-gray-300 dark:border-gray-700 ${!paginationAtFooter ? "rounded-b-2xl border-b" : "rounded-b-none border-b-0"}`}
         >
-          <table className="w-full text-sm h-full ">
+          <table className="w-full text-sm h-full">
             {/* Header */}
             <thead>
-              <tr>
+              <tr className=" whitespace-nowrap space-x-2">
                 {columns.map((col) => (
                   <th
                     key={col.label}
@@ -347,12 +354,12 @@ function DataTable<T extends object>({
                 paginatedData.map((row, idx) => (
                   <tr
                     key={idx}
-                    className="hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                    className="hover:bg-gray-100 dark:hover:bg-gray-700 transition whitespace-nowrap"
                   >
                     {columns.map((col) => (
                       <td
                         key={col.label}
-                        className="p-4 text-gray-700 dark:text-gray-300 h-5"
+                        className="p-4 text-gray-700 dark:text-gray-300 h-5 "
                       >
                         {col.key === "serial"
                           ? (currentPage - 1) * pageSize + idx + 1
@@ -400,8 +407,7 @@ function DataTable<T extends object>({
               title={<FaChevronLeft size={20} />}
               disabled={currentPage === 1}
               onClick={() => setCurrentPage(Math.max(currentPage - 1, 1))}
-              className="text-sm px-2 py-1
-      disabled:opacity-50 disabled:cursor-not-allowed"
+              className="text-sm px-2 py-1 disabled:opacity-50 disabled:cursor-not-allowed"
             />
 
             {/* Page Numbers */}
@@ -410,7 +416,7 @@ function DataTable<T extends object>({
                 item === "..." ? (
                   <span
                     key={`dots-${idx}`}
-                    className="px-2 text-gray-500 select-none"
+                    className="px-2 text-gray-500 select-none "
                   >
                     …
                   </span>
@@ -418,7 +424,7 @@ function DataTable<T extends object>({
                   <button
                     key={item}
                     onClick={() => setCurrentPage(item)}
-                    className={`px-3 py-1 rounded-full text-sm transition
+                    className={`px-3 py-1 rounded-full text-sm transition cursor-pointer
             ${
               item === safePage
                 ? "bg-primary text-gray-600"
@@ -445,17 +451,18 @@ function DataTable<T extends object>({
           </div>
 
           {/* Rows per page selector */}
-          <div>
-            <div className="hidden md:flex items-center gap-2">
-              <span className="text-sm text-gray-600 dark:text-gray-400">
-                Rows per page:
-              </span>
+          <div className="hidden md:flex items-center gap-2">
+            <span className="text-sm text-gray-600 dark:text-gray-400">
+              Rows per page:
+            </span>
 
+            <div className="relative">
               <select
                 value={pageSize}
                 onChange={(e) => handlePageSizeChange(Number(e.target.value))}
-                className="px-2 py-1 rounded-md border border-gray-300 dark:border-gray-700
-                   bg-white dark:bg-dark-blue text-sm"
+                className="appearance-none px-2 py-1 pr-10 rounded-md
+      border border-gray-300 dark:border-gray-700
+      bg-white dark:bg-dark-blue text-sm w-full cursor-pointer"
               >
                 {[10, 50, 100].map((size) => (
                   <option key={size} value={size}>
@@ -463,6 +470,11 @@ function DataTable<T extends object>({
                   </option>
                 ))}
               </select>
+
+              <FaChevronDown
+                className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                size={12}
+              />
             </div>
           </div>
         </div>

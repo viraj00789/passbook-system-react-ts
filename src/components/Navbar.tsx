@@ -99,8 +99,8 @@ export default function Navbar() {
           )}
         </div>
         {isDropdownOpen && (
-          <div className="absolute max-w-50 w-full right-5 top-15 text z-30 rounded-md">
-            <div className="h-auto bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 hover:dark:bg-gray-600 rounded-md p-2">
+          <div className="absolute max-w-50 w-full right-5 top-15 text z-70 rounded-md">
+            <div className="h-auto bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 hover:dark:bg-gray-600 rounded-md p-2">
               <p
                 className="text-md font-medium cursor-pointer"
                 onClick={handleLogout}

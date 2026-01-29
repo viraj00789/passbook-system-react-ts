@@ -2,6 +2,7 @@ import { BsTrash3 } from "react-icons/bs";
 import { Button } from "./Button";
 import { useEffect, useRef, type ReactNode } from "react";
 import { useEscapeKey } from "../../hooks/useEscapekey";
+import "../../popup.css";
 
 interface PopUpProps {
   setOpenModal: (open: boolean) => void;
@@ -36,12 +37,13 @@ export default function PopUp({
   }, [setOpenModal]);
 
   return (
-    <div className="fixed z-50 inset-0 overflow-y-auto bg-gray-900/10 backdrop-blur-xs text">
+    <div className="fixed z-50 inset-0 overflow-y-auto bg-gray-900/40 backdrop-blur-xs text">
       <div className="w-full flex items-center justify-center h-[calc(100vh-100px)] p-4 text-center sm:block sm:p-0">
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen" />
         <div
-          className="inline-block bg-white dark:bg-dark-blue rounded-lg text-left overflow-hidden shadow-xl sm:my-8 sm:align-middle max-w-lg w-full"
           ref={outsideRef}
+          className="inline-block bg-white dark:bg-dark-blue rounded-lg text-left overflow-hidden shadow-xl sm:my-8 sm:align-middle max-w-lg w-full
+                     transform transition-all duration-300 scale-95 opacity-0 animate-popup"
         >
           <div className="flex justify-center items-center mt-12 relative">
             <div className="absolute w-15 h-15 rounded-full border border-red-500/30 bg-red-200/10 dark:border-red-600/20  dark:bg-red-600/10"></div>

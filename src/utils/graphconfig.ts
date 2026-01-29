@@ -2,7 +2,7 @@ import { type ApexOptions } from "apexcharts";
 
 export function getMiniBarChartOptions(
   theme: "light" | "dark",
-  color: string
+  color: string,
 ): ApexOptions {
   return {
     chart: {
@@ -41,6 +41,9 @@ export function getAreaChartOptions(theme: "light" | "dark"): ApexOptions {
       type: "area",
       toolbar: { show: false },
       width: "w-full max-w-xs",
+      zoom: {
+        enabled: false,
+      },
     },
 
     stroke: {

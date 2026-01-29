@@ -46,24 +46,18 @@ export default function Sidebar() {
 
       <aside
         className={`
-          fixed lg:relative z-50 transition-all duration-300
-          ${
-            open
-              ? "w-full! max-w-64! translate-x-0  "
-              : "w-full! max-w-16! -translate-x-full lg:translate-x-0  "
-          }
-        `}
+    fixed lg:relative z-50
+    bg-white dark:bg-dark-blue
+    transition-[width,transform] duration-300 ease-in-out
+    ${open ? "w-70 translate-x-0" : "w-16 -translate-x-full lg:translate-x-0"}
+  `}
       >
         {/* Navigation */}
         <div
           className="bg-white dark:bg-dark-blue w-full h-screen max-h-[calc(100vh-70px)] border-r border-gray-200 dark:border-gray-600
            flex flex-col justify-between text"
         >
-          <nav
-            className={`space-y-3 transition-none ${
-              open ? "p-4" : "px-2 py-4"
-            }`}
-          >
+          <nav className="space-y-3 transition-none px-2 py-4">
             {navItems.map(({ label, icon: Icon, href }) => {
               const isActive = pathname === href;
 
@@ -80,8 +74,16 @@ export default function Sidebar() {
                     if (window.innerWidth < 768) setOpen(false);
                   }}
                 >
-                  <Icon size={24} />
-                  {open && <span>{label}</span>}
+                  <Icon size={24} className="shrink-0" />
+
+                  <span
+                    className={`
+    whitespace-nowrap overflow-hidden transition-opacity duration-200
+    ${open ? "opacity-100" : "opacity-0 w-0"}
+  `}
+                  >
+                    {label}
+                  </span>
                 </Link>
               );
             })}
@@ -90,10 +92,19 @@ export default function Sidebar() {
           {/* Toggle Button */}
           <button
             onClick={toggle}
-            className="p-5 md:flex hidden items-center gap-2 border-t border-gray-200 dark:border-gray-600 cursor-pointer text"
+            className="p-5 md:flex hidden items-center border-t border-gray-200 dark:border-gray-600 cursor-pointer text
+             gap-2 transition-[gap] duration-200"
           >
             {open ? <FiChevronLeft /> : <FiChevronRight />}
-            {open && <span>Collapse</span>}
+
+            <span
+              className={`
+      whitespace-nowrap overflow-hidden transition-opacity duration-200
+      ${open ? "opacity-100 w-auto" : "opacity-0 w-0"}
+    `}
+            >
+              Collapse
+            </span>
           </button>
         </div>
       </aside>

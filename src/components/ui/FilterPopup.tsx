@@ -36,7 +36,7 @@ export default function FilterPopUp({
 
   return (
     <div className="relative z-50" ref={filterRef}>
-      <div className="absolute right-1 top-7 text-center sm:block sm:p-0 bg-white dark:bg-dark-blue rounded-2xl shadow-2xl">
+      <div className="absolute -right-45 sm:right-1 top-7 text-center sm:block sm:p-0 bg-white dark:bg-dark-blue rounded-2xl shadow-2xl">
         <div className="flex items-center justify-between w-full p-3 lg:p-4">
           <h3 className="text-md lg:text-lg leading-6 font-bold text">
             {popupTitle}
@@ -60,7 +60,7 @@ export default function FilterPopUp({
           </div>
         </div>
         <div className="bg-white dark:bg-dark-blue rounded-lg text-left shadow-xl w-70 max-h-[calc(100vh-600px)] overflow-auto">
-          <div className="px-4 pb -4">
+          <div className="px-4 pb-4">
             <p className="text-sm leading-5 text-gray-400">{makeNode}</p>
           </div>
           {bothbuttons && (

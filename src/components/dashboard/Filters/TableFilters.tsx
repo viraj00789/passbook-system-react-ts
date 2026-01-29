@@ -1,26 +1,28 @@
 import { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import type { FiltersState, SelectOption } from "../../../types/FilterTypes";
+import type { SelectOption } from "../../../types/FilterTypes";
 import FilterSelect from "../../ui/Select";
 import {
   ACCOUNT_OPTIONS,
   CLIENT_OPTIONS,
   EMPLOYEE_OPTIONS,
 } from "../../../../data/filterOptionsData";
-
-// interface FiltersPanelProps {
-//     onApply?: (filters: FiltersState) => void;
-// }
+import Input from "../../ui/Input";
 
 const checkOptionsTypes = ["IN", "OUT"];
 
+interface FiltersState {
+  date: string | null;
+  type: "today" | "month" | "custom";
+  accounts: SelectOption[];
+  clients: SelectOption | null;
+  employees: SelectOption | null;
+  isCheckBoxVisible: boolean;
+  checkOptions: string[];
+}
+
 export default function FiltersPanel() {
   const [filters, setFilters] = useState<FiltersState>({
-    dateRange: {
-      start: null,
-      end: null,
-    },
+    date: null,
     type: "today",
     accounts: [],
     clients: null,
@@ -47,27 +49,16 @@ export default function FiltersPanel() {
     <div className="flex flex-col gap-4">
       {/* Date Range */}
       <div className="w-full max-w-full">
-        <label className="flex flex-col mb-2 font-semibold text">
-          Date Range
-        </label>
-        <DatePicker
-          selectsRange
-          startDate={filters.dateRange?.start}
-          endDate={filters.dateRange?.end}
-          onChange={(dates) => {
-            if (!dates) return;
-
-            const [start, end] = dates;
-            setFilters({
-              ...filters,
-              dateRange: { start, end },
-            });
+        <Input
+          label="Date"
+          type="date"
+          value={filters?.date ?? ""}
+          onChange={(e) => {
+            setFilters((prev) => ({
+              ...prev,
+              date: e.target.value,
+            }));
           }}
-          isClearable
-          placeholderText="Select date range"
-          className="p-2 text-sm border border-gray-300 dark:border-gray-600 hover:border-gray-400 rounded-md w-full max-w-full block
-               placeholder:text-gray-500 dark:placeholder:text-gray-400
-               placeholder:font-medium text focus:border-gray-500 bg-gray-100 dark:bg-dark-blue"
         />
       </div>
 

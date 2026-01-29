@@ -36,7 +36,7 @@ export function Filter() {
   return (
     <div className="relative">
       <div
-        className={`flex justify-between items-center border p-1 border-gray-300 dark:border-gray-600 rounded-md ${
+        className={`flex justify-between items-center border p-1 border-gray-300 dark:border-gray-600 rounded-md cursor-pointer ${
           range?.start && range?.end ? "w-fit" : "w-42"
         }`}
         onMouseDown={(e) => {

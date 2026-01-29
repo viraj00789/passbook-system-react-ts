@@ -12,6 +12,7 @@ import Employees from "./pages/Employees";
 import { Expenses } from "./pages/Expense";
 import { Invoices } from "./pages/Invoice";
 import ForgotPassword from "./pages/ForgotPassword";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           {/* Public */}
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="*" element={<NotFound />} />
 
           {/* Protected */}
           <Route
