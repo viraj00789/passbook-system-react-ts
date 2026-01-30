@@ -79,8 +79,8 @@ export function Filter() {
       {open && (
         <div
           ref={ref}
-          className="absolute -right-3 md:right-0 mt-3 z-50 md:flex rounded-x-2xl rounded-t-2xl md:rounded-b-2xl top-[calc(100vh-570px)] md:top-8
-            bg-gray-100 dark:bg-dark-blue text border border-gray-500 text-dp-text shadow-xl w-screen md:w-fit min-h-119 md:h-fit md:min-h-0"
+          className="absolute -right-3 md:right-0 mt-3 z-50 md:flex rounded-x-2xl rounded-t-2xl md:rounded-b-2xl top-[calc(100vh-584px)] md:top-8
+            bg-gray-100 dark:bg-dark-blue text md:border md:border-gray-500 text-dp-text shadow-xl w-screen md:w-fit min-h-119 md:h-fit md:min-h-0"
         >
           {/* PRESETS */}
           <div className="w-full md:w-45 md:border-r border-gray-500 p-2.5 space-y-0.5 font-medium flex flex-row md:flex-col whitespace-nowrap overflow-y-auto">
