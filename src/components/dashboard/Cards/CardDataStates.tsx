@@ -31,7 +31,7 @@ export default function CardDataStates({
   const LazyChart = React.lazy(() => import("react-apexcharts"));
 
   return (
-    <div className="my-0 xl:my-0 p-4 space-y-4 border-radius-3xl  border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+    <div className="my-0 xl:my-0 p-4 space-y-4 border-radius-3xl  border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
       {/* Header */}
       <div className="flex justify-between">
         <div

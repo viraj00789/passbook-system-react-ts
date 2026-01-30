@@ -146,7 +146,7 @@ function DataTable<T extends object>({
   return (
     <div className="w-full h-full">
       {/* Header */}
-      <div className="flex justify-end sm:justify-between items-center border-t border-x border-gray-300 dark:border-gray-700 rounded-t-xl xl:rounded-t-2xl p-2 lg:p-4 bg-white dark:bg-gray-800 sm:px-2 md:px-5 lg:px-4">
+      <div className="flex justify-end sm:justify-between items-center border-t border-x border-gray-300 dark:border-gray-700 rounded-t-xl xl:rounded-t-2xl p-2 lg:p-4 bg-white dark:bg-gray-900 sm:px-2 md:px-5 lg:px-4">
         <h1 className="text-lg lg:text-xl font-bold text-gray-900 dark:text-white hidden sm:flex">
           {title}
         </h1>
@@ -297,7 +297,7 @@ function DataTable<T extends object>({
         </div>
       ) : (
         <div
-          className={`overflow-x-auto w-full max-w-[calc(100vw-11px)] max-h-[calc(100vh-210px)] lg:max-h-[calc(100vh-220px)] xl:max-h-[calc(100vh-240px)]  ${
+          className={`overflow-x-auto w-full max-w-[calc(100vw-11px)] max-h-[calc(100vh-210px)] lg:max-h-[calc(100vh-220px)] xl:max-h-[calc(100vh-239px)]  ${
             paginatedData.length >= pageSize
               ? "h-full overflow-auto"
               : "max-h-[calc(100vh-209px)] overflow-auto"
@@ -319,7 +319,7 @@ function DataTable<T extends object>({
                         ? handleSort(col.key as keyof T)
                         : undefined
                     }
-                    className={`p-4 text-left text-md font-bold text-gray-700 dark:text-gray-400 sticky top-0 bg-gray-100 dark:bg-gray-900
+                    className={`p-4 text-left text-md font-bold text-gray-700 dark:text-gray-400 sticky top-0 bg-gray-100 dark:bg-gray-800
                     ${
                       col.sortable
                         ? "cursor-pointer select-none hover:text-primary"
@@ -357,12 +357,12 @@ function DataTable<T extends object>({
             </thead>
 
             {/* Body */}
-            <tbody className="bg-white dark:bg-gray-800">
+            <tbody className="bg-white dark:bg-gray-900">
               {sortedData.length ? (
                 paginatedData.map((row, idx) => (
                   <tr
                     key={idx}
-                    className="hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                    className="hover:bg-gray-100 dark:hover:bg-gray-800 transition"
                   >
                     {columns.map((col) => (
                       <td
@@ -400,7 +400,7 @@ function DataTable<T extends object>({
         <div
           className="flex flex-wrap items-center justify-center md:justify-between gap-4 px-4 py-3
                   border border-gray-300 dark:border-gray-700
-                  bg-white dark:bg-gray-800 rounded-b-2xl text"
+                  bg-white dark:bg-gray-900 rounded-b-2xl text"
         >
           {/* Page info */}
           <span className="hidden md:inline text-sm text-gray-600 dark:text-gray-400">
