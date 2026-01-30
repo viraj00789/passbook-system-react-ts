@@ -146,7 +146,7 @@ function DataTable<T extends object>({
   return (
     <div className="w-full h-full">
       {/* Header */}
-      <div className="flex justify-end sm:justify-between items-center border-t border-x border-gray-300 dark:border-gray-700 rounded-t-xl xl:rounded-t-2xl p-2 lg:p-4 bg-white dark:bg-gray-800 px-5 lg:px-4">
+      <div className="flex justify-end sm:justify-between items-center border-t border-x border-gray-300 dark:border-gray-700 rounded-t-xl xl:rounded-t-2xl p-2 lg:p-4 bg-white dark:bg-gray-800 sm:px-2 md:px-5 lg:px-4">
         <h1 className="text-lg lg:text-xl font-bold text-gray-900 dark:text-white hidden sm:flex">
           {title}
         </h1>
@@ -319,7 +319,7 @@ function DataTable<T extends object>({
                         ? handleSort(col.key as keyof T)
                         : undefined
                     }
-                    className={`p-6 text-left text-md font-bold text-gray-700 dark:text-gray-400 sticky top-0 bg-gray-100 dark:bg-gray-900
+                    className={`p-4 text-left text-md font-bold text-gray-700 dark:text-gray-400 sticky top-0 bg-gray-100 dark:bg-gray-900
                     ${
                       col.sortable
                         ? "cursor-pointer select-none hover:text-primary"
