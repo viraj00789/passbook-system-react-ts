@@ -189,7 +189,7 @@ function DataTable<T extends object>({
             (openModal ? (
               <RxCross2
                 size={36}
-                className="text border border-gray-300 dark:border-gray-700 rounded-lg px-1.5 w-13 h-9.5 cursor-pointer"
+                className="text border border-gray-300 dark:border-gray-700 rounded-lg hidden md:flex px-1.5 w-13 h-9.5 cursor-pointer"
                 onClick={(e) => {
                   e.stopPropagation();
                   setOpenModal(false);
@@ -198,7 +198,7 @@ function DataTable<T extends object>({
             ) : (
               <IoFilter
                 size={36}
-                className="text border border-gray-300 dark:border-gray-700 rounded-lg px-1.5 w-13 h-9.5 cursor-pointer"
+                className="text border border-gray-300 dark:border-gray-700 rounded-lg hidden md:flex px-1.5 w-13 h-9.5 cursor-pointer"
                 onClick={(e) => {
                   e.stopPropagation();
                   setOpenModal(true);
@@ -307,7 +307,7 @@ function DataTable<T extends object>({
               : "rounded-b-none border-b-0"
           }`}
         >
-          <table className="w-full text-sm">
+          <table className="w-full text-sm h-full">
             {/* Header */}
             <thead>
               <tr className=" whitespace-nowrap space-x-2">
@@ -362,12 +362,12 @@ function DataTable<T extends object>({
                 paginatedData.map((row, idx) => (
                   <tr
                     key={idx}
-                    className="hover:bg-gray-100 dark:hover:bg-gray-700 transition whitespace-nowrap"
+                    className="hover:bg-gray-100 dark:hover:bg-gray-700 transition"
                   >
                     {columns.map((col) => (
                       <td
                         key={col.label}
-                        className="p-4 text-gray-700 dark:text-gray-300 h-20"
+                        className="p-4 text-gray-700 dark:text-gray-300 h-20  truncate"
                       >
                         {col.key === "serial"
                           ? (currentPage - 1) * pageSize + idx + 1
@@ -419,7 +419,7 @@ function DataTable<T extends object>({
             />
 
             {/* Page Numbers */}
-            <div className="flex items-center">
+            <div className="flex items-center gap-2">
               {paginationRange.map((item, idx) =>
                 item === "..." ? (
                   <span
