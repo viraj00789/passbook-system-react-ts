@@ -84,6 +84,12 @@ body {
   background-color: var(--scroll-thumb-hover);
 }
 
+/* Remove bottom-right scrollbar square */
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+
 /*======================= Define Tailwind theme using your variables ============  */
 @theme inline {
   --color-background: var(--background);

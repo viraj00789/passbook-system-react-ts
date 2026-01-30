@@ -112,7 +112,6 @@ export default function ExpenseForm({
           onClick={handleSubmit}
           buttonType="submit"
           className="bg-primary text-gray-900 font-bold"
-          buttonPadding="px-2 lg:px-3 lg:py-2"
         />
         <Button
           title="Cancel"
@@ -122,7 +121,6 @@ export default function ExpenseForm({
             resetForm();
             onClose();
           }}
-          buttonPadding="px-2 lg:px-3 lg:py-2"
         />
       </div>
     </div>
