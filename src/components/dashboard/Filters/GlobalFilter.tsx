@@ -123,7 +123,7 @@ export function Filter() {
               />
             </div>
 
-            <div className="flex justify-end gap-2 w-full">
+            <div className="flex justify-end gap-2 w-full md:mt-4">
               <Button
                 onClick={() => {
                   setActivePreset(null);
